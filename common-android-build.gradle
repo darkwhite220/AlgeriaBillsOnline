@@ -1,0 +1,20 @@
+//apply plugin: "org.jetbrains.kotlin.android"
+
+android {
+    compileSdk = libs.versions.compileSdk.get().toInteger()
+
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInteger()
+        targetSdk = libs.versions.targetSdk.get().toInteger()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+}
+
+dependencies {
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+}

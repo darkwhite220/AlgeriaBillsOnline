@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Allows us to override night specific attributes in the
+     values-night folder. -->
+    <style name="NightAdjusted.Theme.Module" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <!-- Allows us to override platform level specific attributes in their
+         respective values-vXX folder. -->
+    <style name="PlatformAdjusted.Theme.Module" parent="NightAdjusted.Theme.Module">
+        <item name="android:statusBarColor">@color/black30</item>
+    </style>
+
+    <!-- The final theme we use -->
+    <style name="Theme.Module" parent="PlatformAdjusted.Theme.Module" />
+
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="Theme.Module.Splash" parent="NightAdjusted.Theme.Splash">
+<!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_splash</item>
+        <!--        <item name="windowSplashScreenAnimationDuration">1000</item>-->
+        <item name="postSplashScreenTheme">@style/Theme.Module</item>
+    </style>
+</resources>
