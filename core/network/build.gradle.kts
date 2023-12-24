@@ -1,6 +1,7 @@
 plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin)
+  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.hilt)
   alias(libs.plugins.kapt)
 }
@@ -19,4 +20,7 @@ dependencies {
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.hilt.android)
   kapt(libs.hilt.compiler)
+  
+  implementation(libs.bundles.ktor)
+  
 }
