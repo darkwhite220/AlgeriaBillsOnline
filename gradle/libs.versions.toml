@@ -56,6 +56,7 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-material-iconsExtended = { module = "androidx.compose.material:material-icons-extended" } # not in budle
+androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class" } # not in budle
 androidx-compose-paging = { module = "androidx.paging:paging-compose" } # not in budle
@@ -81,7 +82,8 @@ compose = [
     "androidx-compose-ui-tooling",
     "androidx-compose-ui-graphics",
     "androidx-compose-ui-preview",
-    "androidx-compose-material3"
+    "androidx-compose-material3",
+#    "androidx-compose-material"
 ]
 room = [
     "androidx-room-runtime",

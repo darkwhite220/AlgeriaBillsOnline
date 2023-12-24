@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_account">Create Account</string>
+    <string name="password_visibility_icon">Visibility Icon</string>
+    <string name="register_to_see_your_sonalgaz_bills">Register to see your Sonalgaz bills</string>
+
+    <!--Dialog-->
+    <string name="account_creation_failed">Account Creation Failed</string>
+    <string name="account_creation_successful">Account Creation Successful</string>
+    <string name="continue_button">Continue</string>
+    <string name="dismiss">Dismiss</string>
+</resources>

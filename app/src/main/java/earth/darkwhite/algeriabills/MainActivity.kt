@@ -2,6 +2,7 @@ package earth.darkwhite.algeriabills
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import earth.core.designsystem.theme.ModulesTheme
 import earth.core.model.DarkThemeConfig
 import earth.core.model.ThemeBrand
-import earth.darkwhite.algeriabills.ui.ModuleApp
+import earth.darkwhite.algeriabills.ui.AlgeriaBillsApp
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -38,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge()
         
         var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
         
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                 }.collect()
             }
         }
+        
         
         splashScreen.setKeepOnScreenCondition {
             when (uiState) {
@@ -76,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ModuleApp()
+                    AlgeriaBillsApp()
                 }
             }
         }

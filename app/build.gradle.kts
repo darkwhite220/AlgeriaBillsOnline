@@ -56,6 +56,8 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+    implementation(project(":feature:createaccount"))
+    implementation(project(":feature:estimate"))
     implementation(project(":feature:home"))
     implementation(project(":feature:settings"))
     

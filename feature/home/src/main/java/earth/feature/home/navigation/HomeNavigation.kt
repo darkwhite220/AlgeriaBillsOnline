@@ -13,11 +13,11 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeScreen(
-  onSettingsClick: () -> Unit
+    onCreateAccountClick: () -> Unit
 ) {
   composable(route = homeRoute) {
     HomeRoute(
-      onSettingsClick = onSettingsClick
+      onCreateAccountClick = onCreateAccountClick
     )
   }
 }
