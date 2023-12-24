@@ -6,6 +6,7 @@
 
     <!--Dialog-->
     <string name="account_creation_failed">Account Creation Failed</string>
+    <string name="account_creation_failed_desc">Please fix highlighted fields and retry.</string>
     <string name="account_creation_successful">Account Creation Successful</string>
     <string name="continue_button">Continue</string>
     <string name="dismiss">Dismiss</string>

@@ -16,6 +16,7 @@ kotlin = "1.9.10"
 kotlinxCoroutines = "1.7.1"
 kotlinxSerializationJson = "1.6.0"
 # @keep
+lottie = "6.1.0"
 hilt = "2.48"
 coil = "2.2.2"
 retrofit = "2.9.0"
@@ -63,6 +64,7 @@ androidx-compose-paging = { module = "androidx.paging:paging-compose" } # not in
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 # @keep
+lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
@@ -83,7 +85,7 @@ compose = [
     "androidx-compose-ui-graphics",
     "androidx-compose-ui-preview",
     "androidx-compose-material3",
-#    "androidx-compose-material"
+    #    "androidx-compose-material"
 ]
 room = [
     "androidx-room-runtime",
