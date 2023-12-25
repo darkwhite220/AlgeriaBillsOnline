@@ -1,6 +1,7 @@
 package com.darkwhite.feature.createaccount
 
 import android.util.Patterns
+import androidx.core.text.isDigitsOnly
 
 object Util {
     
@@ -17,20 +18,26 @@ object Util {
         return this.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
     
+    fun String.isValidReference(): Boolean {
+        return this.isDigitsOnly()
+    }
+    
     fun String.isValidPassword(): Boolean {
         val minLength = 8
         val hasUpperCase = this.any { it.isUpperCase() }
         val hasLowerCase = this.any { it.isLowerCase() }
         val hasDigit = this.any { it.isDigit() }
         val hasSpecialChar = this.any { !it.isLetterOrDigit() }
+        val hasNoSpace = !this.contains(" ")
         
-        return this.length >= minLength &&
+        return this.length > minLength &&
             hasUpperCase &&
             hasLowerCase &&
             hasDigit &&
-            hasSpecialChar
+            hasSpecialChar &&
+            hasNoSpace
         
-        // Or Regex
+        // Or Regex (need update to check for space " ")
 //        val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z\\d]).{8,}\$")
 //        return regex.matches(this)
     }

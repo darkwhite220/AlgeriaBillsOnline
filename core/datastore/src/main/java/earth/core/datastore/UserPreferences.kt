@@ -9,9 +9,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import earth.core.datastore.PreferencesDataStore.DefaultValues.DARK_THEME_CONFIG_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.SHOULD_HIDE_ONBOARDING_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.THEME_BRAND_DEFAULT
-import earth.core.model.DarkThemeConfig
-import earth.core.model.ThemeBrand
-import earth.core.model.UserData
+import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.ThemeBrand
+import earth.core.preferencesmodel.UserData
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

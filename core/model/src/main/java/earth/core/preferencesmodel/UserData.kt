@@ -1,4 +1,4 @@
-package earth.core.model
+package earth.core.preferencesmodel
 
 data class UserData(
   val shouldHideOnboarding: Boolean,

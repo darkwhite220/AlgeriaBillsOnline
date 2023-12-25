@@ -15,12 +15,14 @@ android {
 }
 
 dependencies {
+  implementation(project(":core:model"))
+  
   implementation(libs.bundles.retrofit)
   implementation(libs.okHttp.logging)
-  implementation(libs.kotlinx.serialization.json)
   implementation(libs.hilt.android)
   kapt(libs.hilt.compiler)
   
-  implementation(libs.bundles.ktor)
+  implementation(libs.kotlinx.serialization.json)
   
+  implementation(libs.bundles.ktor)
 }

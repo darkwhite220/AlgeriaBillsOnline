@@ -15,9 +15,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
-import earth.core.model.DarkThemeConfig
-import earth.core.model.ThemeBrand
-import earth.core.model.UserData
+import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.ThemeBrand
+import earth.core.preferencesmodel.UserData
 
 @Composable
 internal fun SettingsRoute(

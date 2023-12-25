@@ -4,6 +4,7 @@ sealed interface CreateAccountEvent {
     
     data class OnUserNameValueChange(val value: String) : CreateAccountEvent
     data class OnEmailValueChange(val value: String) : CreateAccountEvent
+    data class OnReferenceValueChange(val value: String) : CreateAccountEvent
     data class OnPasswordValueChange(val value: String) : CreateAccountEvent
     data class OnRepeatPasswordValueChange(val value: String) : CreateAccountEvent
     data class OnCaptchaValueChange(val value: String) : CreateAccountEvent

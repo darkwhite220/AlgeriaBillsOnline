@@ -1,7 +1,7 @@
 package earth.core.domain
 
 import earth.core.data.UserDataRepository
-import earth.core.model.UserData
+import earth.core.preferencesmodel.UserData
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 

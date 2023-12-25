@@ -1,7 +1,7 @@
 package earth.feature.settings
 
-import earth.core.model.DarkThemeConfig
-import earth.core.model.ThemeBrand
+import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.ThemeBrand
 
 sealed interface SettingsEvent {
   data class OnDarKThemeChange(val darkThemeConfig: DarkThemeConfig): SettingsEvent

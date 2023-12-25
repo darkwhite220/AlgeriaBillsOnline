@@ -2,16 +2,10 @@ package com.darkwhite.feature.createaccount
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,28 +16,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.darkwhite.feature.createaccount.CreateAccountEvent.OnCreateAccountClick
 import com.darkwhite.feature.createaccount.components.ButtonCreateAccount
+import com.darkwhite.feature.createaccount.components.CaptchaUi
 import com.darkwhite.feature.createaccount.components.MyTextFieldTypes
 import com.darkwhite.feature.createaccount.components.TextFieldCreateAccount
 import com.darkwhite.feature.createaccount.components.textFieldMap
 import com.darkwhite.feature.createaccount.dialog.DialogDataType
+import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
 import com.darkwhite.feature.createaccount.dialog.ResponseDialog
-import com.darkwhite.feature.createaccount.uistate.CreateAccountUiState
+import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
-import earth.core.designsystem.components.ImageCaptcha
+import com.darkwhite.feature.createaccount.uistate.SignupUiState
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
+import earth.core.throwablemodel.SignupThrowable
 import earth.feature.createaccount.R
 
-enum class ShowDialog {
-    SUCCESS, FAILED, NONE
-}
 
 @Composable
 internal fun CreateAccountRoute(
@@ -51,55 +46,42 @@ internal fun CreateAccountRoute(
     onBackClick: () -> Unit,
     viewModel: CreateAccountViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val captchaUiState by viewModel.captchaUiState.collectAsStateWithLifecycle()
+    val signupUiState by viewModel.signupUiState.collectAsStateWithLifecycle()
     val formUiState by viewModel.formUiState.collectAsStateWithLifecycle()
-    var showDialog by remember { mutableStateOf(ShowDialog.NONE) }
+    var showReferenceDetailDialog by remember { mutableStateOf(false) }
     
     CreateAccountScreen(
-        uiState = uiState,
+        signupUiState = signupUiState,
+        captchaUiState = captchaUiState,
         formUiState = formUiState,
+        onCreateAccountEvent = viewModel::onCreateAccountEvent,
         onBackClick = onBackClick,
-        onCreateAccountEvent = viewModel::onCreateAccountEvent
+        onShowReferenceDetailClick = { showReferenceDetailDialog = true },
     )
     
-    // Dialog
-    when (uiState) {
-        CreateAccountUiState.Success -> {
-            ResponseDialog(dialogData = DialogDataType.SUCCESS.dialogData, onClick = onBackClick)
-        }
-        is CreateAccountUiState.Failed -> {
-            ResponseDialog(
-                dialogData = DialogDataType.FAILED.dialogData,
-                onClick = viewModel::onFailedDialogClose
-            )
-        }
-        else -> { /* No op */
-        }
+    // Signup Dialog
+    ShowSignupDialog(
+        signupUiState = signupUiState,
+        onSuccessDialogClose = onBackClick,
+        onFailDialogClose = viewModel::onFailedDialogClose
+    )
+    
+    // Reference detail dialog
+    if (showReferenceDetailDialog) {
+        ReferenceDetailDialog(onDismiss = { showReferenceDetailDialog = false })
     }
-    
-//    when (showDialog) {
-//        ShowDialog.SUCCESS -> {
-//            ResponseDialog(dialogData = DialogDataType.SUCCESS.dialogData, onClick = onBackClick)
-//        }
-//        ShowDialog.FAILED -> {
-//            ResponseDialog(
-//                dialogData = DialogDataType.FAILED.dialogData,
-//                onClick = viewModel::onFailedDialogClose
-//            )
-//        }
-//        ShowDialog.NONE -> { /* No op */
-//        }
-//    }
-    
 }
 
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 private fun CreateAccountScreen(
-    uiState: CreateAccountUiState = CreateAccountUiState.InitialState,
+    signupUiState: SignupUiState = SignupUiState.InitialState,
+    captchaUiState: CaptchaUiState = CaptchaUiState.Loading,
     formUiState: FormUiState = FormUiState(),
     onCreateAccountEvent: (CreateAccountEvent) -> Unit = {},
     onBackClick: () -> Unit = {},
+    onShowReferenceDetailClick: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -113,7 +95,7 @@ private fun CreateAccountScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = largeDp)
-                .imePadding()
+//                .imePadding() // TODO CHECK IME PADDING
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -129,13 +111,14 @@ private fun CreateAccountScreen(
                     if (index == 0) focusRequester.requestFocus()
                 }
                 
-                if (item.key == MyTextFieldTypes.CAPTCHA) {
-                    ImageCaptcha(url = "") // TODO
-                    MyHeightSpacer(largeDp)
-                }
+                CaptchaUi(
+                    textFieldType = item.key,
+                    captchaUiState = captchaUiState
+                )
                 
                 TextFieldCreateAccount(
                     focusRequester = focusRequester,
+                    fieldType = item.key,
                     fieldValues = item.value,
                     value = formUiState.currentValue(item.key),
                     isValid = formUiState.currentIsValid(item.key),
@@ -157,18 +140,21 @@ private fun CreateAccountScreen(
                             TextFieldEvent.OnKeyboardDoneActions -> {
                                 focusManager.clearFocus(true)
                             }
+                            TextFieldEvent.OnReferenceIconClick -> {
+                                onShowReferenceDetailClick()
+                            }
                         }
                     },
                 )
-                
-                TextFieldDescription(description = item.value.description)
+
+//                TextFieldDescription(description = item.value.description)
                 
                 MyHeightSpacer(mediumDp)
             }
             
             ButtonCreateAccount(
                 textId = R.string.create_account,
-                isLoading = uiState == CreateAccountUiState.Loading,
+                isLoading = signupUiState == SignupUiState.Loading,
                 onClick = { onCreateAccountEvent(OnCreateAccountClick) },
             )
             
@@ -190,6 +176,9 @@ private fun onFormEventValueChange(
             MyTextFieldTypes.EMAIL -> {
                 CreateAccountEvent.OnEmailValueChange(newValue)
             }
+            MyTextFieldTypes.REFERENCE -> {
+                CreateAccountEvent.OnReferenceValueChange(newValue)
+            }
             MyTextFieldTypes.PASSWORD -> {
                 CreateAccountEvent.OnPasswordValueChange(newValue)
             }
@@ -203,17 +192,39 @@ private fun onFormEventValueChange(
     )
 }
 
+
 @Composable
-private fun TextFieldDescription(description: String? = null) {
-    description?.let {
-        CompositionLocalProvider(
-            LocalContentColor provides LocalContentColor.current.copy(alpha = .6f)
-        ) {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth()
+private fun ShowSignupDialog(
+    signupUiState: SignupUiState,
+    onSuccessDialogClose: () -> Unit,
+    onFailDialogClose: () -> Unit,
+) {
+    when (signupUiState) {
+        SignupUiState.Success -> {
+            ResponseDialog(dialogData = DialogDataType.SUCCESS.dialogData, onClick = onSuccessDialogClose)
+        }
+        is SignupUiState.Failed -> {
+            println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.exception}")
+            val dialogDataType = when (signupUiState.exception) {
+                SignupThrowable.WrongCaptchaException -> {
+                    DialogDataType.FAILED_WRONG_CAPTCHA
+                }
+                SignupThrowable.WrongReferenceException -> {
+                    DialogDataType.FAILED_WRONG_REFERENCE
+                }
+                SignupThrowable.FailedTryLaterException -> {
+                    DialogDataType.FAILED_REFERENCE_ALREADY_USED
+                }
+                else -> {
+                    DialogDataType.FAILED
+                }
+            }
+            ResponseDialog(
+                dialogData = dialogDataType.dialogData,
+                onClick = onFailDialogClose
             )
+        }
+        else -> { /* No op */
         }
     }
 }

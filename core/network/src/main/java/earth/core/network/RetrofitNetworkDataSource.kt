@@ -1,8 +1,8 @@
 package earth.core.network
 
-import earth.core.network.model.ApiResponse
+import earth.core.networkmodel.ApiResponse
 
 interface RetrofitNetworkDataSource {
   
-  suspend fun getTest(): ApiResponse
+  suspend fun getTest(): earth.core.networkmodel.ApiResponse
 }

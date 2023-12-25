@@ -19,3 +19,18 @@ fun <T> Flow<T>.asResult(): Flow<Result<T>> {
         .onStart { emit(Result.Loading) }
         .catch { emit(Result.Error(it)) }
 }
+
+sealed interface ResultNoData<out T> {
+    data object Success : ResultNoData<Nothing>
+    data class Error(val exception: Throwable? = null) : ResultNoData<Nothing>
+    data object Loading : ResultNoData<Nothing>
+}
+
+fun <T> Flow<T>.asResultNoData(): Flow<ResultNoData<T>> {
+    return this
+        .map<T, ResultNoData<T>> {
+            ResultNoData.Success
+        }
+        .onStart { emit(ResultNoData.Loading) }
+        .catch { emit(ResultNoData.Error(it)) }
+}

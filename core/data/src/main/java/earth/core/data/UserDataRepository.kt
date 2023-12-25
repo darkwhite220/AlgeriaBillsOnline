@@ -1,8 +1,8 @@
 package earth.core.data
 
-import earth.core.model.DarkThemeConfig
-import earth.core.model.ThemeBrand
-import earth.core.model.UserData
+import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.ThemeBrand
+import earth.core.preferencesmodel.UserData
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {

@@ -1,7 +1,7 @@
 package earth.core.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import earth.core.network.model.ApiResponse
+import earth.core.networkmodel.ApiResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.serialization.json.Json
@@ -25,7 +25,7 @@ class RetrofitNetwork @Inject constructor(
     .build()
     .create(RetrofitNetworkApi::class.java)
   
-  override suspend fun getTest(): ApiResponse =
+  override suspend fun getTest(): earth.core.networkmodel.ApiResponse =
     retrofitNetworkApi.getTest()
   
   companion object {
@@ -36,6 +36,6 @@ class RetrofitNetwork @Inject constructor(
 private interface RetrofitNetworkApi {
   
   @GET("")
-  suspend fun getTest(): ApiResponse
+  suspend fun getTest(): earth.core.networkmodel.ApiResponse
   
 }

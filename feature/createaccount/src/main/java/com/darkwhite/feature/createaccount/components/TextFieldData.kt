@@ -8,7 +8,7 @@ import androidx.compose.ui.text.input.KeyboardType
 
 
 enum class MyTextFieldTypes {
-    USERNAME, EMAIL, PASSWORD, REPEAT_PASSWORD, CAPTCHA
+    USERNAME, EMAIL, REFERENCE, PASSWORD, REPEAT_PASSWORD, CAPTCHA
 }
 
 @Immutable
@@ -39,6 +39,17 @@ val textFieldMap = mapOf(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email,
             autoCorrect = true,
+        ),
+    ),
+    MyTextFieldTypes.REFERENCE to MyTextFieldItem(
+        label = "Reference",
+        placeholder = "000000000000000",
+        supportingText = "Must be 15 digits",
+        trailingIcon = true,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Number,
+            autoCorrect = false,
         ),
     ),
     MyTextFieldTypes.PASSWORD to MyTextFieldItem(

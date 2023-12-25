@@ -23,8 +23,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import earth.core.designsystem.theme.ModulesTheme
-import earth.core.model.DarkThemeConfig
-import earth.core.model.ThemeBrand
+import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.ThemeBrand
 import earth.darkwhite.algeriabills.ui.AlgeriaBillsApp
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach

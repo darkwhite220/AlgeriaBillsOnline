@@ -36,6 +36,30 @@ enum class DialogDataType(
             buttonTextId = R.string.continue_button,
         )
     ),
+    FAILED_WRONG_CAPTCHA(
+        dialogData = DialogData(
+            lottieFileName = FAILED_LOTTIE_FILE,
+            titleId = R.string.account_creation_failed,
+            textId = R.string.account_creation_failed_wrong_captcha,
+            buttonTextId = R.string.dismiss,
+        )
+    ),
+    FAILED_WRONG_REFERENCE(
+        dialogData = DialogData(
+            lottieFileName = FAILED_LOTTIE_FILE,
+            titleId = R.string.account_creation_failed,
+            textId = R.string.account_creation_failed_wrong_reference,
+            buttonTextId = R.string.dismiss,
+        )
+    ),
+    FAILED_REFERENCE_ALREADY_USED(
+        dialogData = DialogData(
+            lottieFileName = FAILED_LOTTIE_FILE,
+            titleId = R.string.account_creation_failed,
+            textId = R.string.account_creation_failed_try_again_later,
+            buttonTextId = R.string.dismiss,
+        )
+    ),
     FAILED(
         dialogData = DialogData(
             lottieFileName = FAILED_LOTTIE_FILE,

@@ -2,6 +2,7 @@ package com.darkwhite.feature.createaccount.uistate
 
 import androidx.compose.runtime.Stable
 import com.darkwhite.feature.createaccount.components.MyTextFieldTypes
+import earth.core.networkmodel.SignupRequestBody
 
 
 @Stable
@@ -11,6 +12,9 @@ data class FormUiState(
     
     val email: String = "",
     val emailIsValid: Boolean = true,
+    
+    val reference: String = "",
+    val referenceIsValid: Boolean = true,
     
     val password: String = "",
     val passwordIsValid: Boolean = true,
@@ -28,6 +32,9 @@ data class FormUiState(
             }
             MyTextFieldTypes.EMAIL -> {
                 email
+            }
+            MyTextFieldTypes.REFERENCE -> {
+                reference
             }
             MyTextFieldTypes.PASSWORD -> {
                 password
@@ -49,6 +56,9 @@ data class FormUiState(
             MyTextFieldTypes.EMAIL -> {
                 emailIsValid
             }
+            MyTextFieldTypes.REFERENCE -> {
+                referenceIsValid
+            }
             MyTextFieldTypes.PASSWORD -> {
                 passwordIsValid
             }
@@ -61,3 +71,15 @@ data class FormUiState(
         }
     }
 }
+
+fun FormUiState.toSignupRequestBody(): SignupRequestBody = SignupRequestBody(
+    nomprenom = "",
+    email = this.email,
+    telephone = "",
+    username = this.username,
+    reference = this.reference,
+    newpass = this.password,
+    cfnewpass = this.repeatPassword,
+    captcha = this.captcha,
+    btnAction = "",
+)

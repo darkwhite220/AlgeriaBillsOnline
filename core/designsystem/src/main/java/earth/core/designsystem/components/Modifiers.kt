@@ -13,6 +13,8 @@ val mediumDp = 8.dp
 val largeDp = 16.dp
 val lottieAnimationSize = 100.dp
 
+val largeCorner = 16.dp
+
 @Composable
 fun horizontalSpacedBy(value: Dp = mediumDp): Arrangement.Horizontal = Arrangement.spacedBy(value)
 

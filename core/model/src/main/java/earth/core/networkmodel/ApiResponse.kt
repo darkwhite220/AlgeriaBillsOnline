@@ -1,4 +1,4 @@
-package earth.core.network.model
+package earth.core.networkmodel
 
 data class ApiResponse(
   val id: String,
