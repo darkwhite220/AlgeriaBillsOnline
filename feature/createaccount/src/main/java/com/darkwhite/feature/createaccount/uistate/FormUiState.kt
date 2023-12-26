@@ -7,6 +7,8 @@ import earth.core.networkmodel.SignupRequestBody
 
 @Stable
 data class FormUiState(
+    val enabled: Boolean = true,
+    
     val username: String = "",
     val usernameIsValid: Boolean = true,
     

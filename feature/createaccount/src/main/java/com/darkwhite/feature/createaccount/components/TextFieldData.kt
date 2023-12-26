@@ -56,7 +56,7 @@ val textFieldMap = mapOf(
         label = "Password",
         supportingText = "Wrong format",
         description = """   Password must contain:
-        - 8 characters
+        - at least 8 characters
         - at least one uppercase
         - at least one lowercase
         - at least one special character (_-*/,\$!?.")
@@ -79,7 +79,7 @@ val textFieldMap = mapOf(
     MyTextFieldTypes.CAPTCHA to MyTextFieldItem(
         label = "Image code",
         supportingText = "5 alphanumeric characters",
-        description = "   Type what you see in the image",
+//        description = "   Type what you see in the image",
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Password,

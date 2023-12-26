@@ -72,6 +72,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    
     implementation(libs.androidx.navigation.compose)
     
     implementation(libs.androidx.hilt.navigation.compose)

@@ -3,6 +3,7 @@ package earth.core.designsystem.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -24,4 +25,8 @@ fun verticalSpacedBy(value: Dp = mediumDp): Arrangement.Vertical = Arrangement.s
 @Composable
 fun MyHeightSpacer(height: Dp = mediumDp) {
     Spacer(modifier = Modifier.height(height))
+}
+@Composable
+fun MyWidthSpacer(width: Dp = mediumDp) {
+    Spacer(modifier = Modifier.width(width))
 }

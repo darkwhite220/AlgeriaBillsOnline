@@ -16,22 +16,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import earth.core.data.util.NetworkMonitorRepository
 import earth.core.designsystem.theme.ModulesTheme
 import earth.core.preferencesmodel.DarkThemeConfig
 import earth.core.preferencesmodel.ThemeBrand
 import earth.darkwhite.algeriabills.ui.AlgeriaBillsApp
+import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    
+    @Inject
+    lateinit var networkMonitor: NetworkMonitorRepository
     
     private val viewModel: MainActivityViewModel by viewModels()
     
@@ -79,7 +83,9 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AlgeriaBillsApp()
+                    AlgeriaBillsApp(
+                        networkMonitor= networkMonitor
+                    )
                 }
             }
         }

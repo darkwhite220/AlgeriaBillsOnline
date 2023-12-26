@@ -6,6 +6,7 @@ import earth.core.networkmodel.SignupResponse
 import earth.core.throwablemodel.SignupThrowable
 import earth.core.throwablemodel.SignupThrowableConstants.BAD_SERVER_RESPONSE
 import earth.core.throwablemodel.SignupThrowableConstants.FAILED_TRY_LATER
+import earth.core.throwablemodel.SignupThrowableConstants.REDIRECT_STATUS_CODE
 import earth.core.throwablemodel.SignupThrowableConstants.REFERENCE_NONE_EXISTENT
 import earth.core.throwablemodel.SignupThrowableConstants.REFERENCE_NONE_VALID
 import earth.core.throwablemodel.SignupThrowableConstants.WRONG_CAPTCHA
@@ -23,6 +24,9 @@ class GetSignupStateUseCase @Inject constructor(
         
         emit(
             when {
+                response.body.contains(SUCCESSFUL_SIGNUP_MESSAGE) -> {
+                    ""
+                }
                 response.body.contains(FAILED_TRY_LATER) -> {
                     throw SignupThrowable.FailedTryLaterException
                 }
@@ -33,6 +37,9 @@ class GetSignupStateUseCase @Inject constructor(
                     response.body.contains(REFERENCE_NONE_EXISTENT) -> {
                     throw SignupThrowable.WrongReferenceException
                 }
+                response.responseCode == REDIRECT_STATUS_CODE -> {
+                    throw SignupThrowable.WrongEmailException
+                }
                 response.body.contains(BAD_SERVER_RESPONSE) -> {
                     throw SignupThrowable.BadServerResponseException
                 }
@@ -41,5 +48,10 @@ class GetSignupStateUseCase @Inject constructor(
                 }
             }
         )
+    }
+    
+    companion object {
+        private const val SUCCESSFUL_SIGNUP_MESSAGE =
+            "Enregistrement fait avec succès,vous pouvez vous connecter en utilisant votre nom utlisateur et votre mot de passe"
     }
 }

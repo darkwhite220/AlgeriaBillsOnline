@@ -1,6 +1,7 @@
 package com.darkwhite.feature.createaccount.components
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,7 +55,7 @@ fun CaptchaUi(
                 is CaptchaUiState.Failed -> {
                     ImageCaptcha(modifier = modifier, bitmap = null)
                     // TODO Captcha error implement
-                    println("FAILED, ${captchaUiState.exception}")
+                    Log.e("ImageCaptcha", "CaptchaUi: FAILED, ${captchaUiState.exception}")
                 }
             }
         }
@@ -77,6 +79,7 @@ private fun ImageCaptcha(
         Image(
             painter = painterResource(id = R.drawable.broken_image),
             modifier = modifier,
+            contentScale = ContentScale.Inside,
             contentDescription = null
         )
     }
@@ -94,6 +97,7 @@ fun ImageCaptchaPreview() {
                 color = MaterialTheme.colorScheme.outline,
                 shape = shape
             )
-            .clip(shape), bitmap = null
+            .clip(shape),
+        bitmap = null
     )
 }

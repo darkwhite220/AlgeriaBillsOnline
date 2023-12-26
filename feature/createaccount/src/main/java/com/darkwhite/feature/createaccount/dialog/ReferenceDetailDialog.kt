@@ -10,22 +10,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import earth.core.designsystem.components.largeCorner
 import earth.feature.createaccount.R
 
-
+@Preview(showSystemUi = true)
 @Composable
 fun ReferenceDetailDialog(
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit = {}
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Surface(modifier = Modifier.clip(RoundedCornerShape(largeCorner))) {
             Image(
                 modifier = modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
-                painter = painterResource(id = R.drawable.bill_reference2),
+                painter = painterResource(id = R.drawable.bill_reference),
                 contentDescription = stringResource(id = R.string.reference_detail_icon)
             )
         }

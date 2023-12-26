@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Algeria Bills Online</string>
+    <string name="not_connected">Not connected</string>
 </resources>

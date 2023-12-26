@@ -43,8 +43,6 @@ class AppNetwork @Inject constructor(
         client.get(BASE_URL) {
             initialHeaders()
         }
-
-//        client.printCookies()
         
         client.get(SIGNUP_FORM_URL) {
             signupHeaders()
@@ -66,10 +64,6 @@ class AppNetwork @Inject constructor(
     }
     
     override suspend fun requestSignup(signupRequestBody: SignupRequestBody): SignupResponse {
-        // FOR COOKIES
-//        client.get(BASE_URL) {
-//            initialHeaders()
-//        }
         client.get(SIGNUP_FORM_URL) {
             signupFormHeaders()
         }
@@ -93,6 +87,7 @@ class AppNetwork @Inject constructor(
         }
         
         return SignupResponse(
+            responseCode = response.status.value,
             headers = response.headers.entries(),
             body = response.bodyAsText()
         )

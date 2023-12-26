@@ -1,5 +1,6 @@
 package com.darkwhite.feature.createaccount
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,10 +25,12 @@ import earth.core.domain.GetSignupStateUseCase
 import earth.core.throwablemodel.SignupThrowable
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -44,28 +47,34 @@ class CreateAccountViewModel @Inject constructor(
     private val signupRepository: SignupRepository,
 ) : ViewModel() {
     
-    // TODO disable text fields on signup click
     // TODO show broken image + reload icon if captcha fails
     // TODO save to Database
-    // TODO check network before
+    
+    private val isOnline = MutableStateFlow(false)
     
     private var _formUiState = MutableStateFlow(FormUiState())
     val formUiState: StateFlow<FormUiState> = _formUiState.asStateFlow()
     
     private var startCaptchaRequest = MutableStateFlow(false)
     
-    val captchaUiState: StateFlow<CaptchaUiState> = startCaptchaRequest.flatMapLatest {
-        getSignupCaptchaUseCase()
-            .asResult()
-            .map { result ->
-                when (result) {
-                    is Result.Loading -> CaptchaUiState.Loading
-                    is Result.Success -> CaptchaUiState.Success(result.data)
-                    is Result.Error -> CaptchaUiState.Failed(result.exception)
-                }
+    val captchaUiState: StateFlow<CaptchaUiState> =
+        combine(isOnline, startCaptchaRequest) { isOnline, _ ->
+            Pair(isOnline, Unit)
+        }.flatMapLatest { (isOnline, _) ->
+            if (isOnline) {
+                getSignupCaptchaUseCase()
+                    .asResult()
+                    .map { result ->
+                        when (result) {
+                            is Result.Loading -> CaptchaUiState.Loading
+                            is Result.Success -> CaptchaUiState.Success(result.data)
+                            is Result.Error -> CaptchaUiState.Failed(result.exception)
+                        }
+                    }
+            } else {
+                flowOf(CaptchaUiState.Failed(NetworkErrorException("No connection")))
             }
-    }
-        .stateIn(
+        }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = CaptchaUiState.Loading
@@ -83,7 +92,7 @@ class CreateAccountViewModel @Inject constructor(
                         is ResultNoData.Success -> SignupUiState.Success
                         is ResultNoData.Error -> {
                             if (result.exception == SignupThrowable.WrongCaptchaException) {
-                                startCaptchaRequest.emit(!startCaptchaRequest.value)
+                                startCaptchaRequest.value = !startCaptchaRequest.value
                             }
                             SignupUiState.Failed(result.exception)
                         }
@@ -99,8 +108,15 @@ class CreateAccountViewModel @Inject constructor(
             initialValue = SignupUiState.InitialState
         )
     
+    
     init {
         Log.d(TAG, "init: ")
+        viewModelScope.launch {
+            network.networkStatus.collect {
+                Log.d(TAG, "is connected $it: ")
+                isOnline.value = it
+            }
+        }
     }
     
     fun onCreateAccountEvent(event: CreateAccountEvent) {
@@ -130,10 +146,14 @@ class CreateAccountViewModel @Inject constructor(
     }
     
     fun onFailedDialogClose() {
-        viewModelScope.launch { startSignupRequest.emit(false) }
+        viewModelScope.launch { startSignupRequest.value = false }
     }
     
     private fun onCreateAccountClick() {
+        if (!isOnline.value) {
+            return
+        }
+        checkFieldsValue()
         if (_formUiState.value.username.isNotEmpty() && _formUiState.value.usernameIsValid &&
             _formUiState.value.email.isNotEmpty() && _formUiState.value.emailIsValid &&
             _formUiState.value.reference.isNotEmpty() && _formUiState.value.referenceIsValid &&
@@ -142,8 +162,39 @@ class CreateAccountViewModel @Inject constructor(
             _formUiState.value.captcha.isNotEmpty() && _formUiState.value.captchaIsValid
         ) {
             viewModelScope.launch {
-                startSignupRequest.emit(true)
+                updateFormFieldEnabledState(false)
+                startSignupRequest.value = true
+                updateFormFieldEnabledState(true)
             }
+        }
+    }
+    
+    private fun updateFormFieldEnabledState(enabled: Boolean) {
+        _formUiState.update {
+            it.copy(
+                enabled = enabled,
+            )
+        }
+    }
+    
+    private fun checkFieldsValue() {
+        if (_formUiState.value.username.isEmpty()) {
+            _formUiState.update { it.copy(usernameIsValid = false) }
+        }
+        if (_formUiState.value.email.isEmpty()) {
+            _formUiState.update { it.copy(emailIsValid = false) }
+        }
+        if (_formUiState.value.reference.isEmpty()) {
+            _formUiState.update { it.copy(referenceIsValid = false) }
+        }
+        if (_formUiState.value.password.isEmpty()) {
+            _formUiState.update { it.copy(passwordIsValid = false) }
+        }
+        if (_formUiState.value.repeatPassword.isEmpty()) {
+            _formUiState.update { it.copy(repeatPasswordIsValid = false) }
+        }
+        if (_formUiState.value.captcha.isEmpty()) {
+            _formUiState.update { it.copy(captchaIsValid = false) }
         }
     }
     
@@ -169,7 +220,6 @@ class CreateAccountViewModel @Inject constructor(
         if (value.trim().length <= MAX_REFERENCE_LENGTH) {
             _formUiState.update {
                 it.copy(
-                    
                     reference = value.trim(),
                     referenceIsValid = value.isValidReference()
                 )
@@ -196,16 +246,20 @@ class CreateAccountViewModel @Inject constructor(
     }
     
     private fun updateCaptcha(value: String) {
-        _formUiState.update {
-            it.copy(
-                captcha = value.trim(),
-                captchaIsValid = value.isValidCaptcha()
-            )
+        if (value.length <= CAPTCHA_LENGTH){
+            _formUiState.update {
+                it.copy(
+                    captcha = value.trim(),
+                    captchaIsValid = value.isValidCaptcha()
+                )
+            }
         }
     }
     
     companion object {
         private const val TAG = "CreateAccountViewModel"
-        private const val MAX_REFERENCE_LENGTH = 15
+        const val MAX_REFERENCE_LENGTH = 15
+        const val MIN_PASSWORD_LENGTH = 8
+        const val CAPTCHA_LENGTH = 5
     }
 }

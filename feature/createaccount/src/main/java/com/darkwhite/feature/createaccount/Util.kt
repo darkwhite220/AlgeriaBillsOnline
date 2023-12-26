@@ -2,6 +2,9 @@ package com.darkwhite.feature.createaccount
 
 import android.util.Patterns
 import androidx.core.text.isDigitsOnly
+import com.darkwhite.feature.createaccount.CreateAccountViewModel.Companion.CAPTCHA_LENGTH
+import com.darkwhite.feature.createaccount.CreateAccountViewModel.Companion.MAX_REFERENCE_LENGTH
+import com.darkwhite.feature.createaccount.CreateAccountViewModel.Companion.MIN_PASSWORD_LENGTH
 
 object Util {
     
@@ -19,18 +22,18 @@ object Util {
     }
     
     fun String.isValidReference(): Boolean {
-        return this.isDigitsOnly()
+        return this.length == MAX_REFERENCE_LENGTH &&
+            this.isDigitsOnly()
     }
     
     fun String.isValidPassword(): Boolean {
-        val minLength = 8
         val hasUpperCase = this.any { it.isUpperCase() }
         val hasLowerCase = this.any { it.isLowerCase() }
         val hasDigit = this.any { it.isDigit() }
         val hasSpecialChar = this.any { !it.isLetterOrDigit() }
         val hasNoSpace = !this.contains(" ")
         
-        return this.length > minLength &&
+        return this.length > MIN_PASSWORD_LENGTH &&
             hasUpperCase &&
             hasLowerCase &&
             hasDigit &&
@@ -43,7 +46,7 @@ object Util {
     }
     
     fun String.isValidCaptcha(): Boolean {
-        val isLengthValid = this.length == 5
+        val isLengthValid = this.length == CAPTCHA_LENGTH
         val isAlphanumeric = this.all { it.isLetterOrDigit() }
         return isLengthValid && isAlphanumeric
         // Or regex

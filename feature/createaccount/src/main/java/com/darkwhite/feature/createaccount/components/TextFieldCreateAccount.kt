@@ -35,6 +35,7 @@ fun TextFieldCreateAccount(
     fieldValues: MyTextFieldItem,
     value: String,
     isValid: Boolean,
+    enabled: Boolean,
     onValueChange: (String) -> Unit,
     onTextFieldEvent: (TextFieldEvent) -> Unit,
     modifier: Modifier = Modifier,
@@ -48,6 +49,7 @@ fun TextFieldCreateAccount(
                 .focusRequester(focusRequester),
             value = value,
             onValueChange = { onValueChange(it) },
+            enabled = enabled,
             label = { Text(text = label) },
             placeholder = { PlaceHolder() },
             trailingIcon = {

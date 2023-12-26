@@ -36,6 +36,14 @@ enum class DialogDataType(
             buttonTextId = R.string.continue_button,
         )
     ),
+    FAILED_SERVER_ERROR_TRY_LATER(
+        dialogData = DialogData(
+            lottieFileName = FAILED_LOTTIE_FILE,
+            titleId = R.string.account_creation_failed,
+            textId = R.string.account_creation_failed_try_again_later,
+            buttonTextId = R.string.dismiss,
+        )
+    ),
     FAILED_WRONG_CAPTCHA(
         dialogData = DialogData(
             lottieFileName = FAILED_LOTTIE_FILE,
@@ -52,11 +60,11 @@ enum class DialogDataType(
             buttonTextId = R.string.dismiss,
         )
     ),
-    FAILED_REFERENCE_ALREADY_USED(
+    FAILED_WRONG_EMAIL(
         dialogData = DialogData(
             lottieFileName = FAILED_LOTTIE_FILE,
             titleId = R.string.account_creation_failed,
-            textId = R.string.account_creation_failed_try_again_later,
+            textId = R.string.account_creation_failed_wrong_email,
             buttonTextId = R.string.dismiss,
         )
     ),

@@ -1,8 +1,8 @@
 package com.darkwhite.feature.createaccount
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -24,6 +24,7 @@ import com.darkwhite.feature.createaccount.components.ButtonCreateAccount
 import com.darkwhite.feature.createaccount.components.CaptchaUi
 import com.darkwhite.feature.createaccount.components.MyTextFieldTypes
 import com.darkwhite.feature.createaccount.components.TextFieldCreateAccount
+import com.darkwhite.feature.createaccount.components.TextFieldDescription
 import com.darkwhite.feature.createaccount.components.textFieldMap
 import com.darkwhite.feature.createaccount.dialog.DialogDataType
 import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
@@ -32,6 +33,7 @@ import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
 import earth.core.designsystem.components.MyHeightSpacer
+import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
@@ -50,7 +52,7 @@ internal fun CreateAccountRoute(
     val signupUiState by viewModel.signupUiState.collectAsStateWithLifecycle()
     val formUiState by viewModel.formUiState.collectAsStateWithLifecycle()
     var showReferenceDetailDialog by remember { mutableStateOf(false) }
-    
+    // TODO check bill1.png or bill2.png
     CreateAccountScreen(
         signupUiState = signupUiState,
         captchaUiState = captchaUiState,
@@ -91,74 +93,78 @@ private fun CreateAccountScreen(
             onBackClick = onBackClick,
         )
         
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = largeDp)
+        Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            MyWidthSpacer(largeDp)
+            Column(
+                modifier = Modifier
 //                .imePadding() // TODO CHECK IME PADDING
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val focusManager = LocalFocusManager.current
-            
-            MyHeightSpacer(largeDp)
-            TextTitleLarge(textId = R.string.register_to_see_your_sonalgaz_bills)
-            MyHeightSpacer(largeDp)
-            
-            textFieldMap.entries.forEachIndexed { index, item ->
-                val focusRequester = remember { FocusRequester() }
-                LaunchedEffect(Unit) {
-                    if (index == 0) focusRequester.requestFocus()
+                    .fillMaxSize()
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val focusManager = LocalFocusManager.current
+                
+                MyHeightSpacer(largeDp)
+                TextTitleLarge(textId = R.string.register_to_see_your_sonalgaz_bills)
+                MyHeightSpacer(largeDp)
+                
+                textFieldMap.entries.forEachIndexed { index, item ->
+                    val focusRequester = remember { FocusRequester() }
+                    LaunchedEffect(Unit) {
+                        if (index == 0) focusRequester.requestFocus()
+                    }
+                    
+                    CaptchaUi(
+                        textFieldType = item.key,
+                        captchaUiState = captchaUiState
+                    )
+                    
+                    TextFieldCreateAccount(
+                        focusRequester = focusRequester,
+                        fieldType = item.key,
+                        fieldValues = item.value,
+                        value = formUiState.currentValue(item.key),
+                        isValid = formUiState.currentIsValid(item.key),
+                        enabled = formUiState.enabled,
+                        onValueChange = { newValue ->
+                            onFormEventValueChange(
+                                newValue = newValue,
+                                textFieldTypes = item.key,
+                                onCreateAccountEvent = onCreateAccountEvent,
+                            )
+                        },
+                        onTextFieldEvent = { event ->
+                            when (event) {
+                                TextFieldEvent.OnKeyboardPreviousActions -> {
+                                    focusManager.moveFocus(FocusDirection.Previous)
+                                }
+                                TextFieldEvent.OnKeyboardNextActions -> {
+                                    focusManager.moveFocus(FocusDirection.Next)
+                                }
+                                TextFieldEvent.OnKeyboardDoneActions -> {
+                                    focusManager.clearFocus(true)
+                                }
+                                TextFieldEvent.OnReferenceIconClick -> {
+                                    onShowReferenceDetailClick()
+                                }
+                            }
+                        },
+                    )
+                    
+                    TextFieldDescription(description = item.value.description)
+                    
+                    MyHeightSpacer(mediumDp)
                 }
                 
-                CaptchaUi(
-                    textFieldType = item.key,
-                    captchaUiState = captchaUiState
+                ButtonCreateAccount(
+                    textId = R.string.create_account,
+                    isLoading = signupUiState == SignupUiState.Loading,
+                    onClick = { onCreateAccountEvent(OnCreateAccountClick) },
                 )
                 
-                TextFieldCreateAccount(
-                    focusRequester = focusRequester,
-                    fieldType = item.key,
-                    fieldValues = item.value,
-                    value = formUiState.currentValue(item.key),
-                    isValid = formUiState.currentIsValid(item.key),
-                    onValueChange = { newValue ->
-                        onFormEventValueChange(
-                            newValue = newValue,
-                            textFieldTypes = item.key,
-                            onCreateAccountEvent = onCreateAccountEvent,
-                        )
-                    },
-                    onTextFieldEvent = { event ->
-                        when (event) {
-                            TextFieldEvent.OnKeyboardPreviousActions -> {
-                                focusManager.moveFocus(FocusDirection.Previous)
-                            }
-                            TextFieldEvent.OnKeyboardNextActions -> {
-                                focusManager.moveFocus(FocusDirection.Next)
-                            }
-                            TextFieldEvent.OnKeyboardDoneActions -> {
-                                focusManager.clearFocus(true)
-                            }
-                            TextFieldEvent.OnReferenceIconClick -> {
-                                onShowReferenceDetailClick()
-                            }
-                        }
-                    },
-                )
-
-//                TextFieldDescription(description = item.value.description)
-                
-                MyHeightSpacer(mediumDp)
+                MyHeightSpacer(largeDp)
             }
-            
-            ButtonCreateAccount(
-                textId = R.string.create_account,
-                isLoading = signupUiState == SignupUiState.Loading,
-                onClick = { onCreateAccountEvent(OnCreateAccountClick) },
-            )
-            
-            MyHeightSpacer(largeDp)
+            MyWidthSpacer(largeDp)
         }
     }
 }
@@ -201,19 +207,25 @@ private fun ShowSignupDialog(
 ) {
     when (signupUiState) {
         SignupUiState.Success -> {
-            ResponseDialog(dialogData = DialogDataType.SUCCESS.dialogData, onClick = onSuccessDialogClose)
+            ResponseDialog(
+                dialogData = DialogDataType.SUCCESS.dialogData,
+                onClick = onSuccessDialogClose
+            )
         }
         is SignupUiState.Failed -> {
             println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.exception}")
             val dialogDataType = when (signupUiState.exception) {
+                SignupThrowable.FailedTryLaterException -> {
+                    DialogDataType.FAILED_SERVER_ERROR_TRY_LATER
+                }
                 SignupThrowable.WrongCaptchaException -> {
                     DialogDataType.FAILED_WRONG_CAPTCHA
                 }
                 SignupThrowable.WrongReferenceException -> {
                     DialogDataType.FAILED_WRONG_REFERENCE
                 }
-                SignupThrowable.FailedTryLaterException -> {
-                    DialogDataType.FAILED_REFERENCE_ALREADY_USED
+                SignupThrowable.WrongEmailException -> {
+                    DialogDataType.FAILED_WRONG_EMAIL
                 }
                 else -> {
                     DialogDataType.FAILED
