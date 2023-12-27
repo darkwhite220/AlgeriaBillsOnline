@@ -79,7 +79,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun ModulesTheme(
+fun AlgeriaBillsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit

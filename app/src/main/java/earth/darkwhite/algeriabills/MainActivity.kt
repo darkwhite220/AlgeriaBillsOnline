@@ -22,7 +22,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import earth.core.data.util.NetworkMonitorRepository
-import earth.core.designsystem.theme.ModulesTheme
+import earth.core.designsystem.theme.AlgeriaBillsTheme
 import earth.core.preferencesmodel.DarkThemeConfig
 import earth.core.preferencesmodel.ThemeBrand
 import earth.darkwhite.algeriabills.ui.AlgeriaBillsApp
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 onDispose {}
             }
             
-            ModulesTheme(
+            AlgeriaBillsTheme(
                 darkTheme = darkTheme,
                 dynamicColor = shouldUseAndroidTheme(uiState)
             ) {
