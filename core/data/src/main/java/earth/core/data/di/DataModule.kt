@@ -4,10 +4,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import earth.core.data.BillImplementation
+import earth.core.data.BillRepository
 import earth.core.data.SignupImplementation
 import earth.core.data.SignupRepository
 import earth.core.data.UserDataImplementation
 import earth.core.data.UserDataRepository
+import earth.core.data.UserImplementation
+import earth.core.data.UserRepository
 import earth.core.data.util.NetworkMonitorImplementation
 import earth.core.data.util.NetworkMonitorRepository
 
@@ -23,4 +27,10 @@ interface DataModule {
     
     @Binds
     fun bindCreateAccountRepository(impl: SignupImplementation): SignupRepository
+    
+    @Binds
+    fun bindUserRepository(impl: UserImplementation): UserRepository
+    
+    @Binds
+    fun bindBillRepository(impl: BillImplementation): BillRepository
 }

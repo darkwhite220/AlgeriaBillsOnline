@@ -2,29 +2,301 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "95fcfcc4ab29bf62886c15378cba17bd",
+    "identityHash": "aa6e94c43657481ceec0f24da0b608f2",
     "entities": [
       {
-        "tableName": "SampleEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`index` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "tableName": "user_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`full_name` TEXT NOT NULL, `reference` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `year_avg` REAL NOT NULL, `trimester_avg` REAL NOT NULL, `day_avg` REAL NOT NULL, `max_pay` REAL NOT NULL, `max_pay_elect` REAL NOT NULL, `max_pay_gaz` REAL NOT NULL, `min_pay` REAL NOT NULL, `min_pay_elect` REAL NOT NULL, `min_pay_gaz` REAL NOT NULL, PRIMARY KEY(`reference`))",
         "fields": [
           {
-            "fieldPath": "index",
-            "columnName": "index",
+            "fieldPath": "fullName",
+            "columnName": "full_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reference",
+            "columnName": "reference",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "directionDistribution",
+            "columnName": "direction_distribution",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "businessAgency",
+            "columnName": "business_agency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHouse",
+            "columnName": "is_house",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.yearAgv",
+            "columnName": "year_avg",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.trimesterAgv",
+            "columnName": "trimester_avg",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.dayAvg",
+            "columnName": "day_avg",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.maxPay",
+            "columnName": "max_pay",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.maxPayElect",
+            "columnName": "max_pay_elect",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.maxPayGaz",
+            "columnName": "max_pay_gaz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.minPay",
+            "columnName": "min_pay",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.minPayElect",
+            "columnName": "min_pay_elect",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statistics.minPayGaz",
+            "columnName": "min_pay_gaz",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "index"
+            "reference"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "bill_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `is_paid` INTEGER NOT NULL, `pdf_format_data` BLOB NOT NULL, `bill_number` TEXT NOT NULL, `date` TEXT NOT NULL, `trimester` TEXT NOT NULL, `year` TEXT NOT NULL, `ebp` TEXT NOT NULL, `ebb` TEXT NOT NULL, `electricity_meter_number` TEXT NOT NULL, `elect_new_value` INTEGER NOT NULL, `elect_old_value` INTEGER NOT NULL, `elect_consumption` INTEGER NOT NULL, `elect_consumption_cost` INTEGER NOT NULL, `gaz_meter_number` TEXT NOT NULL, `gaz_new_value` INTEGER NOT NULL, `gaz_old_value` INTEGER NOT NULL, `gaz_consumption` INTEGER NOT NULL, `gaz_consumption_cost` INTEGER NOT NULL, `state_support` INTEGER NOT NULL, `rights_and_taxes` INTEGER NOT NULL, `amount_ht` INTEGER NOT NULL, `tva` INTEGER NOT NULL, `total` INTEGER NOT NULL, `timbre` INTEGER NOT NULL, `total_ttc` INTEGER NOT NULL, PRIMARY KEY(`bill_number`))",
+        "fields": [
+          {
+            "fieldPath": "reference",
+            "columnName": "reference",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPaid",
+            "columnName": "is_paid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pdfFormatData",
+            "columnName": "pdf_format_data",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "billNumber",
+            "columnName": "bill_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trimester",
+            "columnName": "trimester",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ebp",
+            "columnName": "ebp",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ebb",
+            "columnName": "ebb",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "electricityMeterNumber",
+            "columnName": "electricity_meter_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "electNewValue",
+            "columnName": "elect_new_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "electOldValue",
+            "columnName": "elect_old_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "electConsumption",
+            "columnName": "elect_consumption",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "electConsumptionCost",
+            "columnName": "elect_consumption_cost",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gazMeterNumber",
+            "columnName": "gaz_meter_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gazNewValue",
+            "columnName": "gaz_new_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gazOldValue",
+            "columnName": "gaz_old_value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gazConsumption",
+            "columnName": "gaz_consumption",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gazConsumptionCost",
+            "columnName": "gaz_consumption_cost",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stateSupport",
+            "columnName": "state_support",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rightsAndTaxes",
+            "columnName": "rights_and_taxes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountHT",
+            "columnName": "amount_ht",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tva",
+            "columnName": "tva",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "total",
+            "columnName": "total",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timbre",
+            "columnName": "timbre",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalTTC",
+            "columnName": "total_ttc",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "bill_number"
           ]
         },
         "indices": [],
@@ -34,7 +306,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '95fcfcc4ab29bf62886c15378cba17bd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa6e94c43657481ceec0f24da0b608f2')"
     ]
   }
 }
