@@ -9,7 +9,7 @@ import earth.core.database.dao.UserDao
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DaoModule {
+object DaoModule {
     
     @Provides
     fun provideUserDao(myDatabase: MyDatabase): UserDao =
