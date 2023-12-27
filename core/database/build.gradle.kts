@@ -4,12 +4,17 @@ plugins {
   alias(libs.plugins.hilt)
   alias(libs.plugins.kapt)
   alias(libs.plugins.ksp)
+  alias(libs.plugins.room)
 }
 
 apply(from="../../common-android-build.gradle")
 
 android {
   namespace = "earth.code.database"
+  
+  room {
+    schemaDirectory("$projectDir/schemas")
+  }
 }
 
 dependencies {
