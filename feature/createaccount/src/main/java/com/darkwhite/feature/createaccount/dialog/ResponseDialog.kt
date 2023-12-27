@@ -119,7 +119,10 @@ private fun DialogText(@StringRes textId: Int?) {
 @Composable
 private fun ResponseDialogSuccessfulPreview(modifier: Modifier = Modifier) {
     MaterialTheme {
-        ResponseDialog(dialogData = DialogDataType.SUCCESS.dialogData, onClick = {})
+        ResponseDialog(
+            modifier = modifier,
+            dialogData = DialogDataType.SUCCESS.dialogData,
+            onClick = {})
     }
 }
 
@@ -127,6 +130,9 @@ private fun ResponseDialogSuccessfulPreview(modifier: Modifier = Modifier) {
 @Composable
 private fun ResponseDialogFailedPreview(modifier: Modifier = Modifier) {
     MaterialTheme {
-        ResponseDialog(dialogData = DialogDataType.FAILED.dialogData, onClick = {})
+        ResponseDialog(
+            modifier = modifier,
+            dialogData = DialogDataType.FAILED.dialogData,
+            onClick = {})
     }
 }
