@@ -12,7 +12,8 @@ import com.darkwhite.feature.createaccount.Util.isValidUsername
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
-import com.darkwhite.feature.createaccount.uistate.toSignupRequestBody
+import com.darkwhite.feature.createaccount.uistate.asNewUser
+import com.darkwhite.feature.createaccount.uistate.asSignupRequestBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.common.Result
 import earth.core.common.ResultNoData
@@ -22,10 +23,10 @@ import earth.core.data.SignupRepository
 import earth.core.data.util.NetworkMonitorRepository
 import earth.core.domain.GetSignupCaptchaUseCase
 import earth.core.domain.GetSignupStateUseCase
+import earth.core.domain.InsertNewUserUseCase
 import earth.core.throwablemodel.SignupThrowable
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,12 +44,11 @@ import kotlinx.coroutines.launch
 class CreateAccountViewModel @Inject constructor(
     getSignupCaptchaUseCase: GetSignupCaptchaUseCase,
     getSignupStateUseCase: GetSignupStateUseCase,
+    insertNewUserUseCase: InsertNewUserUseCase,
     private val network: NetworkMonitorRepository,
-    private val signupRepository: SignupRepository,
 ) : ViewModel() {
     
-    // TODO show broken image + reload icon if captcha fails
-    // TODO save to Database
+    // TODO Captcha error implement
     
     private val isOnline = MutableStateFlow(false)
     
@@ -84,12 +84,15 @@ class CreateAccountViewModel @Inject constructor(
     
     val signupUiState: StateFlow<SignupUiState> = startSignupRequest.flatMapLatest { startRequest ->
         if (startRequest) {
-            getSignupStateUseCase(_formUiState.value.toSignupRequestBody())
+            getSignupStateUseCase(_formUiState.value.asSignupRequestBody())
                 .asResultNoData()
                 .map { result ->
                     when (result) {
                         is ResultNoData.Loading -> SignupUiState.Loading
-                        is ResultNoData.Success -> SignupUiState.Success
+                        is ResultNoData.Success -> {
+                            insertNewUserUseCase(_formUiState.value.asNewUser())
+                            SignupUiState.Success
+                        }
                         is ResultNoData.Error -> {
                             if (result.exception == SignupThrowable.WrongCaptchaException) {
                                 startCaptchaRequest.value = !startCaptchaRequest.value
@@ -246,7 +249,7 @@ class CreateAccountViewModel @Inject constructor(
     }
     
     private fun updateCaptcha(value: String) {
-        if (value.length <= CAPTCHA_LENGTH){
+        if (value.length <= CAPTCHA_LENGTH) {
             _formUiState.update {
                 it.copy(
                     captcha = value.trim(),

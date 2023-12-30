@@ -68,6 +68,14 @@ enum class DialogDataType(
             buttonTextId = R.string.dismiss,
         )
     ),
+    FAILED_EXISTING_USERNAME(
+        dialogData = DialogData(
+            lottieFileName = FAILED_LOTTIE_FILE,
+            titleId = R.string.account_creation_failed,
+            textId = R.string.account_creation_failed_existing_username,
+            buttonTextId = R.string.dismiss,
+        )
+    ),
     FAILED(
         dialogData = DialogData(
             lottieFileName = FAILED_LOTTIE_FILE,

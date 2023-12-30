@@ -33,7 +33,9 @@ object KtorModule {
     @Provides
     fun provideKtorClient(): HttpClient {
         return HttpClient(Android) {
-            this.expectSuccess = true
+            expectSuccess = true
+            
+            followRedirects = false
             
             install(HttpCookies)
             

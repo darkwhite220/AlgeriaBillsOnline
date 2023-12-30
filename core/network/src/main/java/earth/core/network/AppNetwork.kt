@@ -15,7 +15,6 @@ import earth.core.network.Constants.SIGNUP_CAPTCHA_URL
 import earth.core.network.Constants.SIGNUP_FORM_URL
 import earth.core.network.Constants.SIGNUP_URL
 import earth.core.network.Constants.USERNAME
-import earth.core.network.di.KtorHeaders.initialHeaders
 import earth.core.network.di.KtorHeaders.signupCaptchaHeaders
 import earth.core.network.di.KtorHeaders.signupFormHeaders
 import earth.core.network.di.KtorHeaders.signupHeaders
@@ -25,6 +24,7 @@ import earth.core.networkmodel.SignupResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.cookies.cookies
+import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.plugins.onDownload
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
@@ -39,13 +39,8 @@ class AppNetwork @Inject constructor(
 ) : AppNetworkDataSource {
     
     override suspend fun fetchSignupCaptcha(): SignupCaptcha {
-        // FOR COOKIES
-        client.get(BASE_URL) {
-            initialHeaders()
-        }
-        
         client.get(SIGNUP_FORM_URL) {
-            signupHeaders()
+            signupFormHeaders()
         }
         
         var totalLength = 0
@@ -64,11 +59,10 @@ class AppNetwork @Inject constructor(
     }
     
     override suspend fun requestSignup(signupRequestBody: SignupRequestBody): SignupResponse {
-        client.get(SIGNUP_FORM_URL) {
-            signupFormHeaders()
-        }
         val response = client.post(SIGNUP_URL) {
             signupHeaders()
+            
+            expectSuccess = false
             
             setBody(
                 FormDataContent(
@@ -86,6 +80,7 @@ class AppNetwork @Inject constructor(
             )
         }
         
+        println("SignupResponse ${response.status.value} ${response.status}")
         return SignupResponse(
             responseCode = response.status.value,
             headers = response.headers.entries(),

@@ -227,6 +227,9 @@ private fun ShowSignupDialog(
                 SignupThrowable.WrongEmailException -> {
                     DialogDataType.FAILED_WRONG_EMAIL
                 }
+                SignupThrowable.ExistingUsernameException -> {
+                    DialogDataType.FAILED_EXISTING_USERNAME
+                }
                 else -> {
                     DialogDataType.FAILED
                 }

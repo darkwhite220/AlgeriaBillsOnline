@@ -25,7 +25,7 @@ data class UserEntity(
     @ColumnInfo(name = "is_house")
     val isHouse: Boolean,
     @Embedded
-    val statistics: StatisticsEntity,
+    val statistics: StatisticsEntity?,
     @ColumnInfo(name = "created_at")
     val createdAt: Long = Date().time,
 )
@@ -40,7 +40,7 @@ fun UserEntity.asExternalModel() = User(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
-    statistics = statistics.asExternalModel(),
+    statistics = statistics?.asExternalModel(),
 )
 
 fun User.asEntity() = UserEntity(
@@ -53,5 +53,5 @@ fun User.asEntity() = UserEntity(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
-    statistics = statistics.asEntity(),
+    statistics = statistics?.asEntity(),
 )

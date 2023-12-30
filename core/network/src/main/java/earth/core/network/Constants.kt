@@ -4,7 +4,7 @@ object Constants {
     const val BASE_URL = "https://consulter-factures.elit.dz"
     const val SIGNUP_FORM_URL = "$BASE_URL/enregistrement.jsp"
     const val SIGNUP_CAPTCHA_URL = "$BASE_URL/simpleCaptcha.png"
-    const val SIGNUP_URL = "$BASE_URL/fconsultation/verifenregistrement.jsp"
+    const val SIGNUP_URL = "$BASE_URL/verifenregistrement.jsp"
     
     const val ACCEPT_ALL =
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"

@@ -2,6 +2,7 @@ package com.darkwhite.feature.createaccount.uistate
 
 import androidx.compose.runtime.Stable
 import com.darkwhite.feature.createaccount.components.MyTextFieldTypes
+import earth.core.database.User
 import earth.core.networkmodel.SignupRequestBody
 
 
@@ -74,14 +75,21 @@ data class FormUiState(
     }
 }
 
-fun FormUiState.toSignupRequestBody(): SignupRequestBody = SignupRequestBody(
+fun FormUiState.asSignupRequestBody(): SignupRequestBody = SignupRequestBody(
     nomprenom = "",
-    email = this.email,
+    email = email,
     telephone = "",
-    username = this.username,
-    reference = this.reference,
-    newpass = this.password,
-    cfnewpass = this.repeatPassword,
-    captcha = this.captcha,
+    username = username,
+    reference = reference,
+    newpass = password,
+    cfnewpass = repeatPassword,
+    captcha = captcha,
     btnAction = "",
+)
+
+fun FormUiState.asNewUser(): User = User(
+    email = email,
+    username = username,
+    reference = reference,
+    password = password,
 )

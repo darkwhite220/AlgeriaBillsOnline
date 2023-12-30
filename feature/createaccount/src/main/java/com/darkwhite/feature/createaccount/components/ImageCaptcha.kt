@@ -54,7 +54,7 @@ fun CaptchaUi(
                 }
                 is CaptchaUiState.Failed -> {
                     ImageCaptcha(modifier = modifier, bitmap = null)
-                    // TODO Captcha error implement
+                    // TODO show broken image + reload icon if captcha fails
                     Log.e("ImageCaptcha", "CaptchaUi: FAILED, ${captchaUiState.exception}")
                 }
             }

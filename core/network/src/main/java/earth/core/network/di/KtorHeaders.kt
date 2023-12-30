@@ -3,8 +3,8 @@ package earth.core.network.di
 import earth.core.network.Constants.ACCEPT_ALL
 import earth.core.network.Constants.ACCEPT_IMAGE
 import earth.core.network.Constants.BASE_URL
+import earth.core.network.Constants.SIGNUP_FORM_URL
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.accept
 import io.ktor.client.request.header
 import io.ktor.client.request.headers
 import io.ktor.http.ContentType
@@ -40,7 +40,7 @@ object KtorHeaders {
     fun HttpRequestBuilder.signupCaptchaHeaders() {
         headers {
             header("Accept", ACCEPT_IMAGE)
-            header(HttpHeaders.Referrer, "https://consulter-factures.elit.dz/enregistrement.jsp")
+            header(HttpHeaders.Referrer, SIGNUP_FORM_URL)
             header(HttpHeaders.Origin, BASE_URL)
             header("Sec-Fetch-Site", "same-origin")
             header("Sec-Fetch-Mode", "no-cors")
@@ -52,7 +52,7 @@ object KtorHeaders {
         headers {
             contentType(ContentType.Application.FormUrlEncoded)
             header("Accept", ACCEPT_ALL)
-            header(HttpHeaders.Referrer, "https://consulter-factures.elit.dz/enregistrement.jsp")
+            header(HttpHeaders.Referrer, SIGNUP_FORM_URL)
             header(HttpHeaders.Origin, BASE_URL)
             header("Upgrade-Insecure-Requests", "1")
             header("Sec-Fetch-Site", "same-origin")

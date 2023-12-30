@@ -5,11 +5,13 @@ import earth.core.networkmodel.SignupRequestBody
 import earth.core.networkmodel.SignupResponse
 import earth.core.throwablemodel.SignupThrowable
 import earth.core.throwablemodel.SignupThrowableConstants.BAD_SERVER_RESPONSE
+import earth.core.throwablemodel.SignupThrowableConstants.EXISTING_USERNAME_RESPONSE
 import earth.core.throwablemodel.SignupThrowableConstants.FAILED_TRY_LATER
 import earth.core.throwablemodel.SignupThrowableConstants.REDIRECT_STATUS_CODE
 import earth.core.throwablemodel.SignupThrowableConstants.REFERENCE_NONE_EXISTENT
 import earth.core.throwablemodel.SignupThrowableConstants.REFERENCE_NONE_VALID
-import earth.core.throwablemodel.SignupThrowableConstants.WRONG_CAPTCHA
+import earth.core.throwablemodel.SignupThrowableConstants.WRONG_CAPTCHA_FIRST
+import earth.core.throwablemodel.SignupThrowableConstants.WRONG_CAPTCHA_SECOND
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,14 +32,20 @@ class GetSignupStateUseCase @Inject constructor(
                 response.body.contains(FAILED_TRY_LATER) -> {
                     throw SignupThrowable.FailedTryLaterException
                 }
-                response.body.contains(WRONG_CAPTCHA) -> {
+                response.body.contains(WRONG_CAPTCHA_FIRST) ||
+                    response.body.contains(WRONG_CAPTCHA_SECOND) -> {
                     throw SignupThrowable.WrongCaptchaException
                 }
                 response.body.contains(REFERENCE_NONE_VALID) ||
                     response.body.contains(REFERENCE_NONE_EXISTENT) -> {
                     throw SignupThrowable.WrongReferenceException
                 }
+                response.body.contains(EXISTING_USERNAME_RESPONSE) -> {
+                    throw SignupThrowable.ExistingUsernameException
+                }
                 response.responseCode == REDIRECT_STATUS_CODE -> {
+                    // Server sends a redirect url when email is wrong (example@a.a)
+                    // Or response.body.contains("Document moved")
                     throw SignupThrowable.WrongEmailException
                 }
                 response.body.contains(BAD_SERVER_RESPONSE) -> {

@@ -2,21 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "aa6e94c43657481ceec0f24da0b608f2",
+    "identityHash": "87080b65c9fce0df7325c50c0b82e316",
     "entities": [
       {
         "tableName": "user_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`full_name` TEXT NOT NULL, `reference` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `year_avg` REAL NOT NULL, `trimester_avg` REAL NOT NULL, `day_avg` REAL NOT NULL, `max_pay` REAL NOT NULL, `max_pay_elect` REAL NOT NULL, `max_pay_gaz` REAL NOT NULL, `min_pay` REAL NOT NULL, `min_pay_elect` REAL NOT NULL, `min_pay_gaz` REAL NOT NULL, PRIMARY KEY(`reference`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `full_name` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `year_avg` REAL, `trimester_avg` REAL, `day_avg` REAL, `max_pay` REAL, `max_pay_elect` REAL, `max_pay_gaz` REAL, `min_pay` REAL, `min_pay_elect` REAL, `min_pay_gaz` REAL, PRIMARY KEY(`reference`))",
         "fields": [
           {
-            "fieldPath": "fullName",
-            "columnName": "full_name",
+            "fieldPath": "reference",
+            "columnName": "reference",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "reference",
-            "columnName": "reference",
+            "fieldPath": "fullName",
+            "columnName": "full_name",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -72,55 +72,55 @@
             "fieldPath": "statistics.yearAgv",
             "columnName": "year_avg",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.trimesterAgv",
             "columnName": "trimester_avg",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.dayAvg",
             "columnName": "day_avg",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.maxPay",
             "columnName": "max_pay",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.maxPayElect",
             "columnName": "max_pay_elect",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.maxPayGaz",
             "columnName": "max_pay_gaz",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.minPay",
             "columnName": "min_pay",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.minPayElect",
             "columnName": "min_pay_elect",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "statistics.minPayGaz",
             "columnName": "min_pay_gaz",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -134,8 +134,14 @@
       },
       {
         "tableName": "bill_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `is_paid` INTEGER NOT NULL, `pdf_format_data` BLOB NOT NULL, `bill_number` TEXT NOT NULL, `date` TEXT NOT NULL, `trimester` TEXT NOT NULL, `year` TEXT NOT NULL, `ebp` TEXT NOT NULL, `ebb` TEXT NOT NULL, `electricity_meter_number` TEXT NOT NULL, `elect_new_value` INTEGER NOT NULL, `elect_old_value` INTEGER NOT NULL, `elect_consumption` INTEGER NOT NULL, `elect_consumption_cost` INTEGER NOT NULL, `gaz_meter_number` TEXT NOT NULL, `gaz_new_value` INTEGER NOT NULL, `gaz_old_value` INTEGER NOT NULL, `gaz_consumption` INTEGER NOT NULL, `gaz_consumption_cost` INTEGER NOT NULL, `state_support` INTEGER NOT NULL, `rights_and_taxes` INTEGER NOT NULL, `amount_ht` INTEGER NOT NULL, `tva` INTEGER NOT NULL, `total` INTEGER NOT NULL, `timbre` INTEGER NOT NULL, `total_ttc` INTEGER NOT NULL, PRIMARY KEY(`bill_number`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bill_number` TEXT NOT NULL, `reference` TEXT NOT NULL, `is_paid` INTEGER NOT NULL, `pdf_format_data` BLOB NOT NULL, `date` TEXT NOT NULL, `trimester` TEXT NOT NULL, `year` TEXT NOT NULL, `ebp` TEXT NOT NULL, `ebb` TEXT NOT NULL, `electricity_meter_number` TEXT NOT NULL, `elect_new_value` INTEGER NOT NULL, `elect_old_value` INTEGER NOT NULL, `elect_consumption` INTEGER NOT NULL, `elect_consumption_cost` INTEGER NOT NULL, `gaz_meter_number` TEXT NOT NULL, `gaz_new_value` INTEGER NOT NULL, `gaz_old_value` INTEGER NOT NULL, `gaz_consumption` INTEGER NOT NULL, `gaz_consumption_cost` INTEGER NOT NULL, `state_support` INTEGER NOT NULL, `rights_and_taxes` INTEGER NOT NULL, `amount_ht` INTEGER NOT NULL, `tva` INTEGER NOT NULL, `total` INTEGER NOT NULL, `timbre` INTEGER NOT NULL, `total_ttc` INTEGER NOT NULL, PRIMARY KEY(`bill_number`))",
         "fields": [
+          {
+            "fieldPath": "billNumber",
+            "columnName": "bill_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "reference",
             "columnName": "reference",
@@ -152,12 +158,6 @@
             "fieldPath": "pdfFormatData",
             "columnName": "pdf_format_data",
             "affinity": "BLOB",
-            "notNull": true
-          },
-          {
-            "fieldPath": "billNumber",
-            "columnName": "bill_number",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -306,7 +306,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'aa6e94c43657481ceec0f24da0b608f2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '87080b65c9fce0df7325c50c0b82e316')"
     ]
   }
 }
