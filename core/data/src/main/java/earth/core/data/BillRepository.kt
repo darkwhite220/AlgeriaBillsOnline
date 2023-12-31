@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface BillRepository {
     
-    fun getBillsPreview(reference: String): Flow<List<BillPreview>>
+//    fun getBillsPreview(reference: String): Flow<List<BillPreview>>
+    fun getBillsPreview(): Flow<List<BillPreview>>
     fun getBill(reference: String): Flow<Bill>
     suspend fun insertBills(bills: List<Bill>)
     suspend fun deleteBills(reference: String)

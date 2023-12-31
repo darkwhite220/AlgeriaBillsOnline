@@ -12,4 +12,5 @@ data class User(
     // From bills data we know if its house or store
     val isHouse: Boolean = true,
     val statistics: Statistics? = null,
+    val billsPreview: List<BillPreview>? = null,
 )

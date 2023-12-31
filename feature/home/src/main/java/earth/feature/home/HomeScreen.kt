@@ -1,6 +1,5 @@
 package earth.feature.home
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -22,10 +21,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.designsystem.components.FABCreateAccount
+import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.topappbar.HomeTopAppBar
+import earth.feature.home.uistate.UsersUiState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -33,15 +34,18 @@ internal fun HomeRoute(
     onCreateAccountClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val usersUiState by viewModel.usersUiState.collectAsStateWithLifecycle()
+    
     HomeScreen(
+        usersUiState = usersUiState,
         onCreateAccountClick = onCreateAccountClick
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Preview(showBackground = true)
 @Composable
 private fun HomeScreen(
+    usersUiState: UsersUiState,
     onCreateAccountClick: () -> Unit = {},
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -66,6 +70,14 @@ private fun HomeScreen(
                 .fillMaxSize(),
         ) {
             Text(text = "HOME")
+            when (usersUiState) {
+                UsersUiState.Loading -> {
+                    MyCircularProgressBar()
+                }
+                is UsersUiState.Successful -> {
+                    println(usersUiState.data)
+                }
+            }
         }
     }
     

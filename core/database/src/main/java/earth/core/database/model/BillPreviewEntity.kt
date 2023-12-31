@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import earth.core.database.BillPreview
 
 data class BillPreviewEntity(
+    val reference: String,
     @ColumnInfo(name = "is_paid")
     val isPaid: Boolean,
     @ColumnInfo(name = "bill_number")
@@ -17,6 +18,7 @@ data class BillPreviewEntity(
 
 fun BillPreviewEntity.asExternalModel() = BillPreview(
     isPaid = isPaid,
+    reference = reference,
     billNumber = billNumber,
     date = date,
     trimester = trimester,

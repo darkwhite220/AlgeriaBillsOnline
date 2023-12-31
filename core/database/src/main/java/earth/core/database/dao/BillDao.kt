@@ -18,13 +18,16 @@ interface BillDao {
                 date,
                 trimester,
                 year,
-                total_ttc
+                total_ttc,
+                reference
             FROM bill_table
-            WHERE reference MATCH :reference
+            
             ORDER BY bill_number ASC
         """
     )
-    fun getBillsPreview(reference: String): Flow<List<BillPreviewEntity>>
+    fun getBillsPreview(): Flow<List<BillPreviewEntity>>
+//    WHERE reference MATCH :reference
+//    fun getBillsPreview(reference: String): Flow<List<BillPreviewEntity>>
     
     @Query("SELECT * FROM bill_table WHERE reference MATCH :reference")
     fun getBill(reference: String): Flow<BillEntity>

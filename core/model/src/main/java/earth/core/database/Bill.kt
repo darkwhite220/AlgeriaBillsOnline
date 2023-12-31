@@ -25,7 +25,7 @@ data class Bill(
     val gazConsumptionCost: Int,
     
     val stateSupport: Int,
-    // Taxe d'ahbitation (can be 600/300/150/75) +
+    // Taxe d'habitation (can be 600/300/150/75) +
     // Droit fixe sur consommation (can be 0) doesn't appear in online bill
     val rightsAndTaxes: Int,
     // electConsumptionCost + gazConsumptionCost + rightsAndTaxes
