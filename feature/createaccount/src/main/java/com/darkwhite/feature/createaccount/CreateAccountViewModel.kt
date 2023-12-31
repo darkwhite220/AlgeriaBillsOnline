@@ -19,12 +19,10 @@ import earth.core.common.Result
 import earth.core.common.ResultNoData
 import earth.core.common.asResult
 import earth.core.common.asResultNoData
-import earth.core.data.SignupRepository
 import earth.core.data.util.NetworkMonitorRepository
 import earth.core.domain.GetSignupCaptchaUseCase
 import earth.core.domain.GetSignupStateUseCase
 import earth.core.domain.InsertNewUserUseCase
-import earth.core.throwablemodel.SignupThrowable
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -94,9 +92,7 @@ class CreateAccountViewModel @Inject constructor(
                             SignupUiState.Success
                         }
                         is ResultNoData.Error -> {
-                            if (result.exception == SignupThrowable.WrongCaptchaException) {
-                                startCaptchaRequest.value = !startCaptchaRequest.value
-                            }
+                            startCaptchaRequest.value = !startCaptchaRequest.value
                             SignupUiState.Failed(result.exception)
                         }
                     }
