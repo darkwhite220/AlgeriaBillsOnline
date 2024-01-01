@@ -24,6 +24,8 @@ data class UserEntity(
     // From bills data we know if its house or store
     @ColumnInfo(name = "is_house")
     val isHouse: Boolean,
+    @ColumnInfo(name = "last_bill_number")
+    val lastBillNumber: String?,
     @Embedded
     val statistics: StatisticsEntity?,
     @ColumnInfo(name = "created_at")
@@ -53,5 +55,6 @@ fun User.asEntity() = UserEntity(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
+    lastBillNumber = null,
     statistics = statistics?.asEntity(),
 )

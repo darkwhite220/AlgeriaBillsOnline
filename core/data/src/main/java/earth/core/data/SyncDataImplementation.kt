@@ -4,6 +4,7 @@ import android.util.Log
 import earth.core.database.User
 import earth.core.database.dao.BillDao
 import earth.core.database.dao.UserDao
+import earth.core.database.model.asEntity
 import earth.core.network.AppNetworkDataSource
 import javax.inject.Inject
 
@@ -21,6 +22,14 @@ class SyncDataImplementation @Inject constructor(
                 password = user.password
             )
             Log.d(TAG, "syncData: $response")
+            
+            userDao.insertUser(
+                user.asEntity().copy(
+                    fullName = response.fullName,
+                    address = response.address,
+                    lastBillNumber = response.billNumber,
+                )
+            )
         }
         
         // save user data

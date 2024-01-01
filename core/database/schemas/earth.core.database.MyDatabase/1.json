@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "87080b65c9fce0df7325c50c0b82e316",
+    "identityHash": "79d19854cabe227e3aee0bb063cc156e",
     "entities": [
       {
         "tableName": "user_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `full_name` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, `year_avg` REAL, `trimester_avg` REAL, `day_avg` REAL, `max_pay` REAL, `max_pay_elect` REAL, `max_pay_gaz` REAL, `min_pay` REAL, `min_pay_elect` REAL, `min_pay_gaz` REAL, PRIMARY KEY(`reference`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `full_name` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `last_bill_number` TEXT, `created_at` INTEGER NOT NULL, `year_avg` REAL, `trimester_avg` REAL, `day_avg` REAL, `max_pay` REAL, `max_pay_elect` REAL, `max_pay_gaz` REAL, `min_pay` REAL, `min_pay_elect` REAL, `min_pay_gaz` REAL, PRIMARY KEY(`reference`))",
         "fields": [
           {
             "fieldPath": "reference",
@@ -61,6 +61,12 @@
             "columnName": "is_house",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "lastBillNumber",
+            "columnName": "last_bill_number",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "createdAt",
@@ -306,7 +312,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '87080b65c9fce0df7325c50c0b82e316')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79d19854cabe227e3aee0bb063cc156e')"
     ]
   }
 }

@@ -14,7 +14,7 @@ import earth.core.database.model.UserEntity
         UserEntity::class,
         BillEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class MyDatabase : RoomDatabase() {
