@@ -12,6 +12,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 class NetworkMonitorImplementation @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -58,6 +59,7 @@ class NetworkMonitorImplementation @Inject constructor(
         }
     }
         .conflate()
+        .distinctUntilChanged()
     
     private fun ConnectivityManager.isCurrentlyConnected() =
         activeNetwork
