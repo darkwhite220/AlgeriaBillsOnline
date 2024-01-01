@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.data.util.NetworkMonitorRepository
+import earth.core.domain.home.GetBillUseCase
 import earth.core.domain.home.GetUsersUseCase
 import earth.feature.home.uistate.UsersUiState
 import java.util.*
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
+    private val getBillUseCase: GetBillUseCase,
     savedStateHandle: SavedStateHandle,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
@@ -55,6 +57,10 @@ class HomeViewModel @Inject constructor(
                 
             }
         }
+    }
+    
+    fun onEvent() {
+        getBillUseCase.invoke("")
     }
     
     companion object {

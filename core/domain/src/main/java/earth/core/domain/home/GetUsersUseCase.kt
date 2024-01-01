@@ -20,9 +20,7 @@ class GetUsersUseCase @Inject constructor(
 
 private fun Flow<List<User>>.addBillsPreview(billsPreview: Flow<List<BillPreview>>):
     Flow<List<User>> = combine(billsPreview) { users, bills ->
-    val newList = mutableListOf<User>()
-    users.forEach { user ->
-        newList.add(user.copy(billsPreview = bills.filter { it.reference == user.reference }))
+    users.map { user ->
+        user.copy(billsPreview = bills.filter { it.reference == user.reference })
     }
-    newList
 }
