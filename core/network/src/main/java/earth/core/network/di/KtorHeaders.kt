@@ -89,5 +89,16 @@ object KtorHeaders {
         }
     }
     
+    fun HttpRequestBuilder.fetchBillHeaders() {
+        headers {
+            header("Accept", ACCEPT_ALL)
+            header("Upgrade-Insecure-Requests", "1")
+            header("Sec-Fetch-Site", "none")
+            header("Sec-Fetch-Mode", "navigate")
+            header("Sec-Fetch-Dest", "document")
+            header("Sec-Fetch-User", "?1")
+        }
+    }
+    
     
 }

@@ -1,9 +1,11 @@
 package earth.core.network
 
+import android.util.Log
 import earth.core.network.Constants.ACTION_BUTTON
 import earth.core.network.Constants.ACTION_BUTTON_VALUE
 import earth.core.network.Constants.BASE_URL
 import earth.core.network.Constants.CAPTCHA
+import earth.core.network.Constants.CONSULTING_BILL_URL
 import earth.core.network.Constants.DUPLICATE_PASSWORD
 import earth.core.network.Constants.EMAIL
 import earth.core.network.Constants.LOGIN_AUTH_URL
@@ -23,12 +25,14 @@ import earth.core.network.Constants.SIGN_IN_USERNAME
 import earth.core.network.Constants.USERNAME
 import earth.core.network.Utils.extractSignInPageData
 import earth.core.network.Utils.randomInt
+import earth.core.network.di.KtorHeaders.fetchBillHeaders
 import earth.core.network.di.KtorHeaders.initialHeaders
 import earth.core.network.di.KtorHeaders.signInGetHeaders
 import earth.core.network.di.KtorHeaders.signInPostHeaders
 import earth.core.network.di.KtorHeaders.signupCaptchaHeaders
 import earth.core.network.di.KtorHeaders.signupFormHeaders
 import earth.core.network.di.KtorHeaders.signupHeaders
+import earth.core.networkmodel.BillResponse
 import earth.core.networkmodel.SignInResponse
 import earth.core.networkmodel.SignupCaptcha
 import earth.core.networkmodel.SignupRequestBody
@@ -128,14 +132,30 @@ class AppNetwork @Inject constructor(
         return extractSignInPageData(response.bodyAsText())
     }
     
-    override suspend fun fetchUserData(reference: String) {
-    
+    override suspend fun fetchBill(urlEndpoint: String): BillResponse {
+        var totalLength = 0
+        val response = client.get(CONSULTING_BILL_URL + urlEndpoint) {
+            fetchBillHeaders()
+            onDownload { bytesSentTotal, contentLength ->
+                println("Received $bytesSentTotal bytes from $contentLength")
+                totalLength = bytesSentTotal.toInt()
+            }
+        }
+        
+        return BillResponse(
+            length = totalLength,
+            pdfByteArray = response.body(),
+        )
     }
     
     private suspend fun HttpClient.printCookies() {
         this.cookies(BASE_URL).forEach {
             println("Cookie: $it.")
         }
+    }
+    
+    companion object {
+        private const val TAG = "AppNetwork"
     }
 }
 

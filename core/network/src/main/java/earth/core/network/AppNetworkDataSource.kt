@@ -1,5 +1,6 @@
 package earth.core.network
 
+import earth.core.networkmodel.BillResponse
 import earth.core.networkmodel.SignInResponse
 import earth.core.networkmodel.SignupCaptcha
 import earth.core.networkmodel.SignupRequestBody
@@ -13,5 +14,5 @@ interface AppNetworkDataSource {
     
     suspend fun signIn(username: String, password: String): SignInResponse
     
-    suspend fun fetchUserData(reference: String)
+    suspend fun fetchBill(urlEndpoint: String): BillResponse
 }

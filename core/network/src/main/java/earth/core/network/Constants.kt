@@ -8,8 +8,8 @@ object Constants {
     const val LOGIN_AUTH_URL = "$BASE_URL/fconsultation/authentifier.jsp"
     const val LOGIN_CONSULT_URL = "$BASE_URL/fconsultation/Consult_Facture.jsp"
     const val HEADER_CONSULT_URL = "$BASE_URL/fconsultation/contenu_index.jsp"
-    const val CONSULTING_URL = "$BASE_URL/fconsultation/"
-//    https://consulter-factures.elit.dz/fconsultation/fact.jsp?num_fac=459231108543&mtt_ttc=328.940&filial=SDC
+    //    https://consulter-factures.elit.dz/fconsultation/fact.jsp?num_fac=459231108543&mtt_ttc=328.940&filial=SDC
+    const val CONSULTING_BILL_URL = "$BASE_URL/fconsultation/"
     
     const val ACCEPT_ALL =
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
