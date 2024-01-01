@@ -3,7 +3,7 @@ package earth.core.network.di
 import earth.core.network.Constants.ACCEPT_ALL
 import earth.core.network.Constants.ACCEPT_IMAGE
 import earth.core.network.Constants.BASE_URL
-import earth.core.network.Constants.CONSULTING_URL
+import earth.core.network.Constants.HEADER_CONSULT_URL
 import earth.core.network.Constants.SIGNUP_FORM_URL
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
@@ -63,11 +63,11 @@ object KtorHeaders {
         }
     }
     
-    fun HttpRequestBuilder.loginPostHeaders() {
+    fun HttpRequestBuilder.signInPostHeaders() {
         headers {
             contentType(ContentType.Application.FormUrlEncoded)
             header("Accept", ACCEPT_ALL)
-            header(HttpHeaders.Referrer, CONSULTING_URL)
+            header(HttpHeaders.Referrer, HEADER_CONSULT_URL)
             header(HttpHeaders.Origin, BASE_URL)
             header("Upgrade-Insecure-Requests", "1")
             header("Sec-Fetch-Site", "same-origin")
@@ -77,10 +77,10 @@ object KtorHeaders {
         }
     }
     
-    fun HttpRequestBuilder.loginGetHeaders() {
+    fun HttpRequestBuilder.signInGetHeaders() {
         headers {
             header("Accept", ACCEPT_ALL)
-            header(HttpHeaders.Referrer, CONSULTING_URL)
+            header(HttpHeaders.Referrer, HEADER_CONSULT_URL)
             header("Upgrade-Insecure-Requests", "1")
             header("Sec-Fetch-Site", "same-origin")
             header("Sec-Fetch-Mode", "navigate")

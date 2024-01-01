@@ -7,11 +7,15 @@ object Constants {
     const val SIGNUP_URL = "$BASE_URL/verifenregistrement.jsp"
     const val LOGIN_AUTH_URL = "$BASE_URL/fconsultation/authentifier.jsp"
     const val LOGIN_CONSULT_URL = "$BASE_URL/fconsultation/Consult_Facture.jsp"
-    const val CONSULTING_URL = "$BASE_URL/fconsultation/contenu_index.jsp"
+    const val HEADER_CONSULT_URL = "$BASE_URL/fconsultation/contenu_index.jsp"
+    const val CONSULTING_URL = "$BASE_URL/fconsultation/"
+//    https://consulter-factures.elit.dz/fconsultation/fact.jsp?num_fac=459231108543&mtt_ttc=328.940&filial=SDC
     
     const val ACCEPT_ALL =
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
     const val ACCEPT_IMAGE = "image/avif,image/webp,*/*"
+    
+    const val DEFAULT_VALUE = "N/A"
     
     // Signup request body
     const val NO_VALUE = ""
@@ -27,8 +31,8 @@ object Constants {
     const val ACTION_BUTTON_VALUE = "      Valider      "
     
     // Login
-    const val LOGIN_USERNAME = "username"
-    const val LOGIN_PASSWORD = "password"
-    const val LOGIN_BUTTON_X = "button.x"
-    const val LOGIN_BUTTON_Y = "button.y"
+    const val SIGN_IN_USERNAME = "username"
+    const val SIGN_IN_PASSWORD = "password"
+    const val SIGN_IN_BUTTON_X = "button.x"
+    const val SIGN_IN_BUTTON_Y = "button.y"
 }

@@ -1,5 +1,6 @@
 package earth.core.data
 
+import android.util.Log
 import earth.core.database.User
 import earth.core.database.dao.BillDao
 import earth.core.database.dao.UserDao
@@ -15,10 +16,11 @@ class SyncDataImplementation @Inject constructor(
     override suspend fun syncData(referenceList: List<User>) {
         // login
         referenceList.forEach { user ->
-            appNetwork.login(
+            val response = appNetwork.signIn(
                 username = user.username,
                 password = user.password
             )
+            Log.d(TAG, "syncData: $response")
         }
         
         // save user data
@@ -26,4 +28,7 @@ class SyncDataImplementation @Inject constructor(
         // save bill
     }
     
+    companion object {
+        private const val TAG = "SyncDataImplementation"
+    }
 }
