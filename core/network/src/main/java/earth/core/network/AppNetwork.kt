@@ -21,6 +21,7 @@ import earth.core.network.Constants.SIGNUP_CAPTCHA_URL
 import earth.core.network.Constants.SIGNUP_FORM_URL
 import earth.core.network.Constants.SIGNUP_URL
 import earth.core.network.Constants.USERNAME
+import earth.core.network.Utils.randomInt
 import earth.core.network.di.KtorHeaders.initialHeaders
 import earth.core.network.di.KtorHeaders.loginGetHeaders
 import earth.core.network.di.KtorHeaders.loginPostHeaders
@@ -135,5 +136,4 @@ class AppNetwork @Inject constructor(
     }
 }
 
-private fun randomInt() = Random.nextInt(1, 30).toString()
 

@@ -25,4 +25,6 @@ dependencies {
   implementation(libs.kotlinx.serialization.json)
   
   implementation(libs.bundles.ktor)
+  
+  implementation(libs.jsoup)
 }
