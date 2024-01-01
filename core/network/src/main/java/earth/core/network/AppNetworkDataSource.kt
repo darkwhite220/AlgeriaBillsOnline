@@ -9,4 +9,8 @@ interface AppNetworkDataSource {
     suspend fun fetchSignupCaptcha(): SignupCaptcha
     
     suspend fun requestSignup(signupRequestBody: SignupRequestBody): SignupResponse
+    
+    suspend fun login(username: String, password: String)
+    
+    suspend fun fetchUserData(reference: String)
 }

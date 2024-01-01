@@ -8,6 +8,8 @@ import earth.core.data.BillImplementation
 import earth.core.data.BillRepository
 import earth.core.data.SignupImplementation
 import earth.core.data.SignupRepository
+import earth.core.data.SyncDataImplementation
+import earth.core.data.SyncDataRepository
 import earth.core.data.UserDataImplementation
 import earth.core.data.UserDataRepository
 import earth.core.data.UserImplementation
@@ -33,4 +35,7 @@ interface DataModule {
     
     @Binds
     fun bindBillRepository(impl: BillImplementation): BillRepository
+    
+    @Binds
+    fun bindSyncDataRepository(impl: SyncDataImplementation): SyncDataRepository
 }

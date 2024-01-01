@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.data.util.NetworkMonitorRepository
 import earth.core.domain.home.GetBillUseCase
 import earth.core.domain.home.GetUsersUseCase
+import earth.core.domain.home.SyncDataUseCase
 import earth.feature.home.uistate.UsersUiState
 import java.util.*
 import javax.inject.Inject
@@ -21,6 +22,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
+    syncDataUseCase: SyncDataUseCase,
     private val getBillUseCase: GetBillUseCase,
     savedStateHandle: SavedStateHandle,
     private val network: NetworkMonitorRepository,
@@ -52,9 +54,12 @@ class HomeViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            usersUiState.collect {
-                Log.d(TAG, "isOnline $it: ")
-                
+            usersUiState.collect { uiState ->
+                if (isOnline.value && uiState is UsersUiState.Successful) {
+                    syncDataUseCase.invoke(
+                        referenceList = uiState.data
+                    )
+                }
             }
         }
     }

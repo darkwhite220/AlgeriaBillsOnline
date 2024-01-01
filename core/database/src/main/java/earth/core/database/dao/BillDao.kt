@@ -2,6 +2,7 @@ package earth.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import earth.core.database.model.BillEntity
 import earth.core.database.model.BillPreviewEntity
@@ -32,7 +33,7 @@ interface BillDao {
     @Query("SELECT * FROM bill_table WHERE reference MATCH :reference")
     fun getBill(reference: String): Flow<BillEntity>
     
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertBills(billEntity: List<BillEntity>)
     
     @Query("DELETE FROM bill_table WHERE reference MATCH :reference")

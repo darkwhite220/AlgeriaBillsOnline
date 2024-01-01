@@ -6,6 +6,12 @@ import earth.core.network.Constants.BASE_URL
 import earth.core.network.Constants.CAPTCHA
 import earth.core.network.Constants.DUPLICATE_PASSWORD
 import earth.core.network.Constants.EMAIL
+import earth.core.network.Constants.LOGIN_BUTTON_X
+import earth.core.network.Constants.LOGIN_BUTTON_Y
+import earth.core.network.Constants.LOGIN_PASSWORD
+import earth.core.network.Constants.LOGIN_AUTH_URL
+import earth.core.network.Constants.LOGIN_CONSULT_URL
+import earth.core.network.Constants.LOGIN_USERNAME
 import earth.core.network.Constants.NAME
 import earth.core.network.Constants.NO_VALUE
 import earth.core.network.Constants.PASSWORD
@@ -15,6 +21,9 @@ import earth.core.network.Constants.SIGNUP_CAPTCHA_URL
 import earth.core.network.Constants.SIGNUP_FORM_URL
 import earth.core.network.Constants.SIGNUP_URL
 import earth.core.network.Constants.USERNAME
+import earth.core.network.di.KtorHeaders.initialHeaders
+import earth.core.network.di.KtorHeaders.loginGetHeaders
+import earth.core.network.di.KtorHeaders.loginPostHeaders
 import earth.core.network.di.KtorHeaders.signupCaptchaHeaders
 import earth.core.network.di.KtorHeaders.signupFormHeaders
 import earth.core.network.di.KtorHeaders.signupHeaders
@@ -33,6 +42,7 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Parameters
 import javax.inject.Inject
+import kotlin.random.Random
 
 class AppNetwork @Inject constructor(
     private val client: HttpClient
@@ -88,10 +98,42 @@ class AppNetwork @Inject constructor(
         )
     }
     
+    override suspend fun login(username: String, password: String) {
+        client.get(BASE_URL) {
+            initialHeaders()
+        }
+        
+        client.post(LOGIN_AUTH_URL) {
+            loginPostHeaders()
+            
+            expectSuccess = false
+            
+            setBody(
+                FormDataContent(
+                    Parameters.build {
+                        append(LOGIN_USERNAME, username)
+                        append(LOGIN_PASSWORD, password)
+                        append(LOGIN_BUTTON_X, randomInt())
+                        append(LOGIN_BUTTON_Y, randomInt())
+                    })
+            )
+        }
+        
+        client.get(LOGIN_CONSULT_URL) {
+            loginGetHeaders()
+        }
+    }
+    
+    override suspend fun fetchUserData(reference: String) {
+    
+    }
+    
     private suspend fun HttpClient.printCookies() {
         this.cookies(BASE_URL).forEach {
             println("Cookie: $it.")
         }
     }
 }
+
+private fun randomInt() = Random.nextInt(1, 30).toString()
 
