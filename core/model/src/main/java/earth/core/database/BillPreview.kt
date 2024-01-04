@@ -7,5 +7,5 @@ data class BillPreview(
     val date: String,
     val trimester: String,
     val year: String,
-    val totalTTC: Int,
+    val totalTTC: Float,
 )

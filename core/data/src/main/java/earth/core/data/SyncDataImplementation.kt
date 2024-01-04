@@ -1,8 +1,6 @@
 package earth.core.data
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import earth.core.data.util.PdfUtil.extractDataFromByteArray
 import earth.core.database.User
 import earth.core.database.dao.BillDao
@@ -26,7 +24,7 @@ class SyncDataImplementation @Inject constructor(
                 password = user.password
             )
             Log.d(TAG, "syncData: $signInResponse")
-
+            
             // save user data
             userDao.insertUser(
                 user.asEntity().copy(
@@ -35,17 +33,20 @@ class SyncDataImplementation @Inject constructor(
                     lastBillNumber = signInResponse.billNumber,
                 )
             )
-
-            // fetch bill
-            signInResponse.billUrl?.let { urlEndpoint ->
-                val billResponse = appNetwork.fetchBill(urlEndpoint)
-
-                // save bill
-                val billsList = mutableListOf<BillEntity>()
-                
-                extractDataFromByteArray(billResponse.pdfByteArray)
-
-                billDao.insertBills(billsList)
+            
+            if (user.lastBillNumber != signInResponse.billNumber) {
+                // fetch bill
+                signInResponse.billUrl?.let { urlEndpoint ->
+                    val billResponse = appNetwork.fetchBill(urlEndpoint)
+                    
+                    val billsList = mutableListOf<BillEntity>()
+                    
+                    extractDataFromByteArray(billResponse.pdfByteArray)?.let { bill ->
+                        billsList.add(bill.asEntity())
+                    }
+                    // Insert bills
+                    billDao.insertBills(billsList)
+                }
             }
         }
         

@@ -10,12 +10,10 @@ import earth.core.domain.home.GetBillUseCase
 import earth.core.domain.home.GetUsersUseCase
 import earth.core.domain.home.SyncDataUseCase
 import earth.feature.home.uistate.UsersUiState
-import java.util.*
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -30,11 +28,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
-    
-    private val lastFetchTime = savedStateHandle.getStateFlow(LAST_FETCH_TIME, 0)
-    
-    private val canFetchNewData: Boolean
-        get() = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
+    private val canFetch = MutableStateFlow(true)
     
     val usersUiState: StateFlow<UsersUiState> = getUsersUseCase.invoke()
         .map { users ->
@@ -54,14 +48,19 @@ class HomeViewModel @Inject constructor(
                 isOnline.value = it
             }
         }
+        
         viewModelScope.launch {
-            usersUiState.first() { uiState ->
-                if (isOnline.value && uiState is UsersUiState.Successful) {
+            usersUiState.collect { uiState ->
+                Log.d(TAG, "init syncDataUseCase")
+                if (canFetch.value && isOnline.value &&
+                    uiState is UsersUiState.Successful && uiState.data.isNotEmpty()
+                ) {
+                    canFetch.value = false
+                    Log.d(TAG, "invoke syncDataUseCase")
                     syncDataUseCase.invoke(
                         referenceList = uiState.data
                     )
                 }
-                false
             }
         }
     }

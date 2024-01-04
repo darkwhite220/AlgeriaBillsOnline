@@ -42,6 +42,7 @@ fun UserEntity.asExternalModel() = User(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
+    lastBillNumber = lastBillNumber ?: "",
     statistics = statistics?.asExternalModel(),
 )
 
@@ -55,6 +56,6 @@ fun User.asEntity() = UserEntity(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
-    lastBillNumber = null,
+    lastBillNumber = lastBillNumber,
     statistics = statistics?.asEntity(),
 )

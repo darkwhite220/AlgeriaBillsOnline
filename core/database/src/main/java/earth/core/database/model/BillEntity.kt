@@ -15,7 +15,7 @@ data class BillEntity(
     @ColumnInfo(name = "is_paid")
     val isPaid: Boolean,
     @ColumnInfo(name = "pdf_format_data")
-    val pdfFormatData: ByteArray,
+    val pdfByteArray: ByteArray,
     
     val date: String,
     val trimester: String,
@@ -32,7 +32,7 @@ data class BillEntity(
     @ColumnInfo(name = "elect_consumption")
     val electConsumption: Int,
     @ColumnInfo(name = "elect_consumption_cost")
-    val electConsumptionCost: Int,
+    val electConsumptionCost: Float,
     
     @ColumnInfo(name = "gaz_meter_number")
     val gazMeterNumber: String,
@@ -43,32 +43,32 @@ data class BillEntity(
     @ColumnInfo(name = "gaz_consumption")
     val gazConsumption: Int,
     @ColumnInfo(name = "gaz_consumption_cost")
-    val gazConsumptionCost: Int,
+    val gazConsumptionCost: Float,
     
     @ColumnInfo(name = "state_support")
-    val stateSupport: Int,
+    val stateSupport: Float,
     // Taxe d'ahbitation (can be 600/300/150/75) +
     // Droit fixe sur consommation (can be 0) doesn't appear in online bill
     @ColumnInfo(name = "rights_and_taxes")
-    val rightsAndTaxes: Int,
+    val rightsAndTaxes: Float,
     // electConsumptionCost + gazConsumptionCost + rightsAndTaxes
     @ColumnInfo(name = "amount_ht")
-    val amountHT: Int,
+    val amountHT: Float,
     // 9% + 19% TAVs
-    val tva: Int,
+    val tva: Float,
     
-    val total: Int,
+    val total: Float,
     // 1% of total rounded to Int
-    val timbre: Int,
+    val timbre: Float,
     // total + timbre
     @ColumnInfo(name = "total_ttc")
-    val totalTTC: Int,
+    val totalTTC: Float,
 )
 
 fun BillEntity.asExternalModel() = Bill(
     reference = reference,
     isPaid = isPaid,
-    pdfFormatData = pdfFormatData,
+    pdfByteArray = pdfByteArray,
     billNumber = billNumber,
     date = date,
     trimester = trimester,
@@ -97,7 +97,7 @@ fun BillEntity.asExternalModel() = Bill(
 fun Bill.asEntity() = BillEntity(
     reference = reference,
     isPaid = isPaid,
-    pdfFormatData = pdfFormatData,
+    pdfByteArray = pdfByteArray,
     billNumber = billNumber,
     date = date,
     trimester = trimester,

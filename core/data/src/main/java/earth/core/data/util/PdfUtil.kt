@@ -2,12 +2,12 @@ package earth.core.data.util
 
 import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.parser.PdfTextExtractor
+import earth.core.database.Bill
 import java.io.ByteArrayInputStream
-import java.io.FileOutputStream
 
 
 object PdfUtil {
-    fun extractDataFromByteArray(byteArray: ByteArray) {
+    fun extractDataFromByteArray(byteArray: ByteArray): Bill? {
 //        val file = "/storage/emulated/0/Download/testDjelfaDiff.pdf"
 //
 //        try {
@@ -33,6 +33,7 @@ object PdfUtil {
 //            println(e)
 //        }
         
+        var bill: Bill? = null
         try {
             val inputStream = ByteArrayInputStream(byteArray)
             val reader = PdfReader(inputStream)
@@ -42,16 +43,192 @@ object PdfUtil {
                 parsedText = parsedText + PdfTextExtractor
                     .getTextFromPage(reader, i + 1).trim { it <= ' ' } + "\n"
             }
-            extract(parsedText)
+            bill = extract(parsedText, byteArray)
             reader.close()
         } catch (e: Exception) {
             println("PdfUtil.extractDataFromByteArray: $e")
         }
+        return bill
     }
     
-    private fun extract(parsedText: String) {
+    private fun extract(parsedText: String, pdfByteArray: ByteArray): Bill {
 //        println(parsedText)
-        val first = """
+        val change = parsedText.replace(" ", " ")
+//        println(change)
+        
+        var temp: MutableList<String> = change.split("\n").toMutableList()
+        
+        val removeList = listOf(
+            "Facture Internet",
+            "N° RIP :",
+            "N° RIB :",
+            "Numéro Consommation Montant energie",
+            "Index Nouveau Index ancien",
+            "compteur (kWh/TH)",
+            "HT (DA)",
+            "Clé EBP",
+            "Clé EBB",
+            "Total TTC (Sans Timbre)",
+            "Paiement poste ou Chéque",
+            "Droit de timbre",
+            "Total TTC",
+            "Paiement en espèces",
+            "TVA :",
+            "Historique des factures :",
+            "Consommation Montant (TTC) Clé EBP Clé EBB",
+            "Numéro Facture Periode Montant (HT) Montant (TTC)",
+            "(kwH/Th) Sans Timbre"
+        )
+        temp.removeIf { it.trim() in removeList }
+//        temp.forEach { println(it) }
+        
+        var direction = temp.removeFirst()
+        direction =
+            direction.removePrefix("Direction Distribution : ").substringBeforeLast(" ").trim()
+                .replace(Regex("\\s+"), " ")
+        println(direction)
+        
+        var agence = temp.removeFirst()
+        agence = agence.removePrefix("Agence Commerciale : ").substringBeforeLast(" ").trim()
+            .replace(Regex("\\s+"), " ")
+        println(agence)
+        
+        val reference = temp.removeFirst().removePrefix("Référence : ")
+        temp = temp.subList(2, temp.size)
+//        println(temp[0]) // must be 135 under the date
+        val billNumber = temp.removeFirst().removePrefix("Facture N° : ")
+        var dateData = temp.removeFirst()
+        dateData = dateData.removePrefix("Date facture: ")
+        val date = dateData.takeWhile { it != ' ' }
+        dateData = dateData.removePrefix(date).trim().removePrefix("Période : ")
+        val trimester = dateData.take(1)
+        val year = dateData.takeLast(4)
+        println("Reference: $reference")
+        println("BillNumber: $billNumber")
+        println("Date: $date, $trimester, $year")
+        
+        val ebp = temp.removeFirst()
+        println("EBP: $ebp")
+        
+        val electRow = temp.removeFirst().split(" ")
+        val electricityMeterNumber = electRow[0]
+        val electNewValue = electRow[1].toInt()
+        val electOldValue = electRow[2].toInt()
+        val electConsumption = electRow[3].toInt()
+        val electConsumptionCost = electRow[4].replace(",", ".").toFloat() // Min 78,66
+        println("Electricity row: $electricityMeterNumber, $electNewValue, $electOldValue, $electConsumption, $electConsumptionCost")
+        
+        val ebb = temp.removeFirst()
+        println("EBB: $ebb")
+        
+        val gazRow = temp.removeFirst().split(" ")
+        val gazMeterNumber = gazRow[0]
+        val gazNewValue = gazRow[1].toInt()
+        val gazOldValue = gazRow[2].toInt()
+        val gazConsumption = gazRow[3].toInt()
+        val gazConsumptionCost = gazRow[4].replace(",", ".").toFloat() // Min 85,50
+        println("Gaz row: $gazMeterNumber, $gazNewValue, $gazOldValue, $gazConsumption, $gazConsumptionCost")
+        
+        var stateSupport = 0f
+        val total: Float
+        if (temp[0].contains("Soutien de l'état:")) {
+            total = temp.removeFirst().removePrefix("Soutien de l'état: ").replace(",", ".").toFloat()
+            stateSupport = temp.removeFirst().replace(",", ".").toFloat()
+            println("Soutien de l'état: $stateSupport")
+        } else {
+            total = temp.removeFirst().replace(",", ".").toFloat()
+        }
+        println("Total: $total")
+        
+        val timbre = temp.removeFirst().removePrefix("Droits & Taxes: ").replace(",", ".").toFloat()
+        println("Timbre: $timbre")
+        
+        val rightsAndTaxes = temp.removeFirst().replace(",", ".").toFloat()
+        println("Droits & Taxes: $rightsAndTaxes")
+        
+        val amountHT = temp.removeFirst().removePrefix("Montant HT: ").replace(",", ".").toFloat()
+        println("Montant HT: $amountHT")
+        
+        val tva = temp.removeFirst().replace(",", ".").toFloat()
+        println("TVA: $tva")
+        
+        val totalTTC = temp.removeFirst().replace(",", ".").toFloat()
+        println("Total TTC: $totalTTC")
+        
+        println("PREVIOUS BILLS DATA")
+        // TODO remove space from string float .replace(",", ".")
+        val previousFirstTrimElectConsumption = temp[0].substringAfterLast(" ")
+        println("previousFirstTrimElectConsumption $previousFirstTrimElectConsumption")
+        val previousFirstTrimElectAmountTH = temp.removeFirst().substringBeforeLast(" ")
+        println("previousFirstTrimElectAmountTH $previousFirstTrimElectAmountTH")
+        
+        val previousFirstTrim = temp.removeFirst()
+        
+        var previousFirstInfo = temp.removeFirst()
+        val previousFirstTrimBillNumber = previousFirstInfo.substringBefore(" ")
+        println("previousFirstTrimBillNumber $previousFirstTrimBillNumber")
+        previousFirstInfo = previousFirstInfo.removeRange(0, previousFirstTrimBillNumber.length + 1)
+        
+        val previousFirstTrimEBB = previousFirstInfo.takeLast(3)
+        println("previousFirstTrimEBB $previousFirstTrimEBB")
+        previousFirstInfo =
+            previousFirstInfo.removeRange(previousFirstInfo.length - 4, previousFirstInfo.length)
+        val previousFirstTrimEBP = previousFirstInfo.takeLast(3)
+        println("previousFirstTrimEBP $previousFirstTrimEBP")
+        previousFirstInfo =
+            previousFirstInfo.removeRange(previousFirstInfo.length - 4, previousFirstInfo.length)
+        
+        val commaIndex = previousFirstInfo.indexOf(",")
+        val previousFirstTrimTotal = previousFirstInfo.take(commaIndex + 3)
+        println("previousFirstTrimTotal $previousFirstTrimTotal")
+        val previousFirstTrimTotalTTC = previousFirstInfo.drop(commaIndex + 4)
+        println("previousFirstTrimTotalTTC $previousFirstTrimTotalTTC")
+        
+        // Remove year
+        if (!previousFirstTrim.startsWith("1")) {
+            temp.removeFirst()
+        }
+        
+        val previousFirstTrimGazConsumption = temp[0].substringAfterLast(" ")
+        println("previousFirstTrimGazConsumption $previousFirstTrimGazConsumption")
+        val previousFirstTrimGazAmountTH = temp.removeFirst().substringBeforeLast(" ")
+        println("previousFirstTrimElectAmountTH $previousFirstTrimGazAmountTH")
+        
+        // Second previous trimester
+        
+        return Bill(
+            reference = reference,
+            isPaid = false,
+            pdfByteArray = pdfByteArray,
+            billNumber = billNumber,
+            date = date,
+            trimester = trimester,
+            year = year,
+            ebp = ebp,
+            ebb = ebb,
+            electricityMeterNumber = electricityMeterNumber,
+            electNewValue = electNewValue,
+            electOldValue = electOldValue,
+            electConsumption = electConsumption,
+            electConsumptionCost = electConsumptionCost,
+            gazMeterNumber = gazMeterNumber,
+            gazNewValue = gazNewValue,
+            gazOldValue = gazOldValue,
+            gazConsumption = gazConsumption,
+            gazConsumptionCost = gazConsumptionCost,
+            stateSupport = stateSupport,
+            rightsAndTaxes = rightsAndTaxes,
+            amountHT = amountHT,
+            tva = tva,
+            total = total,
+            timbre = timbre,
+            totalTTC = totalTTC
+        )
+    }
+}
+
+
+val first = """
     Facture Internet
     N° RIP :
     Direction Distribution : DIR DIST DJELFA 00799999000038025661
@@ -108,7 +285,7 @@ object PdfUtil {
     2022
     474,58 193
 """.trimIndent()
-        val second = """
+val second = """
     Facture Internet
 N° RIP :
 Direction Distribution : DIR DIST DJELFA 00799999000038025661
@@ -166,136 +343,3 @@ Numéro Facture Periode Montant (HT) Montant (TTC)
 459220206971 10 419,61 10 524,61 152 538
 1 235,87 419
 """.trimIndent()
-        
-        val change = parsedText.replace(" ", " ")
-//        println(change)
-        
-        var temp: MutableList<String> = change.split("\n").toMutableList()
-        
-        val removeList = listOf(
-            "Facture Internet",
-            "N° RIP :",
-            "N° RIB :",
-            "Numéro Consommation Montant energie",
-            "Index Nouveau Index ancien",
-            "compteur (kWh/TH)",
-            "HT (DA)",
-            "Clé EBP",
-            "Clé EBB",
-            "Total TTC (Sans Timbre)",
-            "Paiement poste ou Chéque",
-            "Droit de timbre",
-            "Total TTC",
-            "Paiement en espèces",
-            "TVA :",
-            "Historique des factures :",
-            "Consommation Montant (TTC) Clé EBP Clé EBB",
-            "Numéro Facture Periode Montant (HT) Montant (TTC)",
-            "(kwH/Th) Sans Timbre"
-        )
-        temp.removeIf { it.trim() in removeList }
-//        temp.forEach { println(it) }
-        
-        var direction = temp.removeFirst()
-        direction =
-            direction.removePrefix("Direction Distribution : ").substringBeforeLast(" ").trim()
-                .replace(Regex("\\s+"), " ")
-        println(direction)
-        
-        var agence = temp.removeFirst()
-        agence = agence.removePrefix("Agence Commerciale : ").substringBeforeLast(" ").trim()
-            .replace(Regex("\\s+"), " ")
-        println(agence)
-        
-        temp = temp.subList(5, temp.size)
-//        println(temp[0]) // must be 135 under the date
-        
-        val ebp = temp.removeFirst()
-        println("EBP: $ebp")
-        
-        val electRow = temp.removeFirst().split(" ")
-        val electCounterN = electRow[0]
-        val electNewN = electRow[1]
-        val electOldN = electRow[2]
-        val electConsumption = electRow[3]
-        val electPayAmount = electRow[4] // Min 78,66
-        println("Electricity row: $electCounterN, $electNewN, $electOldN, $electConsumption, $electPayAmount")
-        
-        val ebb = temp.removeFirst()
-        println("EBB: $ebb")
-        
-        val gazRow = temp.removeFirst().split(" ")
-        val gazCounterN = gazRow[0]
-        val gazNewN = gazRow[1]
-        val gazOldN = gazRow[2]
-        val gazConsumption = gazRow[3]
-        val gazPayAmount = gazRow[4] // Min 85,50
-        println("Gaz row: $gazCounterN, $gazNewN, $gazOldN, $gazConsumption, $gazPayAmount")
-        
-        var soutienDeta = ""
-        var total = ""
-        if (temp[0].contains("Soutien de l'état:")) {
-            total = temp.removeFirst().removePrefix("Soutien de l'état: ")
-            soutienDeta = temp.removeFirst()
-            println("Soutien de l'état: $soutienDeta")
-        } else {
-            total = temp.removeFirst()
-        }
-        println("Total: $total")
-        
-        val timbre = temp.removeFirst().removePrefix("Droits & Taxes: ")
-        println("Timbre: $timbre")
-        
-        val rightAndTax = temp.removeFirst()
-        println("Droits & Taxes: $rightAndTax")
-        
-        val amountHT = temp.removeFirst().removePrefix("Montant HT: ")
-        println("Montant HT: $amountHT")
-        
-        val tva = temp.removeFirst()
-        println("TVA: $tva")
-        
-        val totalTTC = temp.removeFirst()
-        println("Total TTC: $totalTTC")
-        
-        println("PREVIOUS BILLS DATA")
-        
-        val previousFirstTrimElectConsumption = temp[0].substringAfterLast(" ")
-        println("previousFirstTrimElectConsumption $previousFirstTrimElectConsumption")
-        val previousFirstTrimElectAmountTH = temp.removeFirst().substringBeforeLast(" ")
-        println("previousFirstTrimElectAmountTH $previousFirstTrimElectAmountTH")
-        
-        val previousFirstTrim = temp.removeFirst()
-        
-        var previousFirstInfo = temp.removeFirst()
-        val previousFirstTrimBillNumber = previousFirstInfo.substringBefore(" ")
-        println("previousFirstTrimBillNumber $previousFirstTrimBillNumber")
-        previousFirstInfo = previousFirstInfo.removeRange(0, previousFirstTrimBillNumber.length+1)
-        
-        val previousFirstTrimEBB = previousFirstInfo.takeLast(3)
-        println("previousFirstTrimEBB $previousFirstTrimEBB")
-        previousFirstInfo = previousFirstInfo.removeRange(previousFirstInfo.length-4,previousFirstInfo.length)
-        val previousFirstTrimEBP = previousFirstInfo.takeLast(3)
-        println("previousFirstTrimEBP $previousFirstTrimEBP")
-        previousFirstInfo = previousFirstInfo.removeRange(previousFirstInfo.length-4, previousFirstInfo.length)
-        
-        val commaIndex = previousFirstInfo.indexOf(",")
-        val previousFirstTrimTotal = previousFirstInfo.take(commaIndex + 3)
-        println("previousFirstTrimTotal $previousFirstTrimTotal")
-        val previousFirstTrimTotalTTC = previousFirstInfo.drop(commaIndex + 4)
-        println("previousFirstTrimTotalTTC $previousFirstTrimTotalTTC")
-        
-        // Remove year
-        if (!previousFirstTrim.startsWith("1")){
-            temp.removeFirst()
-        }
-        
-        val previousFirstTrimGazConsumption = temp[0].substringAfterLast(" ")
-        println("previousFirstTrimGazConsumption $previousFirstTrimGazConsumption")
-        val previousFirstTrimGazAmountTH = temp.removeFirst().substringBeforeLast(" ")
-        println("previousFirstTrimElectAmountTH $previousFirstTrimGazAmountTH")
-        
-        // Second previous trimester
-        
-    }
-}

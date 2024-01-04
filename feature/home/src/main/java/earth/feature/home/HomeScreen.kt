@@ -1,5 +1,6 @@
 package earth.feature.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -28,6 +29,8 @@ import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.topappbar.HomeTopAppBar
 import earth.feature.home.uistate.UsersUiState
 import kotlinx.coroutines.launch
+
+private const val TAG = "HomeScreen"
 
 @Composable
 internal fun HomeRoute(
@@ -75,7 +78,7 @@ private fun HomeScreen(
                     MyCircularProgressBar()
                 }
                 is UsersUiState.Successful -> {
-                    println(usersUiState.data)
+                    Log.d(TAG, "${usersUiState.data}")
                 }
             }
         }

@@ -13,7 +13,7 @@ data class BillPreviewEntity(
     val trimester: String,
     val year: String,
     @ColumnInfo(name = "total_ttc")
-    val totalTTC: Int,
+    val totalTTC: Float,
 )
 
 fun BillPreviewEntity.asExternalModel() = BillPreview(

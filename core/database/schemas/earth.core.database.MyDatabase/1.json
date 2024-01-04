@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "79d19854cabe227e3aee0bb063cc156e",
+    "identityHash": "48c2cad85114349a24160fa7bf5ab928",
     "entities": [
       {
         "tableName": "user_table",
@@ -140,7 +140,7 @@
       },
       {
         "tableName": "bill_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bill_number` TEXT NOT NULL, `reference` TEXT NOT NULL, `is_paid` INTEGER NOT NULL, `pdf_format_data` BLOB NOT NULL, `date` TEXT NOT NULL, `trimester` TEXT NOT NULL, `year` TEXT NOT NULL, `ebp` TEXT NOT NULL, `ebb` TEXT NOT NULL, `electricity_meter_number` TEXT NOT NULL, `elect_new_value` INTEGER NOT NULL, `elect_old_value` INTEGER NOT NULL, `elect_consumption` INTEGER NOT NULL, `elect_consumption_cost` INTEGER NOT NULL, `gaz_meter_number` TEXT NOT NULL, `gaz_new_value` INTEGER NOT NULL, `gaz_old_value` INTEGER NOT NULL, `gaz_consumption` INTEGER NOT NULL, `gaz_consumption_cost` INTEGER NOT NULL, `state_support` INTEGER NOT NULL, `rights_and_taxes` INTEGER NOT NULL, `amount_ht` INTEGER NOT NULL, `tva` INTEGER NOT NULL, `total` INTEGER NOT NULL, `timbre` INTEGER NOT NULL, `total_ttc` INTEGER NOT NULL, PRIMARY KEY(`bill_number`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bill_number` TEXT NOT NULL, `reference` TEXT NOT NULL, `is_paid` INTEGER NOT NULL, `pdf_format_data` BLOB NOT NULL, `date` TEXT NOT NULL, `trimester` TEXT NOT NULL, `year` TEXT NOT NULL, `ebp` TEXT NOT NULL, `ebb` TEXT NOT NULL, `electricity_meter_number` TEXT NOT NULL, `elect_new_value` INTEGER NOT NULL, `elect_old_value` INTEGER NOT NULL, `elect_consumption` INTEGER NOT NULL, `elect_consumption_cost` REAL NOT NULL, `gaz_meter_number` TEXT NOT NULL, `gaz_new_value` INTEGER NOT NULL, `gaz_old_value` INTEGER NOT NULL, `gaz_consumption` INTEGER NOT NULL, `gaz_consumption_cost` REAL NOT NULL, `state_support` REAL NOT NULL, `rights_and_taxes` REAL NOT NULL, `amount_ht` REAL NOT NULL, `tva` REAL NOT NULL, `total` REAL NOT NULL, `timbre` REAL NOT NULL, `total_ttc` REAL NOT NULL, PRIMARY KEY(`bill_number`))",
         "fields": [
           {
             "fieldPath": "billNumber",
@@ -161,7 +161,7 @@
             "notNull": true
           },
           {
-            "fieldPath": "pdfFormatData",
+            "fieldPath": "pdfByteArray",
             "columnName": "pdf_format_data",
             "affinity": "BLOB",
             "notNull": true
@@ -223,7 +223,7 @@
           {
             "fieldPath": "electConsumptionCost",
             "columnName": "elect_consumption_cost",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -253,49 +253,49 @@
           {
             "fieldPath": "gazConsumptionCost",
             "columnName": "gaz_consumption_cost",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "stateSupport",
             "columnName": "state_support",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "rightsAndTaxes",
             "columnName": "rights_and_taxes",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "amountHT",
             "columnName": "amount_ht",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "tva",
             "columnName": "tva",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "total",
             "columnName": "total",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "timbre",
             "columnName": "timbre",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "totalTTC",
             "columnName": "total_ttc",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -312,7 +312,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79d19854cabe227e3aee0bb063cc156e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48c2cad85114349a24160fa7bf5ab928')"
     ]
   }
 }
