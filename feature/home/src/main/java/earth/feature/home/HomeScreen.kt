@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -24,9 +26,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import earth.core.database.BillPreview
 import earth.core.designsystem.components.FABCreateAccount
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.topappbar.HomeTopAppBar
+import earth.core.designsystem.components.verticalSpacedBy
 import earth.feature.home.uistate.UsersUiState
 import kotlinx.coroutines.launch
 
@@ -79,6 +83,18 @@ private fun HomeScreen(
                 }
                 is UsersUiState.Successful -> {
                     Log.d(TAG, "${usersUiState.data}")
+                    usersUiState.data[0].billsPreview?.let { billPreview ->
+                        LazyColumn(
+                            verticalArrangement = verticalSpacedBy()
+                        ) {
+                            items(
+                                items = billPreview,
+                                key = { item: BillPreview -> item.billNumber }
+                            ) { item ->
+                                Text(text = "$item")
+                            }
+                        }
+                    }
                 }
             }
         }
