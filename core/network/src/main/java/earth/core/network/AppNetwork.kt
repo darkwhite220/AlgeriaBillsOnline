@@ -1,6 +1,8 @@
 package earth.core.network
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import earth.core.network.Constants.ACTION_BUTTON
 import earth.core.network.Constants.ACTION_BUTTON_VALUE
 import earth.core.network.Constants.BASE_URL
@@ -46,8 +48,12 @@ import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Parameters
+import java.io.File
+import java.nio.charset.StandardCharsets
+import java.util.*
 import javax.inject.Inject
 
 class AppNetwork @Inject constructor(

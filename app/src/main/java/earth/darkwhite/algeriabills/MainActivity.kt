@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     AlgeriaBillsApp(
-                        networkMonitor= networkMonitor
+                        networkMonitor = networkMonitor
                     )
                 }
             }
