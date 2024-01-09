@@ -90,7 +90,8 @@ class HomeViewModel @Inject constructor(
     }
     
     fun initSyncData() {
-        canFetch.value = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
+//        canFetch.value = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
+        canFetch.value = true
         Log.d(TAG, "initSyncData: canFetch ${canFetch.value}")
     }
     

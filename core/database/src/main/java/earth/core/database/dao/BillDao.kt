@@ -23,7 +23,7 @@ interface BillDao {
                 reference
             FROM bill_table
             
-            ORDER BY bill_number ASC
+            ORDER BY bill_number DESC
         """
     )
     fun getBillsPreview(): Flow<List<BillPreviewEntity>>

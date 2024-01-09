@@ -17,9 +17,11 @@ object PdfUtil {
             val parsedText = PdfTextExtractor.getTextFromPage(reader, 1).trim()
             
             val cleanedText: MutableList<String> = parsedText.cleanExtractedText()
+            println("cleanedText: $cleanedText")
             initialCheck(cleanedText)
             
             dataAsListOfString = cleanedText.prepStringForMainExtraction()
+            println("dataAsListOfString: $dataAsListOfString")
             
             reader.close()
         } catch (e: Exception) {
@@ -36,7 +38,14 @@ object PdfUtil {
         for (index in dataList.indices) {
             dataList[index] = dataList[index].replace(Regex("\\s+"), " ").trim()
         }
-        return dataList
+        // Remove last 6 lines
+//IMPORTANT
+//* Cette facture peut être utilisée pour le paiement.
+//* Cette facture ne peut être utilisée comme pièce justificative pour les dossiers administratifs.
+//* La société de distribution décline toute responsabilité quant à une utilisation frauduleuse de ce document.
+//GAZ ELEC GAZ ELEC GAZ ELEC GAZ ELEC
+//GAZ ELEC
+        return dataList.subList(0, dataList.size - 6)
     }
     
     fun initialCheck(cleanedText: List<String>) {
