@@ -2,6 +2,9 @@ package earth.feature.home
 
 import android.accounts.NetworkErrorException
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,9 +23,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -33,14 +33,22 @@ class HomeViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
     private val syncDataUseCase: SyncDataUseCase,
     private val getBillUseCase: GetBillUseCase,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
     
-    private val lastFetchTime = savedStateHandle.getStateFlow(LAST_FETCH_TIME, 0)
-    private val canFetch: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val lastFetchTime = savedStateHandle.getStateFlow(
+        key = LAST_FETCH_TIME,
+        initialValue = 0
+    )
+    
+    private val canFetch: Boolean
+        get() = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
+    
+    var syncUiState: SyncUiState by mutableStateOf(SyncUiState.InitialState)
+        private set
     
     val usersUiState: StateFlow<UsersUiState> = getUsersUseCase.invoke()
         .map { users ->
@@ -51,34 +59,7 @@ class HomeViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = UsersUiState.Loading
         )
-    
-    val syncUiState: StateFlow<SyncUiState> = combine(isOnline, canFetch) { isOnline, canFetch ->
-        Pair(isOnline, canFetch)
-    }.flatMapLatest { (isOnline, canFetch) ->
-        if (isOnline && canFetch) {
-            syncDataUseCase.invoke()
-                .asResult()
-                .map { result ->
-                    when (result) {
-                        is Result.Loading -> SyncUiState.Loading
-                        is Result.Success -> {
-                            SyncUiState.Success(result.data)
-                        }
-                        is Result.Error -> SyncUiState.Failed(result.exception)
-                    }
-                }
-        } else if (!isOnline) {
-            flowOf(SyncUiState.Failed(NetworkErrorException("No connection")))
-        } else {
-            flowOf(SyncUiState.InitialState)
-        }
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SyncUiState.InitialState
-        )
-    
+        
     init {
         Log.d(TAG, "init: ")
         viewModelScope.launch {
@@ -90,15 +71,35 @@ class HomeViewModel @Inject constructor(
     }
     
     fun initSyncData() {
-//        canFetch.value = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
-        canFetch.value = true
-        Log.d(TAG, "initSyncData: canFetch ${canFetch.value}")
+        Log.d(TAG, "initSyncData: canFetch $canFetch")
+        viewModelScope.launch {
+            if (isOnline.value && canFetch) {
+                syncDataUseCase.invoke()
+                    .asResult()
+                    .collect { result ->
+                        syncUiState = when (result) {
+                            is Result.Loading -> SyncUiState.Loading
+                            is Result.Success -> SyncUiState.Success(result.data)
+                            is Result.Error -> SyncUiState.Failed(result.exception)
+                        }
+                    }
+            } else if (!isOnline.value) {
+                SyncUiState.Failed(NetworkErrorException("No connection"))
+            } else {
+                SyncUiState.InitialState
+            }
+        }
     }
     
-    fun onEvent() {
+    fun onEvent(event: HomeEvent) {
         getBillUseCase.invoke("")
-        // TODO UPDATE LAST FETCH TIME WHEN CORRECT SUCCESS FETCH
-//        savedStateHandle[LAST_FETCH_TIME] = Date().time
+        
+        when (event) {
+            HomeEvent.OnSuccessSyncUiState -> {
+                savedStateHandle[LAST_FETCH_TIME] = Date().time
+                syncUiState = SyncUiState.InitialState
+            }
+        }
     }
     
     companion object {

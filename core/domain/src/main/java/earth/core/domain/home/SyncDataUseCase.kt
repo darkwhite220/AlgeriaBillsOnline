@@ -12,7 +12,7 @@ class SyncDataUseCase @Inject constructor(
 ) {
     
     operator fun invoke(): Flow<Boolean> = flow {
-        val result = withContext(Dispatchers.IO) {
+        val result = withContext(Dispatchers.IO){
             syncDataRepository.syncData()
         }
         emit(result)

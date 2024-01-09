@@ -46,11 +46,12 @@ internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val usersUiState by viewModel.usersUiState.collectAsStateWithLifecycle()
-    val syncUiState by viewModel.syncUiState.collectAsStateWithLifecycle()
+    val syncUiState = viewModel.syncUiState
     
     HomeScreen(
         usersUiState = usersUiState,
         syncUiState = syncUiState,
+        onHomeEvent = viewModel::onEvent,
         onCreateAccountClick = onCreateAccountClick
     )
     
@@ -64,6 +65,7 @@ internal fun HomeRoute(
 private fun HomeScreen(
     usersUiState: UsersUiState,
     syncUiState: SyncUiState,
+    onHomeEvent: (HomeEvent) -> Unit,
     onCreateAccountClick: () -> Unit = {},
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -95,9 +97,9 @@ private fun HomeScreen(
                 is SyncUiState.Success -> {
                     Log.d(TAG, "HomeScreen: syncData updated")
                     if (syncUiState.isNotEmpty) {
-                        // TODO UPDATE LAST FETCH TIME WHEN CORRECT SUCCESS FETCH
                         Toast.makeText(LocalContext.current, "SyncData updated", Toast.LENGTH_SHORT)
                             .show()
+                        onHomeEvent(HomeEvent.OnSuccessSyncUiState)
                     }
                 }
                 is SyncUiState.Failed -> {

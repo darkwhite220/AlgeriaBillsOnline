@@ -37,7 +37,7 @@ class SyncDataImplementation @Inject constructor(
             Log.d(TAG, "syncData: $signInResponse")
             
             // Save user data from logged in page
-            if (user.fullName.isNotEmpty()) {
+            if (user.fullName.isEmpty()) {
                 userDao.insertUser(
                     user.asEntity().copy(
                         fullName = signInResponse.fullName,
