@@ -191,6 +191,7 @@ object ExtractionUtil {
         electricityPMD: ElectricityPMD,
         gazPCS: BigDecimal,
         isPaid: Boolean,
+        onDone: (BigDecimal) -> Unit,
     ): List<Bill> {
         var dataAsListOfString = dataSource
         val billsList = mutableListOf<Bill>()
@@ -209,6 +210,7 @@ object ExtractionUtil {
                     electricityPMD = electricityPMD,
                     gazPCS = gazPCS,
                     isPaid = isPaid,
+                    onDone = onDone
                 )
             )
             
@@ -702,6 +704,7 @@ object ExtractionUtil {
         electricityPMD: ElectricityPMD,
         gazPCS: BigDecimal,
         isPaid: Boolean,
+        onDone: (BigDecimal) -> Unit
     ): Bill {
         val mutableList: MutableList<String> = dataSource.toMutableList()
         @Suppress("NAME_SHADOWING") var gazPCS = gazPCS
@@ -767,7 +770,7 @@ object ExtractionUtil {
             (electricity.totalHT + electricity.totalTVA + gaz.totalHT + gaz.totalTVA +
                 rightsAndTaxes.toBigDecimal()) - totalTTCNoTimbre
         
-        
+        onDone(gazPCS)
         // Calculate the float on consumption: n*UnitPrice = XX.xxxx (Clip to only 2 digits) = XX.xx
         // Calculate the float on the rest: n*i = XX.xxxx (Roundup to 2 digits) XX.xy
         return Bill(

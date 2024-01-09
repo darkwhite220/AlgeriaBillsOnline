@@ -66,9 +66,9 @@ class SyncDataImplementation @Inject constructor(
                     var agency = ""
                     var menageType = MenageType.M
                     var electricityPMD = ElectricityPMD.MEDIUM_MONO_PHASE
-                    var gazPCS = "8.8".toBigDecimal()
+                    var gazPCS = "0".toBigDecimal()
                     
-                    // Main Bill
+                    // Extract Main Bill
                     billsList.add(
                         extractMainBillData(
                             dataSource = dataAsListOfString,
@@ -88,7 +88,25 @@ class SyncDataImplementation @Inject constructor(
                         )
                     )
                     
+                    // Extract Previous Bills
+                    billsList.addAll(
+                        extractPreviousBillsData(
+                            dataSource = dataAsListOfString,
+                            mainBill = billsList[0],
+                            menageType = menageType,
+                            electricityPMD = electricityPMD,
+                            gazPCS = gazPCS,
+                            isPaid = true,
+                            onDone = {pcs->
+                                if (gazPCS == "0".toBigDecimal()) {
+                                    gazPCS = pcs
+                                }
+                            }
+                        )
+                    )
+                    
                     // Save new user data
+                    // gasPCS can be 0 when no consumption registered
                     if (user.gasPCS != gazPCS) {
                         userDao.insertUser(
                             user.asEntity().copy(
@@ -101,18 +119,6 @@ class SyncDataImplementation @Inject constructor(
                             )
                         )
                     }
-                    
-                    // Save previous bills
-                    billsList.addAll(
-                        extractPreviousBillsData(
-                            dataSource = dataAsListOfString,
-                            mainBill = billsList[0],
-                            menageType = menageType,
-                            electricityPMD = electricityPMD,
-                            gazPCS = gazPCS,
-                            isPaid = true,
-                        )
-                    )
                     
                     // Extract & Insert bills
                     billDao.insertBills(

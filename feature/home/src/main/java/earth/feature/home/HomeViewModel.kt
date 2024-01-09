@@ -38,12 +38,11 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
-    
+    // TODO store the value with user
     private val lastFetchTime = savedStateHandle.getStateFlow(
         key = LAST_FETCH_TIME,
         initialValue = 0
     )
-    
     private val canFetch: Boolean
         get() = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
     
