@@ -33,6 +33,9 @@ interface BillDao {
     @Query("SELECT * FROM bill_table WHERE reference MATCH :reference")
     fun getBill(reference: String): Flow<BillEntity>
     
+    @Query("SELECT * FROM bill_table WHERE reference MATCH :reference ORDER BY bill_number DESC LIMIT 1")
+    fun getLastBill(reference: String): BillEntity?
+    
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertBills(billEntity: List<BillEntity>)
     

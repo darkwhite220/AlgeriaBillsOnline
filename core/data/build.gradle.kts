@@ -18,6 +18,7 @@ dependencies {
   implementation(project(":core:model"))
   
   implementation(libs.hilt.android)
+  testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
   kapt(libs.hilt.compiler)
   
   implementation(libs.itextg)

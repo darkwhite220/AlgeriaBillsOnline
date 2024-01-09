@@ -24,6 +24,12 @@ data class UserEntity(
     // From bills data we know if its house or store
     @ColumnInfo(name = "is_house")
     val isHouse: Boolean,
+    @ColumnInfo(name = "is_in_state")
+    val isInState: Boolean,
+    @ColumnInfo(name = "elect_pmd")
+    val electPMD: Int,
+    @ColumnInfo(name = "gas_pcs")
+    val gasPCS: String,
     @ColumnInfo(name = "last_bill_number")
     val lastBillNumber: String?,
     @Embedded
@@ -42,6 +48,9 @@ fun UserEntity.asExternalModel() = User(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
+    isInState = isInState,
+    electPMD = electPMD,
+    gasPCS = gasPCS.toBigDecimal(),
     lastBillNumber = lastBillNumber ?: "",
     statistics = statistics?.asExternalModel(),
 )
@@ -56,6 +65,9 @@ fun User.asEntity() = UserEntity(
     directionDistribution = directionDistribution,
     businessAgency = businessAgency,
     isHouse = isHouse,
+    isInState = isInState,
+    electPMD = electPMD,
+    gasPCS = gasPCS.toString(),
     lastBillNumber = lastBillNumber,
     statistics = statistics?.asEntity(),
 )
