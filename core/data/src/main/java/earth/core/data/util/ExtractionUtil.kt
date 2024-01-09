@@ -101,7 +101,7 @@ object ExtractionUtil {
         val gazConsumption = gazRow[3]
         val gazConsumptionCost = gazRow[4].replace(",", ".") // Min 85,50
         
-        var stateSupport = "0"
+        var stateSupport = "0.00"
         val total: String
         if (mutableList[0].contains("Soutien de l'état:")) {
             total = mutableList.removeFirst().removePrefix("Soutien de l'état: ")
@@ -763,9 +763,10 @@ object ExtractionUtil {
             consumptionTH = gazConsumption.toBigDecimal() * gazPCS,
             menageType = menageType,
         )
-        val stateSupport = totalTTCNoTimbre -
+        val stateSupport =
             (electricity.totalHT + electricity.totalTVA + gaz.totalHT + gaz.totalTVA +
-                rightsAndTaxes.toBigDecimal())
+                rightsAndTaxes.toBigDecimal()) - totalTTCNoTimbre
+        
         
         // Calculate the float on consumption: n*UnitPrice = XX.xxxx (Clip to only 2 digits) = XX.xx
         // Calculate the float on the rest: n*i = XX.xxxx (Roundup to 2 digits) XX.xy
@@ -789,7 +790,7 @@ object ExtractionUtil {
             gazOldValue = gazOldMeterValue - gazConsumption,
             gazConsumption = gazConsumption.toBigDecimal(),
             gazConsumptionCost = gazConsumptionCost,
-            stateSupport = stateSupport.abs(),
+            stateSupport = stateSupport,
             rightsAndTaxes = rightsAndTaxes,
             totalHT = electricity.totalHT + gaz.totalHT,
             electricityTva = electricity.totalTVA,
