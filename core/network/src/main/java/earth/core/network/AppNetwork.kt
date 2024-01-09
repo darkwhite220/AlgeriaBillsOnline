@@ -1,8 +1,5 @@
 package earth.core.network
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import earth.core.network.Constants.ACTION_BUTTON
 import earth.core.network.Constants.ACTION_BUTTON_VALUE
 import earth.core.network.Constants.BASE_URL
@@ -25,7 +22,6 @@ import earth.core.network.Constants.SIGN_IN_BUTTON_Y
 import earth.core.network.Constants.SIGN_IN_PASSWORD
 import earth.core.network.Constants.SIGN_IN_USERNAME
 import earth.core.network.Constants.USERNAME
-import earth.core.network.Utils.extractSignInPageData
 import earth.core.network.Utils.randomInt
 import earth.core.network.di.KtorHeaders.fetchBillHeaders
 import earth.core.network.di.KtorHeaders.initialHeaders
@@ -35,7 +31,6 @@ import earth.core.network.di.KtorHeaders.signupCaptchaHeaders
 import earth.core.network.di.KtorHeaders.signupFormHeaders
 import earth.core.network.di.KtorHeaders.signupHeaders
 import earth.core.networkmodel.BillResponse
-import earth.core.networkmodel.SignInResponse
 import earth.core.networkmodel.SignupCaptcha
 import earth.core.networkmodel.SignupRequestBody
 import earth.core.networkmodel.SignupResponse
@@ -48,12 +43,8 @@ import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsChannel
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.Parameters
-import java.io.File
-import java.nio.charset.StandardCharsets
-import java.util.*
 import javax.inject.Inject
 
 class AppNetwork @Inject constructor(
@@ -110,7 +101,7 @@ class AppNetwork @Inject constructor(
         )
     }
     
-    override suspend fun signIn(username: String, password: String): SignInResponse {
+    override suspend fun signIn(username: String, password: String): String {
         client.get(BASE_URL) {
             initialHeaders()
         }
@@ -135,7 +126,7 @@ class AppNetwork @Inject constructor(
             signInGetHeaders()
         }
         
-        return extractSignInPageData(response.bodyAsText())
+        return response.bodyAsText()
     }
     
     override suspend fun fetchBill(urlEndpoint: String): BillResponse {

@@ -26,5 +26,4 @@ dependencies {
   
   implementation(libs.bundles.ktor)
   
-  implementation(libs.jsoup)
 }

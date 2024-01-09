@@ -52,7 +52,7 @@ internal fun CreateAccountRoute(
     val signupUiState by viewModel.signupUiState.collectAsStateWithLifecycle()
     val formUiState by viewModel.formUiState.collectAsStateWithLifecycle()
     var showReferenceDetailDialog by remember { mutableStateOf(false) }
-    // TODO check bill1.png or bill2.png
+    
     CreateAccountScreen(
         signupUiState = signupUiState,
         captchaUiState = captchaUiState,

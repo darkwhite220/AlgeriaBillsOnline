@@ -4,6 +4,7 @@ import android.util.Log
 import earth.core.data.util.ExtractionUtil.extractMainBillData
 import earth.core.data.util.ExtractionUtil.extractPreviousBillsData
 import earth.core.data.util.PdfUtil.extractDataFromByteArray
+import earth.core.data.util.SignInUtil.extractSignInPageData
 import earth.core.database.Bill
 import earth.core.database.ElectricityPMD
 import earth.core.database.MenageType
@@ -21,23 +22,30 @@ class SyncDataImplementation @Inject constructor(
     private val billDao: BillDao,
 ) : SyncDataRepository {
     
-    override suspend fun syncData(referenceList: List<User>) {
-        referenceList.forEach { user ->
+    override suspend fun syncData(): Boolean {
+        val userList: List<User> = userDao.getUsers().map { it.asExternalModel() }
+        var result = false
+        
+        userList.forEach { user ->
             // login
-            val signInResponse = appNetwork.signIn(
-                username = user.username,
-                password = user.password
+            val signInResponse = extractSignInPageData(
+                appNetwork.signIn(
+                    username = user.username,
+                    password = user.password
+                )
             )
             Log.d(TAG, "syncData: $signInResponse")
             
-            // save user data from logged in page
-            userDao.insertUser(
-                user.asEntity().copy(
-                    fullName = signInResponse.fullName,
-                    address = signInResponse.address,
-                    lastBillNumber = signInResponse.billNumber,
+            // Save user data from logged in page
+            if (user.fullName.isNotEmpty()) {
+                userDao.insertUser(
+                    user.asEntity().copy(
+                        fullName = signInResponse.fullName,
+                        address = signInResponse.address,
+                        lastBillNumber = signInResponse.billNumber,
+                    )
                 )
-            )
+            }
             
             val lastBill = billDao.getLastBill(user.reference)?.asExternalModel()
             
@@ -81,19 +89,18 @@ class SyncDataImplementation @Inject constructor(
                     )
                     
                     // Save new user data
-                    userDao.insertUser(
-                        user.asEntity().copy(
-                            fullName = signInResponse.fullName,
-                            address = signInResponse.address,
-                            lastBillNumber = signInResponse.billNumber,
-                            directionDistribution = direction,
-                            businessAgency = agency,
-                            isHouse = menageType in listOf(MenageType.M, MenageType.M_OUT_CITY),
-                            isInState = menageType in listOf(MenageType.M, MenageType.NM),
-                            electPMD = electricityPMD.value,
-                            gasPCS = gazPCS.toString(),
+                    if (user.gasPCS != gazPCS) {
+                        userDao.insertUser(
+                            user.asEntity().copy(
+                                directionDistribution = direction,
+                                businessAgency = agency,
+                                isHouse = menageType in listOf(MenageType.M, MenageType.M_OUT_CITY),
+                                isInState = menageType in listOf(MenageType.M, MenageType.NM),
+                                electPMD = electricityPMD.value,
+                                gasPCS = gazPCS.toString(),
+                            )
                         )
-                    )
+                    }
                     
                     // Save previous bills
                     billsList.addAll(
@@ -113,8 +120,9 @@ class SyncDataImplementation @Inject constructor(
                     )
                 }
             }
+            result = true
         }
-        
+        return result
     }
     
     companion object {

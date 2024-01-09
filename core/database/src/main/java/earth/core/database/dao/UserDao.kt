@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
     
     @Query("SELECT * FROM user_table ORDER BY `created_at` ASC")
-    fun getUsers(): Flow<List<UserEntity>>
+    fun getUsersFlow(): Flow<List<UserEntity>>
+    
+    @Query("SELECT * FROM user_table ORDER BY `created_at` ASC")
+    fun getUsers(): List<UserEntity>
     
     @Upsert
     suspend fun insertUser(userEntity: UserEntity)

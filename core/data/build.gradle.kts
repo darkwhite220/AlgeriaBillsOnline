@@ -21,5 +21,6 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
   kapt(libs.hilt.compiler)
   
+  implementation(libs.jsoup)
   implementation(libs.itextg)
 }

@@ -2,6 +2,7 @@ package earth.core.data.util
 
 import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.parser.PdfTextExtractor
+import earth.core.throwablemodel.ConvertingPdfThrowable
 import java.io.ByteArrayInputStream
 
 
@@ -19,62 +20,6 @@ object PdfUtil {
             initialCheck(cleanedText)
             
             dataAsListOfString = cleanedText.prepStringForMainExtraction()
-            
-            /*billsList.add(extractMainBillData(dataAsListOfString, byteArray))
-            dataAsListOfString =
-                dataAsListOfString.subList(dataAsListOfString.size - 19, dataAsListOfString.size)
-            println(dataAsListOfString[0])
-            
-            val menageType = menageType(
-                electConsumption = billsList[0].electConsumption.toInt(),
-                previousRightsAndTaxes = billsList[0].rightsAndTaxes,
-            )
-            Log.d(TAG, "extractDataFromByteArray: $menageType")
-            
-            val electricityPMD = extractElectricityPMD(
-                consumption = billsList[0].electConsumption,
-                consumptionCost = billsList[0].electConsumptionCost,
-                menageType = menageType,
-            )
-            Log.d(TAG, "extractDataFromByteArray: $electricityPMD")
-            
-            val gazPCS = extractGazPCS(
-                consumptionCubicM = billsList[0].gazConsumption,
-                consumptionCostMinusDefault = billsList[0].gazConsumptionCost - GAZ_DEFAULT_CONSUMPTION_VALUE,
-                menageType = menageType,
-            )
-            
-            val calculateGaz = calculateGaz(
-                consumptionTH = (billsList[0].gazConsumption * gazPCS).round(),
-                menageType = menageType,
-            )
-            
-            (0 until 4).forEach { index ->
-                Log.d(TAG, "extractDataFromByteArray: $index extractPreviousBillsData")
-                billsList.add(
-                    extractPreviousBillsData(
-                        dataList = dataAsListOfString,
-                        pdfByteArray = byteArray,
-                        reference = billsList[0].reference,
-                        electricityMeterNumber = billsList[0].electricityMeterNumber,
-                        electOldValue = billsList[0].electOldValue,
-                        gazMeterNumber = billsList[0].gazMeterNumber,
-                        gazOldValue = billsList[0].gazOldValue,
-                        mainBillStateSupport = billsList[0].stateSupport,
-                        rightsAndTaxes = billsList[0].rightsAndTaxes,
-                        menageType = menageType,
-                    )
-                )
-                
-                dataAsListOfString = dataAsListOfString.first { it.contains("Trimestre") }
-                    .startsWith("1").let {
-                        if (it) {
-                            dataAsListOfString.subList(4, dataAsListOfString.size)
-                        } else {
-                            dataAsListOfString.subList(5, dataAsListOfString.size)
-                        }
-                    }
-            }*/
             
             reader.close()
         } catch (e: Exception) {
@@ -105,7 +50,7 @@ object PdfUtil {
                 checkMatchingLinesStateSupport(cleanedText)
             }
             else -> {
-                throw java.lang.Exception("Wrong formatted text")
+                throw ConvertingPdfThrowable.UnhandledPdfFormat(cleanedText)
             }
         }
     }
@@ -130,7 +75,7 @@ object PdfUtil {
         
         initialCheckRegexStrings.forEachIndexed { index, regexString ->
             if (!Regex(regexString).matches(cleanedText.getOrNull(20 + index) ?: ""))
-                throw java.lang.Exception("None matching format (55)")
+                throw ConvertingPdfThrowable.BadPdfFormat(cleanedText)
         }
     }
     
@@ -155,7 +100,7 @@ object PdfUtil {
         
         initialCheckRegexStrings.forEachIndexed { index, regexString ->
             if (!Regex(regexString).matches(cleanedText.getOrNull(20 + index) ?: ""))
-                throw java.lang.Exception("None matching format (56)")
+                throw ConvertingPdfThrowable.BadPdfFormatWithStateSupport(cleanedText)
         }
     }
     

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a9ff711b1c6bd2d060f6e477b21c8a63",
+    "identityHash": "7c27f5d56d7c8e3deee503a5d1790276",
     "entities": [
       {
         "tableName": "user_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `full_name` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `last_bill_number` TEXT, `created_at` INTEGER NOT NULL, `year_avg` REAL, `trimester_avg` REAL, `day_avg` REAL, `max_pay` REAL, `max_pay_elect` REAL, `max_pay_gaz` REAL, `min_pay` REAL, `min_pay_elect` REAL, `min_pay_gaz` REAL, PRIMARY KEY(`reference`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`reference` TEXT NOT NULL, `full_name` TEXT NOT NULL, `address` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `username` TEXT NOT NULL, `direction_distribution` TEXT NOT NULL, `business_agency` TEXT NOT NULL, `is_house` INTEGER NOT NULL, `is_in_state` INTEGER NOT NULL, `elect_pmd` INTEGER NOT NULL, `gas_pcs` TEXT NOT NULL, `last_bill_number` TEXT, `created_at` INTEGER NOT NULL, `year_avg` REAL, `trimester_avg` REAL, `day_avg` REAL, `max_pay` REAL, `max_pay_elect` REAL, `max_pay_gaz` REAL, `min_pay` REAL, `min_pay_elect` REAL, `min_pay_gaz` REAL, PRIMARY KEY(`reference`))",
         "fields": [
           {
             "fieldPath": "reference",
@@ -60,6 +60,24 @@
             "fieldPath": "isHouse",
             "columnName": "is_house",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isInState",
+            "columnName": "is_in_state",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "electPMD",
+            "columnName": "elect_pmd",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gasPCS",
+            "columnName": "gas_pcs",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -324,7 +342,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a9ff711b1c6bd2d060f6e477b21c8a63')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7c27f5d56d7c8e3deee503a5d1790276')"
     ]
   }
 }
