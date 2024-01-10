@@ -1,4 +1,4 @@
-package com.darkwhite.feature.createaccount.components
+package earth.core.designsystem.components.textfield
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Immutable
@@ -7,7 +7,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 
 
-enum class MyTextFieldTypes {
+enum class CreateAccountTextFieldTypes {
     USERNAME, EMAIL, REFERENCE, PASSWORD, REPEAT_PASSWORD, CAPTCHA
 }
 
@@ -21,8 +21,8 @@ data class MyTextFieldItem(
     val keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 )
 
-val textFieldMap = mapOf(
-    MyTextFieldTypes.USERNAME to MyTextFieldItem(
+val createAccountTextFieldMap = mapOf(
+    CreateAccountTextFieldTypes.USERNAME to MyTextFieldItem(
         label = "Username",
         supportingText = "Min 8 alphanumeric characters",
         keyboardOptions = KeyboardOptions(
@@ -32,7 +32,7 @@ val textFieldMap = mapOf(
             autoCorrect = true
         ),
     ),
-    MyTextFieldTypes.EMAIL to MyTextFieldItem(
+    CreateAccountTextFieldTypes.EMAIL to MyTextFieldItem(
         label = "Email",
         placeholder = "Example@gmail.com",
         keyboardOptions = KeyboardOptions(
@@ -41,7 +41,7 @@ val textFieldMap = mapOf(
             autoCorrect = true,
         ),
     ),
-    MyTextFieldTypes.REFERENCE to MyTextFieldItem(
+    CreateAccountTextFieldTypes.REFERENCE to MyTextFieldItem(
         label = "Reference",
         placeholder = "000000000000000",
         supportingText = "Must be 15 digits",
@@ -52,7 +52,7 @@ val textFieldMap = mapOf(
             autoCorrect = false,
         ),
     ),
-    MyTextFieldTypes.PASSWORD to MyTextFieldItem(
+    CreateAccountTextFieldTypes.PASSWORD to MyTextFieldItem(
         label = "Password",
         supportingText = "Wrong format",
         description = """   Password must contain:
@@ -67,7 +67,7 @@ val textFieldMap = mapOf(
             keyboardType = KeyboardType.Password
         ),
     ),
-    MyTextFieldTypes.REPEAT_PASSWORD to MyTextFieldItem(
+    CreateAccountTextFieldTypes.REPEAT_PASSWORD to MyTextFieldItem(
         label = "Repeat password",
         supportingText = "Must be same as password",
         trailingIcon = true,
@@ -76,15 +76,41 @@ val textFieldMap = mapOf(
             keyboardType = KeyboardType.Password
         ),
     ),
-    MyTextFieldTypes.CAPTCHA to MyTextFieldItem(
+    CreateAccountTextFieldTypes.CAPTCHA to MyTextFieldItem(
         label = "Image code",
         supportingText = "5 alphanumeric characters",
 //        description = "   Type what you see in the image",
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Password,
+            keyboardType = KeyboardType.Text,
             autoCorrect = false,
             capitalization = KeyboardCapitalization.None
+        ),
+    ),
+)
+
+enum class SignInTextFieldTypes {
+    USERNAME, PASSWORD
+}
+
+val signInTextFieldMap = mapOf(
+    SignInTextFieldTypes.USERNAME to MyTextFieldItem(
+        label = "Username",
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Next,
+            keyboardType = KeyboardType.Text,
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = true
+        ),
+    ),
+    SignInTextFieldTypes.PASSWORD to MyTextFieldItem(
+        label = "Password",
+        supportingText = "Wrong format",
+        trailingIcon = true,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password,
+            autoCorrect = false,
         ),
     ),
 )

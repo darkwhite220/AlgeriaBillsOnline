@@ -4,11 +4,6 @@ import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.darkwhite.feature.createaccount.Util.isValidCaptcha
-import com.darkwhite.feature.createaccount.Util.isValidEmail
-import com.darkwhite.feature.createaccount.Util.isValidPassword
-import com.darkwhite.feature.createaccount.Util.isValidReference
-import com.darkwhite.feature.createaccount.Util.isValidUsername
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
@@ -20,6 +15,13 @@ import earth.core.common.ResultNoData
 import earth.core.common.asResult
 import earth.core.common.asResultNoData
 import earth.core.data.util.NetworkMonitorRepository
+import earth.core.designsystem.Constants.CAPTCHA_LENGTH
+import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
+import earth.core.designsystem.Util.isValidCaptcha
+import earth.core.designsystem.Util.isValidEmail
+import earth.core.designsystem.Util.isValidPassword
+import earth.core.designsystem.Util.isValidReference
+import earth.core.designsystem.Util.isValidUsername
 import earth.core.domain.createaccount.GetSignupCaptchaUseCase
 import earth.core.domain.createaccount.GetSignupStateUseCase
 import earth.core.domain.createaccount.InsertNewUserUseCase
@@ -50,10 +52,10 @@ class CreateAccountViewModel @Inject constructor(
     
     private val isOnline = MutableStateFlow(false)
     
-    private var _formUiState = MutableStateFlow(FormUiState())
+    private val _formUiState = MutableStateFlow(FormUiState())
     val formUiState: StateFlow<FormUiState> = _formUiState.asStateFlow()
     
-    private var startCaptchaRequest = MutableStateFlow(false)
+    private val startCaptchaRequest = MutableStateFlow(false)
     
     val captchaUiState: StateFlow<CaptchaUiState> =
         combine(isOnline, startCaptchaRequest) { isOnline, _ ->
@@ -78,7 +80,7 @@ class CreateAccountViewModel @Inject constructor(
             initialValue = CaptchaUiState.Loading
         )
     
-    private var startSignupRequest = MutableStateFlow(false)
+    private val startSignupRequest = MutableStateFlow(false)
     
     val signupUiState: StateFlow<SignupUiState> = startSignupRequest.flatMapLatest { startRequest ->
         if (startRequest) {
@@ -153,17 +155,16 @@ class CreateAccountViewModel @Inject constructor(
             return
         }
         checkFieldsValue()
-        if (_formUiState.value.username.isNotEmpty() && _formUiState.value.usernameIsValid &&
-            _formUiState.value.email.isNotEmpty() && _formUiState.value.emailIsValid &&
-            _formUiState.value.reference.isNotEmpty() && _formUiState.value.referenceIsValid &&
-            _formUiState.value.password.isNotEmpty() && _formUiState.value.passwordIsValid &&
-            _formUiState.value.repeatPassword.isNotEmpty() && _formUiState.value.repeatPasswordIsValid &&
-            _formUiState.value.captcha.isNotEmpty() && _formUiState.value.captchaIsValid
-        ) {
-            viewModelScope.launch {
-                updateFormFieldEnabledState(false)
-                startSignupRequest.value = true
-                updateFormFieldEnabledState(true)
+        
+        _formUiState.value.apply {
+            if (usernameIsValid && emailIsValid && referenceIsValid && passwordIsValid &&
+                repeatPasswordIsValid && captchaIsValid
+            ) {
+                viewModelScope.launch {
+                    updateFormFieldEnabledState(false)
+                    startSignupRequest.value = true
+                    updateFormFieldEnabledState(true)
+                }
             }
         }
     }
@@ -257,8 +258,5 @@ class CreateAccountViewModel @Inject constructor(
     
     companion object {
         private const val TAG = "CreateAccountViewModel"
-        const val MAX_REFERENCE_LENGTH = 15
-        const val MIN_PASSWORD_LENGTH = 8
-        const val CAPTCHA_LENGTH = 5
     }
 }

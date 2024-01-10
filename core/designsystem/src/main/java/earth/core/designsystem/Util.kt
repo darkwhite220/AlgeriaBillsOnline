@@ -1,15 +1,16 @@
-package com.darkwhite.feature.createaccount
+package earth.core.designsystem
 
 import android.util.Patterns
 import androidx.core.text.isDigitsOnly
-import com.darkwhite.feature.createaccount.CreateAccountViewModel.Companion.CAPTCHA_LENGTH
-import com.darkwhite.feature.createaccount.CreateAccountViewModel.Companion.MAX_REFERENCE_LENGTH
-import com.darkwhite.feature.createaccount.CreateAccountViewModel.Companion.MIN_PASSWORD_LENGTH
+import earth.core.designsystem.Constants.CAPTCHA_LENGTH
+import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
+import earth.core.designsystem.Constants.MIN_PASSWORD_LENGTH
+import earth.core.designsystem.Constants.MIN_USERNAME_LENGTH
 
 object Util {
     
     fun String.isValidUsername(): Boolean {
-        val isLengthValid = this.length >= 8
+        val isLengthValid = this.length > MIN_USERNAME_LENGTH
         val isAlphanumeric = this.all { it.isLetterOrDigit() }
         return isLengthValid && isAlphanumeric
         // Or regex
@@ -35,6 +36,23 @@ object Util {
         
         return this.length > MIN_PASSWORD_LENGTH &&
             hasUpperCase &&
+            hasLowerCase &&
+            hasDigit &&
+            hasSpecialChar &&
+            hasNoSpace
+        
+        // Or Regex (need update to check for space " ")
+//        val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z\\d]).{8,}\$")
+//        return regex.matches(this)
+    }
+    
+    fun String.isValidSignInPassword(): Boolean {
+        val hasLowerCase = this.any { it.isLowerCase() }
+        val hasDigit = this.any { it.isDigit() }
+        val hasSpecialChar = this.any { !it.isLetterOrDigit() }
+        val hasNoSpace = !this.contains(" ")
+        
+        return this.length > MIN_PASSWORD_LENGTH &&
             hasLowerCase &&
             hasDigit &&
             hasSpecialChar &&

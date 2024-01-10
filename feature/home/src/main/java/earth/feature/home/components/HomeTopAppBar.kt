@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp
+import earth.core.designsystem.icon.AppIcons
 
 @Preview(showBackground = true)
 @Composable
@@ -55,7 +56,7 @@ fun HomeTopAppBar(
         }
         
         Image(
-            painter = painterResource(id = earth.feature.home.R.drawable.designa),
+            painter = painterResource(id = AppIcons.TEST_IMAGE),
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape),

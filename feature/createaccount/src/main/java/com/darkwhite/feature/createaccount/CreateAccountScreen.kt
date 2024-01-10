@@ -20,23 +20,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.darkwhite.feature.createaccount.CreateAccountEvent.OnCreateAccountClick
-import com.darkwhite.feature.createaccount.components.ButtonCreateAccount
 import com.darkwhite.feature.createaccount.components.CaptchaUi
-import com.darkwhite.feature.createaccount.components.MyTextFieldTypes
-import com.darkwhite.feature.createaccount.components.TextFieldCreateAccount
-import com.darkwhite.feature.createaccount.components.TextFieldDescription
-import com.darkwhite.feature.createaccount.components.textFieldMap
 import com.darkwhite.feature.createaccount.dialog.DialogDataType
 import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
 import com.darkwhite.feature.createaccount.dialog.ResponseDialog
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
+import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.MyWidthSpacer
+import earth.core.designsystem.components.TextFieldDescription
 import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
+import earth.core.designsystem.components.textfield.CreateAccountTextFieldTypes
+import earth.core.designsystem.components.textfield.MyTextField
+import earth.core.designsystem.components.textfield.TextFieldEvent
+import earth.core.designsystem.components.textfield.createAccountTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
 import earth.core.throwablemodel.SignupThrowable
 import earth.feature.createaccount.R
@@ -107,7 +108,7 @@ private fun CreateAccountScreen(
                 TextTitleLarge(textId = R.string.register_to_see_your_sonalgaz_bills)
                 MyHeightSpacer(largeDp)
                 
-                textFieldMap.entries.forEachIndexed { index, item ->
+                createAccountTextFieldMap.entries.forEachIndexed { index, item ->
                     val focusRequester = remember { FocusRequester() }
                     LaunchedEffect(Unit) {
                         if (index == 0) focusRequester.requestFocus()
@@ -118,9 +119,9 @@ private fun CreateAccountScreen(
                         captchaUiState = captchaUiState
                     )
                     
-                    TextFieldCreateAccount(
+                    MyTextField(
                         focusRequester = focusRequester,
-                        fieldType = item.key,
+                        fieldType = item.key.name,
                         fieldValues = item.value,
                         value = formUiState.currentValue(item.key),
                         isValid = formUiState.currentIsValid(item.key),
@@ -155,7 +156,7 @@ private fun CreateAccountScreen(
                     MyHeightSpacer(mediumDp)
                 }
                 
-                ButtonCreateAccount(
+                ButtonWithLoading(
                     textId = R.string.create_account,
                     isLoading = signupUiState == SignupUiState.Loading,
                     onClick = { onCreateAccountEvent(OnCreateAccountClick) },
@@ -170,27 +171,27 @@ private fun CreateAccountScreen(
 
 private fun onFormEventValueChange(
     newValue: String,
-    textFieldTypes: MyTextFieldTypes,
+    textFieldTypes: CreateAccountTextFieldTypes,
     onCreateAccountEvent: (CreateAccountEvent) -> Unit,
 ) {
     onCreateAccountEvent(
         when (textFieldTypes) {
-            MyTextFieldTypes.USERNAME -> {
+            CreateAccountTextFieldTypes.USERNAME -> {
                 CreateAccountEvent.OnUserNameValueChange(newValue)
             }
-            MyTextFieldTypes.EMAIL -> {
+            CreateAccountTextFieldTypes.EMAIL -> {
                 CreateAccountEvent.OnEmailValueChange(newValue)
             }
-            MyTextFieldTypes.REFERENCE -> {
+            CreateAccountTextFieldTypes.REFERENCE -> {
                 CreateAccountEvent.OnReferenceValueChange(newValue)
             }
-            MyTextFieldTypes.PASSWORD -> {
+            CreateAccountTextFieldTypes.PASSWORD -> {
                 CreateAccountEvent.OnPasswordValueChange(newValue)
             }
-            MyTextFieldTypes.REPEAT_PASSWORD -> {
+            CreateAccountTextFieldTypes.REPEAT_PASSWORD -> {
                 CreateAccountEvent.OnRepeatPasswordValueChange(newValue)
             }
-            MyTextFieldTypes.CAPTCHA -> {
+            CreateAccountTextFieldTypes.CAPTCHA -> {
                 CreateAccountEvent.OnCaptchaValueChange(newValue)
             }
         }

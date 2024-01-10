@@ -1,4 +1,4 @@
-package com.darkwhite.feature.createaccount.components
+package earth.core.designsystem.components.textfield
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -21,17 +21,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.darkwhite.feature.createaccount.TextFieldEvent
-import com.darkwhite.feature.createaccount.TextFieldEvent.OnKeyboardDoneActions
-import com.darkwhite.feature.createaccount.TextFieldEvent.OnKeyboardNextActions
-import com.darkwhite.feature.createaccount.TextFieldEvent.OnKeyboardPreviousActions
-import earth.feature.createaccount.R
+import earth.core.designsystem.R
+import earth.core.designsystem.components.textfield.TextFieldEvent.OnKeyboardDoneActions
+import earth.core.designsystem.components.textfield.TextFieldEvent.OnKeyboardNextActions
+import earth.core.designsystem.components.textfield.TextFieldEvent.OnKeyboardPreviousActions
 
 
 @Composable
-fun TextFieldCreateAccount(
+fun MyTextField(
     focusRequester: FocusRequester,
-    fieldType: MyTextFieldTypes,
+    fieldType: String,
     fieldValues: MyTextFieldItem,
     value: String,
     isValid: Boolean,
@@ -54,12 +53,13 @@ fun TextFieldCreateAccount(
             placeholder = { PlaceHolder() },
             trailingIcon = {
                 when (fieldType) {
-                    MyTextFieldTypes.PASSWORD, MyTextFieldTypes.REPEAT_PASSWORD -> {
+                    CreateAccountTextFieldTypes.PASSWORD.name,
+                    CreateAccountTextFieldTypes.REPEAT_PASSWORD.name -> {
                         PasswordTrailingIcon(
                             passwordVisibility = passwordVisibility,
                             onClick = { passwordVisibility = !passwordVisibility })
                     }
-                    MyTextFieldTypes.REFERENCE -> {
+                    CreateAccountTextFieldTypes.REFERENCE.name -> {
                         ReferenceTrailingIcon(onClick = { onTextFieldEvent(TextFieldEvent.OnReferenceIconClick) })
                     }
                     else -> {}
@@ -70,7 +70,7 @@ fun TextFieldCreateAccount(
             },
             isError = isValid.not(),
             visualTransformation =
-            if (!trailingIcon || fieldType == MyTextFieldTypes.REFERENCE || passwordVisibility)
+            if (!trailingIcon || fieldType == CreateAccountTextFieldTypes.REFERENCE.name || passwordVisibility)
                 VisualTransformation.None
             else PasswordVisualTransformation(),
             singleLine = true,

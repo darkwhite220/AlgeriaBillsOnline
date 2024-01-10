@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="create_account">Create Account</string>
-    <string name="password_visibility_icon">Visibility Icon</string>
     <string name="reference_detail_icon">Reference Detail</string>
     <string name="register_to_see_your_sonalgaz_bills">Register to see your Sonelgaz bills</string>
 

@@ -1,4 +1,4 @@
-package com.darkwhite.feature.createaccount
+package earth.core.designsystem.components.textfield
 
 sealed interface TextFieldEvent {
     data object OnKeyboardPreviousActions : TextFieldEvent

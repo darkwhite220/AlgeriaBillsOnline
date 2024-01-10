@@ -1,7 +1,7 @@
 package com.darkwhite.feature.createaccount.uistate
 
 import androidx.compose.runtime.Stable
-import com.darkwhite.feature.createaccount.components.MyTextFieldTypes
+import earth.core.designsystem.components.textfield.CreateAccountTextFieldTypes
 import earth.core.database.User
 import earth.core.networkmodel.SignupRequestBody
 
@@ -28,47 +28,47 @@ data class FormUiState(
     val captcha: String = "",
     val captchaIsValid: Boolean = true,
 ) {
-    fun currentValue(textFieldTypes: MyTextFieldTypes): String {
+    fun currentValue(textFieldTypes: CreateAccountTextFieldTypes): String {
         return when (textFieldTypes) {
-            MyTextFieldTypes.USERNAME -> {
+            CreateAccountTextFieldTypes.USERNAME -> {
                 username
             }
-            MyTextFieldTypes.EMAIL -> {
+            CreateAccountTextFieldTypes.EMAIL -> {
                 email
             }
-            MyTextFieldTypes.REFERENCE -> {
+            CreateAccountTextFieldTypes.REFERENCE -> {
                 reference
             }
-            MyTextFieldTypes.PASSWORD -> {
+            CreateAccountTextFieldTypes.PASSWORD -> {
                 password
             }
-            MyTextFieldTypes.REPEAT_PASSWORD -> {
+            CreateAccountTextFieldTypes.REPEAT_PASSWORD -> {
                 repeatPassword
             }
-            MyTextFieldTypes.CAPTCHA -> {
+            CreateAccountTextFieldTypes.CAPTCHA -> {
                 captcha
             }
         }
     }
     
-    fun currentIsValid(textFieldTypes: MyTextFieldTypes): Boolean {
+    fun currentIsValid(textFieldTypes: CreateAccountTextFieldTypes): Boolean {
         return when (textFieldTypes) {
-            MyTextFieldTypes.USERNAME -> {
+            CreateAccountTextFieldTypes.USERNAME -> {
                 usernameIsValid
             }
-            MyTextFieldTypes.EMAIL -> {
+            CreateAccountTextFieldTypes.EMAIL -> {
                 emailIsValid
             }
-            MyTextFieldTypes.REFERENCE -> {
+            CreateAccountTextFieldTypes.REFERENCE -> {
                 referenceIsValid
             }
-            MyTextFieldTypes.PASSWORD -> {
+            CreateAccountTextFieldTypes.PASSWORD -> {
                 passwordIsValid
             }
-            MyTextFieldTypes.REPEAT_PASSWORD -> {
+            CreateAccountTextFieldTypes.REPEAT_PASSWORD -> {
                 repeatPasswordIsValid
             }
-            MyTextFieldTypes.CAPTCHA -> {
+            CreateAccountTextFieldTypes.CAPTCHA -> {
                 captchaIsValid
             }
         }

@@ -22,15 +22,16 @@ import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.largeCorner
 import earth.core.designsystem.components.largeDp
-import earth.feature.createaccount.R
+import earth.core.designsystem.components.textfield.CreateAccountTextFieldTypes
+import earth.core.designsystem.icon.AppIcons
 
 
 @Composable
 fun CaptchaUi(
-    textFieldType: MyTextFieldTypes,
+    textFieldType: CreateAccountTextFieldTypes,
     captchaUiState: CaptchaUiState
 ) {
-    if (textFieldType == MyTextFieldTypes.CAPTCHA) {
+    if (textFieldType == CreateAccountTextFieldTypes.CAPTCHA) {
         
         val shape = RoundedCornerShape(largeCorner)
         val modifier = Modifier.size(width = 280.dp, height = 84.dp)
@@ -77,7 +78,7 @@ private fun ImageCaptcha(
         )
     } else {
         Image(
-            painter = painterResource(id = R.drawable.broken_image),
+            painter = painterResource(id = AppIcons.BrokenImage),
             modifier = modifier,
             contentScale = ContentScale.Inside,
             contentDescription = null

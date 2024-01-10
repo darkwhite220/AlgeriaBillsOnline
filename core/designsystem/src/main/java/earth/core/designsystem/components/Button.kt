@@ -1,4 +1,4 @@
-package com.darkwhite.feature.createaccount.components
+package earth.core.designsystem.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
@@ -10,15 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import earth.core.designsystem.components.MyCircularProgressBar
-import earth.core.designsystem.components.largeDp
-import earth.feature.createaccount.R
-
+import earth.core.designsystem.R
 
 @Preview
 @Composable
-fun ButtonCreateAccount(
-    @StringRes textId: Int = R.string.create_account,
+fun ButtonWithLoading(
+    @StringRes textId: Int = R.string.password_visibility_icon,
     isLoading: Boolean = false,
     onClick: () -> Unit = {},
 ) {
