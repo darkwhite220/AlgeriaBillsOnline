@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 val smallDp = 4.dp
 val mediumDp = 8.dp
 val largeDp = 16.dp
+val extraLargeDp = 24.dp
 val lottieAnimationSize = 100.dp
 
 val largeCorner = 16.dp
