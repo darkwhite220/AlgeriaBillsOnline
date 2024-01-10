@@ -3,13 +3,13 @@ package earth.darkwhite.algeriabills.ui.navigation
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.darkwhite.feature.createaccount.navigation.createAccountScreen
 import earth.darkwhite.algeriabills.ui.AppState
 import earth.darkwhite.feature.estimate.navigation.estimateScreen
+import earth.darkwhite.feature.signin.navigation.signInScreen
 import earth.feature.home.navigation.homeRoute
 import earth.feature.home.navigation.homeScreen
 import earth.feature.settings.navigation.settingsScreen
@@ -34,7 +34,7 @@ fun AlgeriaBillsNavHost(
                 appState.navigateToCreateAccount()
             },
             onSignInClick = {
-                appState.navigateToCreateAccount()
+                appState.navigateToSignIn()
             },
         )
         estimateScreen(
@@ -46,7 +46,10 @@ fun AlgeriaBillsNavHost(
         )
         
         createAccountScreen(
-            onAccountCreated = {  },
+            onBackClick = { navController.popBackStack() }
+        )
+        
+        signInScreen(
             onBackClick = { navController.popBackStack() }
         )
     }

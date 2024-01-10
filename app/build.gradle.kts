@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature:estimate"))
     implementation(project(":feature:home"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:signin"))
     
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

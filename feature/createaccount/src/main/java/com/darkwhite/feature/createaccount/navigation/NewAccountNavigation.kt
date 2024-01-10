@@ -13,12 +13,10 @@ fun NavController.navigateToCreateAccount(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.createAccountScreen(
-    onAccountCreated: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     composable(route = createAccountRoute) {
         CreateAccountRoute(
-            onAccountCreated = onAccountCreated,
             onBackClick = onBackClick,
         )
     }

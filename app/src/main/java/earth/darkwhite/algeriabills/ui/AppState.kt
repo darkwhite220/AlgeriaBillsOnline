@@ -15,6 +15,7 @@ import earth.core.data.util.NetworkMonitorRepository
 import earth.darkwhite.algeriabills.ui.navigation.TopLevelDestination
 import earth.darkwhite.feature.estimate.navigation.estimateRoute
 import earth.darkwhite.feature.estimate.navigation.navigateToEstimate
+import earth.darkwhite.feature.signin.navigation.navigateToSignIn
 import earth.feature.home.navigation.homeRoute
 import earth.feature.home.navigation.navigateToHome
 import earth.feature.settings.navigation.navigateToSettings
@@ -89,5 +90,9 @@ class AppState(
     
     fun navigateToCreateAccount() {
         navController.navigateToCreateAccount()
+    }
+    
+    fun navigateToSignIn() {
+        navController.navigateToSignIn()
     }
 }

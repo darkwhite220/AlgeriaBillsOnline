@@ -44,7 +44,6 @@ import earth.feature.createaccount.R
 
 @Composable
 internal fun CreateAccountRoute(
-    onAccountCreated: () -> Unit,
     onBackClick: () -> Unit,
     viewModel: CreateAccountViewModel = hiltViewModel()
 ) {
