@@ -94,9 +94,9 @@ private fun HomeScreen(
         topBar = {
             HomeTopAppBar()
         },
-        floatingActionButton = {
-            FABCreateAccount(onCreateAccountClick)
-        },
+//        floatingActionButton = {
+//            FABCreateAccount(onCreateAccountClick)
+//        },
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(NavigationBarDefaults.windowInsets)
     ) { paddingValues ->
         Column(
