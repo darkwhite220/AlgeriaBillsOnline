@@ -97,6 +97,8 @@ class HomeViewModel @Inject constructor(
                 savedStateHandle[LAST_FETCH_TIME] = Date().time
                 syncUiState = SyncUiState.InitialState
             }
+            HomeEvent.OnCreateAccountClick -> TODO()
+            HomeEvent.OnSignInClick -> TODO()
         }
     }
     

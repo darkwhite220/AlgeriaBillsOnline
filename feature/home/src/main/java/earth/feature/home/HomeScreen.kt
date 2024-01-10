@@ -3,13 +3,12 @@ package earth.feature.home
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,14 +32,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.BillPreview
-import earth.core.designsystem.components.FABCreateAccount
 import earth.core.designsystem.components.MyCircularProgressBar
-import earth.feature.home.components.HomeTopAppBar
+import earth.core.designsystem.components.MyHeightSpacer
+import earth.core.designsystem.components.indicatorWidthUnselected
+import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.components.verticalSpacedBy
+import earth.feature.home.components.HomeTopAppBar
+import earth.feature.home.components.Indicators
 import earth.feature.home.uistate.SyncUiState
 import earth.feature.home.uistate.UsersUiState
 import kotlinx.coroutines.launch
@@ -50,7 +51,7 @@ private const val TAG = "HomeScreen"
 @Composable
 internal fun HomeRoute(
     onCreateAccountClick: () -> Unit,
-    onSignInClick: () -> Unit = {},
+    onSignInClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val usersUiState by viewModel.usersUiState.collectAsStateWithLifecycle()
@@ -66,7 +67,6 @@ internal fun HomeRoute(
                 else -> viewModel.onEvent(event)
             }
         },
-        onCreateAccountClick = onCreateAccountClick
     )
     
     LaunchedEffect(key1 = Unit) {
@@ -75,28 +75,41 @@ internal fun HomeRoute(
 }
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class,
-    ExperimentalFoundationApi::class
+    ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class, ExperimentalFoundationApi::class
 )
 @Composable
 private fun HomeScreen(
     usersUiState: UsersUiState,
     syncUiState: SyncUiState,
     onHomeEvent: (HomeEvent) -> Unit = {},
-    onCreateAccountClick: () -> Unit = {},
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     
+    val pagerState = when (usersUiState) {
+        is UsersUiState.Successful -> rememberPagerState { usersUiState.data.size + 1 }
+        else -> rememberPagerState { 1 }
+    }
+    
     Scaffold(
         modifier = Modifier,
         topBar = {
-            HomeTopAppBar()
+            HomeTopAppBar(
+                canScrollBackward = pagerState.canScrollBackward,
+                canScrollForward = pagerState.canScrollForward,
+                onBackwardClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                    }
+                },
+                onForwardClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
+                }
+            )
         },
-//        floatingActionButton = {
-//            FABCreateAccount(onCreateAccountClick)
-//        },
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(NavigationBarDefaults.windowInsets)
     ) { paddingValues ->
         Column(
@@ -105,50 +118,25 @@ private fun HomeScreen(
                 .consumeWindowInsets(paddingValues)
                 .fillMaxSize(),
         ) {
-            when (syncUiState) {
-                SyncUiState.InitialState -> {}
-                SyncUiState.Loading -> {
-                    MyCircularProgressBar()
-                }
-                is SyncUiState.Success -> {
-                    Log.d(TAG, "HomeScreen: syncData updated")
-                    if (syncUiState.isNotEmpty) {
-                        Toast.makeText(LocalContext.current, "SyncData updated", Toast.LENGTH_SHORT)
-                            .show()
-                        onHomeEvent(HomeEvent.OnSuccessSyncUiState)
-                    }
-                }
-                is SyncUiState.Failed -> {
-                    Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
-                    Toast.makeText(LocalContext.current, "SyncData Failed", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                
-            }
-            Text(text = "HOME")
+            SyncUi(syncUiState, onHomeEvent)
+            
             when (usersUiState) {
                 UsersUiState.Loading -> {
                     MyCircularProgressBar()
                 }
                 is UsersUiState.Successful -> {
                     Log.d(TAG, "${usersUiState.data}")
-                    val pagerState = rememberPagerState { usersUiState.data.size + 1 }
                     
                     HorizontalPager(
                         state = pagerState,
                         verticalAlignment = Alignment.Top,
-                        key = { item -> item }
+                        key = { item -> item },
+                        modifier = Modifier.weight(1f)
                     ) { index ->
                         
-                        Column {
-                            Text(
-                                text = "Page: $index",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(100.dp)
-                            )
+                        Column(modifier = Modifier.fillMaxSize()) {
                             if (index < usersUiState.data.size) {
-                                usersUiState.data[index].billsPreview?.let { billPreview ->
+                                usersUiState.data[0].billsPreview?.let { billPreview ->
                                     LazyColumn(
                                         verticalArrangement = verticalSpacedBy()
                                     ) {
@@ -158,22 +146,30 @@ private fun HomeScreen(
                                         ) { item ->
                                             Text(text = "$item")
                                         }
+                                        // Indicators Height (circle)
+                                        item {
+                                            MyHeightSpacer(indicatorWidthUnselected)
+                                        }
                                     }
                                 }
                             } else {
-                                
-                                Text(text = "Welcome new user")
-                                Button(onClick = { onHomeEvent(HomeEvent.OnCreateAccountClick) }) {
-                                    Text(text = "Create New Account")
-                                }
-                                Button(onClick = { onHomeEvent(HomeEvent.OnSignInClick) }) {
-                                    Text(text = "SignIn")
-                                }
+                                NewUserPage(onHomeEvent = onHomeEvent)
                             }
                         }
                     }
                 }
             }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = smallDp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Indicators(
+                size = pagerState.pageCount,
+                index = pagerState.currentPage
+            )
         }
     }
     
@@ -200,5 +196,45 @@ private fun HomeScreen(
         }
     }
     
+}
+
+@Composable
+private fun NewUserPage(onHomeEvent: (HomeEvent) -> Unit) {
+    Text(text = "Welcome new user")
+    Button(onClick = { onHomeEvent(HomeEvent.OnCreateAccountClick) }) {
+        Text(text = "Create New Account")
+    }
+    Button(onClick = {
+        onHomeEvent(HomeEvent.OnSignInClick)
+    }) {
+        Text(text = "SignIn")
+    }
+}
+
+@Composable
+private fun SyncUi(
+    syncUiState: SyncUiState,
+    onHomeEvent: (HomeEvent) -> Unit
+) {
+    when (syncUiState) {
+        SyncUiState.InitialState -> {}
+        SyncUiState.Loading -> {
+            MyCircularProgressBar()
+        }
+        is SyncUiState.Success -> {
+            Log.d(TAG, "HomeScreen: syncData updated")
+            if (syncUiState.isNotEmpty) {
+                Toast.makeText(LocalContext.current, "SyncData updated", Toast.LENGTH_SHORT)
+                    .show()
+                onHomeEvent(HomeEvent.OnSuccessSyncUiState)
+            }
+        }
+        is SyncUiState.Failed -> {
+            Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
+            Toast.makeText(LocalContext.current, "SyncData Failed", Toast.LENGTH_SHORT)
+                .show()
+        }
+        
+    }
 }
 

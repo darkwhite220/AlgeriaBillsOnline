@@ -32,7 +32,10 @@ fun AlgeriaBillsNavHost(
         homeScreen(
             onCreateAccountClick = {
                 appState.navigateToCreateAccount()
-            }
+            },
+            onSignInClick = {
+                appState.navigateToCreateAccount()
+            },
         )
         estimateScreen(
             onSettingsClick = { appState.navigate(TopLevelDestination.SETTINGS) },
