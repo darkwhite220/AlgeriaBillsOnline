@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/feature/estimate" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/signin" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

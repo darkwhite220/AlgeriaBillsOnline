@@ -39,6 +39,7 @@ class SignInViewModel @Inject constructor(
     // TODO save new user in room
     // TODO get uiState to disable submit button
     // TODO add delay in sync data
+    // TODO handle expired account response
     private val isOnline = MutableStateFlow(false)
     
     private val _signInFormState = MutableStateFlow(SignInFormState())
@@ -98,8 +99,8 @@ class SignInViewModel @Inject constructor(
     private fun updateUserName(value: String) {
         _signInFormState.update {
             it.copy(
-                username = value.trim(),
-                usernameIsValid = value.trim().isNotEmpty()
+                username = value,
+                usernameIsValid = value.isNotEmpty()
             )
         }
     }
@@ -107,8 +108,8 @@ class SignInViewModel @Inject constructor(
     private fun updatePassword(value: String) {
         _signInFormState.update {
             it.copy(
-                password = value.trim(),
-                passwordIsValid = value.trim().isValidSignInPassword()
+                password = value,
+                passwordIsValid = value.isValidSignInPassword(),
             )
         }
     }

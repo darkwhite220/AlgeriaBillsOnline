@@ -41,6 +41,7 @@ fun SignInRoute(
     
     SignInScreen(
         signInFormState = signInFormState,
+        signInUiState = signInUiState,
         onSignInEvent = viewModel::onEvent,
         onBackClick = onBackClick,
     )
@@ -49,6 +50,7 @@ fun SignInRoute(
 @Composable
 fun SignInScreen(
     signInFormState: SignInFormState = SignInFormState(),
+    signInUiState: SignInUiState = SignInUiState.InitialState,
     onSignInEvent: (SignInEvent) -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -90,7 +92,7 @@ fun SignInScreen(
                         enabled = signInFormState.enabled,
                         onValueChange = { newValue ->
                             onFormEventValueChange(
-                                newValue = newValue,
+                                newValue = newValue.trim(),
                                 signInTextFieldTypes = item.key,
                                 onSignInEvent = onSignInEvent,
                             )
@@ -116,7 +118,7 @@ fun SignInScreen(
                 
                 ButtonWithLoading(
                     textId = R.string.sign_in,
-                    isLoading = false,//signupUiState == SignupUiState.Loading,
+                    isLoading = signInUiState == SignInUiState.Loading,
                     onClick = { onSignInEvent(OnSignInClick) },
                 )
                 
