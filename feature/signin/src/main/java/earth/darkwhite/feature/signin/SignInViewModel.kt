@@ -38,7 +38,7 @@ class SignInViewModel @Inject constructor(
     // TODO forget password logic
     // TODO save new user in room
     // TODO get uiState to disable submit button
-    // TODO add delay in sync data
+    
     private val isOnline = MutableStateFlow(false)
     
     private val _signInFormState = MutableStateFlow(SignInFormState())

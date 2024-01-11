@@ -1,6 +1,7 @@
 package earth.core.data
 
 import android.util.Log
+import earth.core.data.util.Constants.DELAY_BETWEEN_EACH_SYNC_REQUEST
 import earth.core.data.util.ExtractionUtil.extractMainBillData
 import earth.core.data.util.ExtractionUtil.extractPreviousBillsData
 import earth.core.data.util.PdfUtil.extractDataFromByteArray
@@ -15,6 +16,7 @@ import earth.core.database.model.asEntity
 import earth.core.database.model.asExternalModel
 import earth.core.network.AppNetworkDataSource
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 
 class SyncDataImplementation @Inject constructor(
     private val appNetwork: AppNetworkDataSource,
@@ -97,7 +99,7 @@ class SyncDataImplementation @Inject constructor(
                             electricityPMD = electricityPMD,
                             gazPCS = gazPCS,
                             isPaid = true,
-                            onDone = {pcs->
+                            onDone = { pcs ->
                                 if (gazPCS == "0".toBigDecimal()) {
                                     gazPCS = pcs
                                 }
@@ -127,6 +129,7 @@ class SyncDataImplementation @Inject constructor(
                 }
             }
             result = true
+            delay(DELAY_BETWEEN_EACH_SYNC_REQUEST)
         }
         return result
     }

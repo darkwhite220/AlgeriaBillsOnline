@@ -2,6 +2,8 @@ package earth.core.data.util
 
 object Constants {
     
+    const val DELAY_BETWEEN_EACH_SYNC_REQUEST = 500L
+    
     const val RIGHTS_FIRST_TRANCHE = 70
     const val RIGHTS_FIRST_TRANCHE_PRICE = 25
     const val RIGHTS_SECOND_TRANCHE = 190
