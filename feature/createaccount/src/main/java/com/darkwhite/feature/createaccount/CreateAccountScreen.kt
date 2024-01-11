@@ -21,9 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.darkwhite.feature.createaccount.CreateAccountEvent.OnCreateAccountClick
 import com.darkwhite.feature.createaccount.components.CaptchaUi
-import com.darkwhite.feature.createaccount.dialog.DialogDataType
 import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
-import com.darkwhite.feature.createaccount.dialog.ResponseDialog
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
@@ -32,6 +30,8 @@ import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextFieldDescription
 import earth.core.designsystem.components.TextTitleLarge
+import earth.core.designsystem.components.dialog.ResponseDialog
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.textfield.CreateAccountTextFieldTypes
@@ -208,34 +208,34 @@ private fun ShowSignupDialog(
     when (signupUiState) {
         SignupUiState.Success -> {
             ResponseDialog(
-                dialogData = DialogDataType.SUCCESS.dialogData,
+                dialogData = SignUpResponseDialogDataType.SUCCESS.dialogData,
                 onClick = onSuccessDialogClose
             )
         }
         is SignupUiState.Failed -> {
             println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.exception}")
-            val dialogDataType = when (signupUiState.exception) {
+            val signUpResponseDialogDataType = when (signupUiState.exception) {
                 SignupThrowable.FailedTryLaterException -> {
-                    DialogDataType.FAILED_SERVER_ERROR_TRY_LATER
+                    SignUpResponseDialogDataType.FAILED_SERVER_ERROR_TRY_LATER
                 }
                 SignupThrowable.WrongCaptchaException -> {
-                    DialogDataType.FAILED_WRONG_CAPTCHA
+                    SignUpResponseDialogDataType.FAILED_WRONG_CAPTCHA
                 }
                 SignupThrowable.WrongReferenceException -> {
-                    DialogDataType.FAILED_WRONG_REFERENCE
+                    SignUpResponseDialogDataType.FAILED_WRONG_REFERENCE
                 }
                 SignupThrowable.WrongEmailException -> {
-                    DialogDataType.FAILED_WRONG_EMAIL
+                    SignUpResponseDialogDataType.FAILED_WRONG_EMAIL
                 }
                 SignupThrowable.ExistingUsernameException -> {
-                    DialogDataType.FAILED_EXISTING_USERNAME
+                    SignUpResponseDialogDataType.FAILED_EXISTING_USERNAME
                 }
                 else -> {
-                    DialogDataType.FAILED
+                    SignUpResponseDialogDataType.FAILED
                 }
             }
             ResponseDialog(
-                dialogData = dialogDataType.dialogData,
+                dialogData = signUpResponseDialogDataType.dialogData,
                 onClick = onFailDialogClose
             )
         }

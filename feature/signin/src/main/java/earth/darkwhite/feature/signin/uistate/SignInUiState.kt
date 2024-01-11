@@ -1,4 +1,4 @@
-package earth.darkwhite.feature.signin
+package earth.darkwhite.feature.signin.uistate
 
 sealed interface SignInUiState {
     

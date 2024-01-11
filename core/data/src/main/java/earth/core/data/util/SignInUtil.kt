@@ -3,9 +3,10 @@ package earth.core.data.util
 import earth.core.network.Constants
 import earth.core.networkmodel.SignInData
 import earth.core.throwablemodel.ConvertingPdfThrowable
-import earth.core.throwablemodel.ConvertingPdfThrowableConstants.WRONG_PASSWORD
-import earth.core.throwablemodel.ConvertingPdfThrowableConstants.WRONG_USERNAME
-import earth.core.throwablemodel.ConvertingPdfThrowableConstants.WRONG_USERNAME_TWO
+import earth.core.throwablemodel.SignInThrowable
+import earth.core.throwablemodel.SignInThrowableConstants.WRONG_PASSWORD
+import earth.core.throwablemodel.SignInThrowableConstants.WRONG_USERNAME
+import earth.core.throwablemodel.SignInThrowableConstants.WRONG_USERNAME_TWO
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -16,12 +17,6 @@ object SignInUtil {
     // TODO ADD TESTS
     fun extractSignInPageData(response: String): SignInData {
         val result: SignInData
-        
-        if (response.contains(WRONG_USERNAME) || response.contains(WRONG_USERNAME_TWO)) {
-            throw ConvertingPdfThrowable.BadUsername
-        } else if (response.contains(WRONG_PASSWORD)) {
-            throw ConvertingPdfThrowable.BadPassword
-        }
         
         try {
             result = extractData(response)

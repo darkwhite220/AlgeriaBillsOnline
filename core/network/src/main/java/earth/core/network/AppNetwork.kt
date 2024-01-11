@@ -34,6 +34,8 @@ import earth.core.networkmodel.BillResponse
 import earth.core.networkmodel.SignupCaptcha
 import earth.core.networkmodel.SignupRequestBody
 import earth.core.networkmodel.SignupResponse
+import earth.core.throwablemodel.SignInThrowable
+import earth.core.throwablemodel.SignInThrowableConstants
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.cookies.cookies
@@ -106,7 +108,7 @@ class AppNetwork @Inject constructor(
             initialHeaders()
         }
         
-        client.post(LOGIN_AUTH_URL) {
+        val logIn = client.post(LOGIN_AUTH_URL) {
             signInPostHeaders()
             
             expectSuccess = false
@@ -120,6 +122,14 @@ class AppNetwork @Inject constructor(
                         append(SIGN_IN_BUTTON_Y, randomInt())
                     })
             )
+        }.bodyAsText()
+        
+        if (logIn.contains(SignInThrowableConstants.WRONG_USERNAME) ||
+            logIn.contains(SignInThrowableConstants.WRONG_USERNAME_TWO)
+        ) {
+            throw SignInThrowable.BadUsername
+        } else if (logIn.contains(SignInThrowableConstants.WRONG_PASSWORD)) {
+            throw SignInThrowable.BadPassword
         }
         
         val response = client.get(LOGIN_CONSULT_URL) {

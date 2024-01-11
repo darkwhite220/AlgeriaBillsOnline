@@ -11,10 +11,10 @@ import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.core.designsystem.Util.isValidSignInPassword
 import earth.core.domain.signin.SignInUseCase
 import earth.darkwhite.feature.signin.uistate.SignInFormState
+import earth.darkwhite.feature.signin.uistate.SignInUiState
 import earth.darkwhite.feature.signin.uistate.asSignInCredentials
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,12 +32,7 @@ class SignInViewModel @Inject constructor(
     signInUseCase: SignInUseCase,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
-    // TODO uiState
-    // TODO signIn logic, AppNetwork
-    // TODO response
     // TODO forget password logic
-    // TODO save new user in room
-    // TODO get uiState to disable submit button
     
     private val isOnline = MutableStateFlow(false)
     

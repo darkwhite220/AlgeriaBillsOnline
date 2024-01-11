@@ -20,6 +20,8 @@ import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextDescription
 import earth.core.designsystem.components.TextTitleLarge
+import earth.core.designsystem.components.dialog.ResponseDialog
+import earth.core.designsystem.components.dialog.SignInResponseDialogDataType
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.textfield.MyTextField
 import earth.core.designsystem.components.textfield.SignInTextFieldTypes
@@ -27,8 +29,10 @@ import earth.core.designsystem.components.textfield.TextFieldEvent
 import earth.core.designsystem.components.textfield.signInTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
 import earth.core.designsystem.components.verticalSpacedBy
+import earth.core.throwablemodel.SignInThrowable
 import earth.darkwhite.feature.signin.SignInEvent.OnSignInClick
 import earth.darkwhite.feature.signin.uistate.SignInFormState
+import earth.darkwhite.feature.signin.uistate.SignInUiState
 import earth.feature.signin.R
 
 @Composable
@@ -44,6 +48,13 @@ fun SignInRoute(
         signInUiState = signInUiState,
         onSignInEvent = viewModel::onEvent,
         onBackClick = onBackClick,
+    )
+    
+    // SignIn Dialog
+    ShowSignInDialog(
+        signInUiState = signInUiState,
+        onSuccessDialogClose = onBackClick,
+        onFailDialogClose = viewModel::onFailedDialogClose
     )
 }
 
@@ -143,4 +154,45 @@ private fun onFormEventValueChange(
             }
         }
     )
+}
+
+@Composable
+private fun ShowSignInDialog(
+    signInUiState: SignInUiState,
+    onSuccessDialogClose: () -> Unit,
+    onFailDialogClose: () -> Unit,
+) {
+    when (signInUiState) {
+        is SignInUiState.Success -> {
+            val dialogDataType = if (signInUiState.data) {
+                SignInResponseDialogDataType.SUCCESS
+            } else {
+                SignInResponseDialogDataType.SUCCESS_ALREADY_EXIST_IN_APP
+            }
+            ResponseDialog(
+                dialogData = dialogDataType.dialogData,
+                onClick = onSuccessDialogClose
+            )
+        }
+        is SignInUiState.Failed -> { // TODO add send DATA BY EMAIL (on main page extraction fail)
+            println("ShowSignInDialog SignInUiState.Failed: ${signInUiState.throwable}")
+            val dialogDataType = when (signInUiState.throwable) {
+                SignInThrowable.BadUsername -> {
+                    SignInResponseDialogDataType.FAILED_WRONG_USERNAME
+                }
+                SignInThrowable.BadPassword -> {
+                    SignInResponseDialogDataType.FAILED_WRONG_PASSWORD
+                }
+                else -> {
+                    SignInResponseDialogDataType.FAILED
+                }
+            }
+            ResponseDialog(
+                dialogData = dialogDataType.dialogData,
+                onClick = onFailDialogClose
+            )
+        }
+        else -> { /* No op */
+        }
+    }
 }

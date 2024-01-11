@@ -2,4 +2,26 @@
 <resources>
     <string name="password_visibility_icon">Visibility Icon</string>
     <string name="reference_detail_icon">Reference Detail</string>
+
+    <!-- SignUp Response Dialog-->
+    <string name="account_creation_successful">Account Creation Successful</string>
+    <string name="continue_button">Continue</string>
+    <string name="account_creation_failed">Account Creation Failed</string>
+    <string name="account_creation_failed_desc">Please check the values and try again, If the problem persists contact support.</string>
+    <string name="account_creation_failed_wrong_captcha">Wrong captcha code, Please insert correct code and try again.</string>
+    <string name="account_creation_failed_wrong_reference">Wrong reference number, Please insert correct number and try again.</string>
+    <string name="account_creation_failed_wrong_email">Bad email format, Please insert correct email and try again, If the problem persists contact support.</string>
+    <string name="account_creation_failed_existing_username">Username already used, Please change it and try again.</string>
+    <string name="account_creation_failed_try_again_later">Server error, Please try again later.</string>
+    <string name="dismiss">Dismiss</string>
+
+    <!-- SignIn Response Dialog-->
+    <string name="sign_in_successful">Sign In Successful</string>
+    <string name="sign_in_successful_but_already_exist_in_app">Account Already Saved</string>
+    <string name="sign_in_successful_but_already_exist_in_app_desc">Account holding same \"Reference Number\" already saved in the app, this account won\'t be saved.</string>
+    <string name="sign_in_failed">Sign In Failed</string>
+    <string name="sign_in_failed_desc">Please check the values and try again, If the problem persists contact support.</string>
+    <string name="sign_in_failed_wrong_username_desc">Wrong username, Please check the values and try again.</string>
+    <string name="sign_in_failed_wrong_password_desc">Wrong password, Please check the values and try again.</string>
+
 </resources>

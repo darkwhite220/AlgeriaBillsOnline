@@ -3,16 +3,4 @@
     <string name="create_account">Create Account</string>
     <string name="reference_detail_icon">Reference Detail</string>
     <string name="register_to_see_your_sonalgaz_bills">Register to see your Sonelgaz bills</string>
-
-    <!--Dialog-->
-    <string name="account_creation_successful">Account Creation Successful</string>
-    <string name="continue_button">Continue</string>
-    <string name="account_creation_failed">Account Creation Failed</string>
-    <string name="account_creation_failed_desc">Please check the values and try again, If the problem persists contact support.</string>
-    <string name="account_creation_failed_wrong_captcha">Wrong captcha code, Please insert correct code and try again.</string>
-    <string name="account_creation_failed_wrong_reference">Wrong reference number, Please insert correct number and try again.</string>
-    <string name="account_creation_failed_wrong_email">Bad email format, Please insert correct email and try again, If the problem persists contact support.</string>
-    <string name="account_creation_failed_existing_username">Username already used, Please change it and try again.</string>
-    <string name="account_creation_failed_try_again_later">Server error, Please try again later.</string>
-    <string name="dismiss">Dismiss</string>
 </resources>
