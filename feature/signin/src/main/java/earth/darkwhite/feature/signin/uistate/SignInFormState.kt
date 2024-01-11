@@ -2,6 +2,7 @@ package earth.darkwhite.feature.signin.uistate
 
 import androidx.compose.runtime.Stable
 import earth.core.designsystem.components.textfield.SignInTextFieldTypes
+import earth.core.networkmodel.SignInCredentials
 
 @Stable
 data class SignInFormState(
@@ -35,3 +36,8 @@ data class SignInFormState(
         }
     }
 }
+
+fun SignInFormState.asSignInCredentials() = SignInCredentials(
+    username = username,
+    password = password
+)

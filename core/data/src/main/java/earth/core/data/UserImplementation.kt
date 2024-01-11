@@ -17,6 +17,9 @@ class UserImplementation @Inject constructor(
             it.map { userEntity -> userEntity.asExternalModel() }
         }
     
+    override fun getUser(reference: String): User? =
+        userDao.getUser(reference)?.asExternalModel()
+    
     override suspend fun insertUser(user: User) {
         userDao.insertUser(user.asEntity())
     }

@@ -1,6 +1,7 @@
 package earth.core.networkmodel
 
 data class SignInData(
+    val reference: String,
     val fullName: String,
     val address: String,
     val billNumber: String,

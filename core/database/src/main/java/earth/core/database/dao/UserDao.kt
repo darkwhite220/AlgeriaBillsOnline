@@ -15,10 +15,13 @@ interface UserDao {
     @Query("SELECT * FROM user_table ORDER BY `created_at` ASC")
     fun getUsers(): List<UserEntity>
     
+    @Query("SELECT * FROM user_table WHERE reference LIKE :reference")
+    fun getUser(reference: String): UserEntity?
+    
     @Upsert
     suspend fun insertUser(userEntity: UserEntity)
     
-    @Query("DELETE FROM user_table WHERE reference MATCH :reference")
+    @Query("DELETE FROM user_table WHERE reference LIKE :reference")
     suspend fun deleteUser(reference: String)
     
 }

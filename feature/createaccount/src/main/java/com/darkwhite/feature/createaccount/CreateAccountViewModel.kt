@@ -160,11 +160,9 @@ class CreateAccountViewModel @Inject constructor(
             if (usernameIsValid && emailIsValid && referenceIsValid && passwordIsValid &&
                 repeatPasswordIsValid && captchaIsValid
             ) {
-                viewModelScope.launch {
-                    updateFormFieldEnabledState(false)
-                    startSignupRequest.value = true
-                    updateFormFieldEnabledState(true)
-                }
+                updateFormFieldEnabledState(false)
+                startSignupRequest.value = true
+                updateFormFieldEnabledState(true)
             }
         }
     }

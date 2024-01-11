@@ -37,6 +37,7 @@ fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val signInFormState by viewModel.signInFormState.collectAsStateWithLifecycle()
+    val signInUiState by viewModel.signInUiState.collectAsStateWithLifecycle()
     
     SignInScreen(
         signInFormState = signInFormState,

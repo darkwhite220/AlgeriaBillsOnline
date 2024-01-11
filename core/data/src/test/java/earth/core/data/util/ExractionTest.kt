@@ -12,6 +12,8 @@ import earth.core.data.util.ExtractionUtil.extractPreviousBillsData
 import earth.core.data.util.ExtractionUtil.menageType
 import earth.core.data.util.ExtractionUtil.rightsAndTaxesPreviousTrimester
 import earth.core.database.Bill
+import earth.core.database.ElectricityPMD
+import earth.core.database.MenageType
 import java.math.BigDecimal
 import org.junit.Assert
 import org.junit.Test
@@ -548,6 +550,7 @@ class ExtractionUtilTest {
             electricityPMD = ElectricityPMD.MEDIUM_MONO_PHASE,
             gazPCS = "9.02".toBigDecimal(),
             isPaid = true,
+            onDone = {}
         )
         println(bills)
     }

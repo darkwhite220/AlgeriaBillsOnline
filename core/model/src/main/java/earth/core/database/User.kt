@@ -13,7 +13,7 @@ data class User(
     val fullName: String = "",
     val reference: String,
     val address: String = "",
-    val email: String,
+    val email: String = "",
     val password: String,
     val username: String,
     val directionDistribution: String = "",

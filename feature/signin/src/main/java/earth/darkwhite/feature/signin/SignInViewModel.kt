@@ -1,37 +1,71 @@
 package earth.darkwhite.feature.signin
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import earth.core.common.Result
+import earth.core.common.asResult
 import earth.core.data.util.NetworkMonitorRepository
+import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.core.designsystem.Util.isValidSignInPassword
+import earth.core.domain.signin.SignInUseCase
 import earth.darkwhite.feature.signin.uistate.SignInFormState
+import earth.darkwhite.feature.signin.uistate.asSignInCredentials
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
+    signInUseCase: SignInUseCase,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
     // TODO uiState
     // TODO signIn logic, AppNetwork
     // TODO response
     // TODO forget password logic
-    // TODO save new user
+    // TODO save new user in room
     // TODO get uiState to disable submit button
+    // TODO add delay in sync data
     private val isOnline = MutableStateFlow(false)
     
     private val _signInFormState = MutableStateFlow(SignInFormState())
     val signInFormState: StateFlow<SignInFormState> = _signInFormState.asStateFlow()
     
     private val startSignInRequest = MutableStateFlow(false)
+    
+    val signInUiState: StateFlow<SignInUiState> = startSignInRequest.flatMapLatest {
+        if (it) {
+            signInUseCase.invoke(_signInFormState.value.asSignInCredentials())
+                .asResult()
+                .map { result ->
+                    when (result) {
+                        Result.Loading -> SignInUiState.Loading
+                        is Result.Success -> SignInUiState.Success(result.data)
+                        is Result.Error -> SignInUiState.Failed(result.exception)
+                    }
+                }
+        } else {
+            flowOf(SignInUiState.InitialState)
+        }
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(VIEW_MODEL_SUBSCRIPTION_TIME),
+            initialValue = SignInUiState.InitialState
+        )
     
     init {
         Log.d(TAG, "init: ")
@@ -41,6 +75,10 @@ class SignInViewModel @Inject constructor(
                 isOnline.value = it
             }
         }
+    }
+    
+    fun onFailedDialogClose() {
+        viewModelScope.launch { startSignInRequest.value = false }
     }
     
     fun onEvent(event: SignInEvent) {

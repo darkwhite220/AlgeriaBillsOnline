@@ -5,7 +5,7 @@ import earth.core.data.util.InitialAssets.parsedTextStateSupport
 import earth.core.data.util.PdfUtil.cleanExtractedText
 import earth.core.data.util.PdfUtil.initialCheck
 import earth.core.data.util.PdfUtil.prepStringForMainExtraction
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class PdfUtilTest {
     

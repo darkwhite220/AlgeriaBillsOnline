@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import earth.core.data.BillImplementation
 import earth.core.data.BillRepository
+import earth.core.data.SignInImplementation
+import earth.core.data.SignInRepository
 import earth.core.data.SignupImplementation
 import earth.core.data.SignupRepository
 import earth.core.data.SyncDataImplementation
@@ -38,4 +40,7 @@ interface DataModule {
     
     @Binds
     fun bindSyncDataRepository(impl: SyncDataImplementation): SyncDataRepository
+    
+    @Binds
+    fun bindSignInRepository(impl: SignInImplementation): SignInRepository
 }
