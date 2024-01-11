@@ -5,6 +5,7 @@ import earth.core.networkmodel.SignInData
 import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.ConvertingPdfThrowableConstants.WRONG_PASSWORD
 import earth.core.throwablemodel.ConvertingPdfThrowableConstants.WRONG_USERNAME
+import earth.core.throwablemodel.ConvertingPdfThrowableConstants.WRONG_USERNAME_TWO
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -16,7 +17,7 @@ object SignInUtil {
     fun extractSignInPageData(response: String): SignInData {
         val result: SignInData
         
-        if (response.contains(WRONG_USERNAME)) {
+        if (response.contains(WRONG_USERNAME) || response.contains(WRONG_USERNAME_TWO)) {
             throw ConvertingPdfThrowable.BadUsername
         } else if (response.contains(WRONG_PASSWORD)) {
             throw ConvertingPdfThrowable.BadPassword
