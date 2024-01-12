@@ -2,27 +2,23 @@ package earth.core.data.util
 
 import earth.core.network.Constants
 import earth.core.networkmodel.SignInData
+import earth.core.networkmodel.SignInResponse
 import earth.core.throwablemodel.ConvertingPdfThrowable
-import earth.core.throwablemodel.SignInThrowable
-import earth.core.throwablemodel.SignInThrowableConstants.WRONG_PASSWORD
-import earth.core.throwablemodel.SignInThrowableConstants.WRONG_USERNAME
-import earth.core.throwablemodel.SignInThrowableConstants.WRONG_USERNAME_TWO
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-private const val TAG = "SignInUtil"
 
 object SignInUtil {
     
     // TODO ADD TESTS
-    fun extractSignInPageData(response: String): SignInData {
+    fun extractSignInPageData(response: SignInResponse): SignInData {
         val result: SignInData
         
         try {
-            result = extractData(response)
+            result = extractData(response.homePageBody)
         } catch (e: Exception) {
             println("SignInUtil.extractSignInPageData $e")
-            throw ConvertingPdfThrowable.UnhandledSignInResponse(response)
+            throw ConvertingPdfThrowable.UnhandledSignInResponse(response.concatThrowableMessage())
         }
         return result
     }
@@ -103,4 +99,5 @@ object SignInUtil {
             billUrl = urlPart,
         )
     }
+    
 }

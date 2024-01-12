@@ -14,6 +14,7 @@
     <string name="account_creation_failed_existing_username">Username already used, Please change it and try again.</string>
     <string name="account_creation_failed_try_again_later">Server error, Please try again later.</string>
     <string name="dismiss">Dismiss</string>
+    <string name="contact_support">Contact Support</string>
 
     <!-- SignIn Response Dialog-->
     <string name="sign_in_successful">Sign In Successful</string>

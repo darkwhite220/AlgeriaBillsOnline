@@ -1,5 +1,6 @@
 package earth.core.data.util
 
+import earth.core.networkmodel.SignInResponse
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -17,3 +18,10 @@ data class CalculationHolder(
     val totalHT: BigDecimal = "0".toBigDecimal(),
     val totalTVA: BigDecimal = "0".toBigDecimal(),
 )
+
+fun SignInResponse.concatThrowableMessage(): String =
+    "LOGIN PART".center() + this.signInBody + "\n" + "HOME PAGE PART".center() + this.homePageBody
+
+
+private fun String.center(padding: Int = 10, char: String = "-_-"): String =
+    "${char.repeat(padding)}$this${char.repeat(padding)}\n"

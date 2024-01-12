@@ -1,6 +1,12 @@
 package earth.core.designsystem
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Patterns
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.text.isDigitsOnly
 import earth.core.designsystem.Constants.CAPTCHA_LENGTH
 import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
@@ -72,4 +78,21 @@ object Util {
 //        return regex.matches(this)
     }
     
+    fun sendEmail(
+        context: Context,
+        @StringRes titleId: Int,
+        message: String? = null
+    ) {
+        val email = "dw220appstore+algeriabills@gmail.com"
+        val title = context.getString(titleId)
+        
+        val intentRequest = Intent(Intent.ACTION_SENDTO)
+        intentRequest.data = Uri.parse("mailto:$email?subject=$title?text=$message")
+        try {
+            context.startActivity(Intent.createChooser(intentRequest, "Send mail..."))
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
 }

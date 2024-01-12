@@ -209,12 +209,12 @@ private fun ShowSignupDialog(
         SignupUiState.Success -> {
             ResponseDialog(
                 dialogData = SignUpResponseDialogDataType.SUCCESS.dialogData,
-                onClick = onSuccessDialogClose
+                onDismissClick = onSuccessDialogClose
             )
         }
         is SignupUiState.Failed -> {
-            println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.exception}")
-            val signUpResponseDialogDataType = when (signupUiState.exception) {
+            println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.throwable}")
+            val signUpResponseDialogDataType = when (signupUiState.throwable) {
                 SignupThrowable.FailedTryLaterException -> {
                     SignUpResponseDialogDataType.FAILED_SERVER_ERROR_TRY_LATER
                 }
@@ -236,7 +236,7 @@ private fun ShowSignupDialog(
             }
             ResponseDialog(
                 dialogData = signUpResponseDialogDataType.dialogData,
-                onClick = onFailDialogClose
+                onDismissClick = onFailDialogClose,
             )
         }
         else -> { /* No op */

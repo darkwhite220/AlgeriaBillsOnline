@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import earth.core.designsystem.Util.sendEmail
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextDescription
@@ -29,6 +31,7 @@ import earth.core.designsystem.components.textfield.TextFieldEvent
 import earth.core.designsystem.components.textfield.signInTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
 import earth.core.designsystem.components.verticalSpacedBy
+import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.SignInThrowable
 import earth.darkwhite.feature.signin.SignInEvent.OnSignInClick
 import earth.darkwhite.feature.signin.uistate.SignInFormState
@@ -171,11 +174,13 @@ private fun ShowSignInDialog(
             }
             ResponseDialog(
                 dialogData = dialogDataType.dialogData,
-                onClick = onSuccessDialogClose
+                onDismissClick = onSuccessDialogClose,
             )
         }
-        is SignInUiState.Failed -> { // TODO add send DATA BY EMAIL (on main page extraction fail)
+        is SignInUiState.Failed -> {
             println("ShowSignInDialog SignInUiState.Failed: ${signInUiState.throwable}")
+            val context = LocalContext.current
+            var supportMessage: String? = null
             val dialogDataType = when (signInUiState.throwable) {
                 SignInThrowable.BadUsername -> {
                     SignInResponseDialogDataType.FAILED_WRONG_USERNAME
@@ -184,12 +189,24 @@ private fun ShowSignInDialog(
                     SignInResponseDialogDataType.FAILED_WRONG_PASSWORD
                 }
                 else -> {
+                    if (signInUiState.throwable is ConvertingPdfThrowable.UnhandledSignInResponse) {
+                        supportMessage = signInUiState.throwable.data
+                    }
                     SignInResponseDialogDataType.FAILED
                 }
             }
             ResponseDialog(
                 dialogData = dialogDataType.dialogData,
-                onClick = onFailDialogClose
+                supportMessage = supportMessage,
+                onDismissClick = onFailDialogClose,
+                onContactSupportClick = {
+                    sendEmail(
+                        context = context,
+                        titleId = R.string.sign_in_failed_error,
+                        message = supportMessage
+                    )
+                    onFailDialogClose()
+                },
             )
         }
         else -> { /* No op */

@@ -2,5 +2,6 @@
 <resources>
     <string name="sign_in">Sign In</string>
     <string name="sign_in_to_continue">Sign In to continue</string>
-    <string name="sign_in_desc">Note: You can use the same credentials as in \"consulter-factures.elit.dz\" if you already have a account there!</string>
+    <string name="sign_in_desc">Note: You can use the same credentials as in the website if you already have a account there!</string>
+    <string name="sign_in_failed_error">SignIn Failed Error</string>
 </resources>

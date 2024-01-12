@@ -33,6 +33,7 @@ class SignInViewModel @Inject constructor(
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
     // TODO forget password logic
+    // TODO implement backoff delay
     
     private val isOnline = MutableStateFlow(false)
     
@@ -72,10 +73,6 @@ class SignInViewModel @Inject constructor(
         }
     }
     
-    fun onFailedDialogClose() {
-        viewModelScope.launch { startSignInRequest.value = false }
-    }
-    
     fun onEvent(event: SignInEvent) {
         when (event) {
             is SignInEvent.OnUserNameValueChange -> {
@@ -88,6 +85,10 @@ class SignInViewModel @Inject constructor(
                 onSignInClick()
             }
         }
+    }
+    
+    fun onFailedDialogClose() {
+        viewModelScope.launch { startSignInRequest.value = false }
     }
     
     private fun updateUserName(value: String) {

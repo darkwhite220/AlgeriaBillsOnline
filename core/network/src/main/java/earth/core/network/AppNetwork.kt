@@ -31,6 +31,7 @@ import earth.core.network.di.KtorHeaders.signupCaptchaHeaders
 import earth.core.network.di.KtorHeaders.signupFormHeaders
 import earth.core.network.di.KtorHeaders.signupHeaders
 import earth.core.networkmodel.BillResponse
+import earth.core.networkmodel.SignInResponse
 import earth.core.networkmodel.SignupCaptcha
 import earth.core.networkmodel.SignupRequestBody
 import earth.core.networkmodel.SignupResponse
@@ -103,7 +104,7 @@ class AppNetwork @Inject constructor(
         )
     }
     
-    override suspend fun signIn(username: String, password: String): String {
+    override suspend fun signIn(username: String, password: String): SignInResponse {
         client.get(BASE_URL) {
             initialHeaders()
         }
@@ -136,7 +137,10 @@ class AppNetwork @Inject constructor(
             signInGetHeaders()
         }
         
-        return response.bodyAsText()
+        return SignInResponse(
+            signInBody = logIn,
+            homePageBody = response.bodyAsText(),
+        )
     }
     
     override suspend fun fetchBill(urlEndpoint: String): BillResponse {
