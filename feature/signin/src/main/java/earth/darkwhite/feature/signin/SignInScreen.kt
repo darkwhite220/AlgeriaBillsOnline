@@ -3,6 +3,7 @@ package earth.darkwhite.feature.signin
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ import earth.core.designsystem.Util.sendEmail
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextDescription
-import earth.core.designsystem.components.TextTitleLarge
+import earth.core.designsystem.components.TextDisplaySmall
 import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.dialog.SignInResponseDialogDataType
 import earth.core.designsystem.components.largeDp
@@ -74,12 +75,12 @@ fun SignInScreen(
         modifier = Modifier
     ) {
         CenteredTopAppBar(
-            titleId = R.string.sign_in,
+            titleId = null,
             onBackClick = onBackClick,
         )
         
         Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            MyWidthSpacer(largeDp * 3)
+            MyWidthSpacer(largeDp)
             Column(
                 modifier = Modifier
 //                .imePadding() // TODO CHECK IME PADDING
@@ -90,7 +91,10 @@ fun SignInScreen(
             ) {
                 val focusManager = LocalFocusManager.current
                 
-                TextTitleLarge(textId = R.string.sign_in_to_continue)
+                TextDisplaySmall(
+                    textId = R.string.sign_in,
+                    modifier = Modifier.padding(vertical = largeDp)
+                )
                 TextDescription(textId = R.string.sign_in_desc)
                 
                 signInTextFieldMap.entries.forEachIndexed { index, item ->

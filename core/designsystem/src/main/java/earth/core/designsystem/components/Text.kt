@@ -13,10 +13,20 @@ import androidx.compose.ui.text.style.TextAlign
 
 
 @Composable
-fun TextTitleLarge(@StringRes textId: Int) {
+fun TextDisplaySmall(@StringRes textId: Int, modifier: Modifier = Modifier) {
     Text(
         text = stringResource(textId),
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.displaySmall,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun TextTitleLarge(@StringRes textId: Int, modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(textId),
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifier
     )
 }
 

@@ -35,7 +35,6 @@ class SignInViewModel @Inject constructor(
     signInUseCase: SignInUseCase,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
-    // TODO forget password
     
     private val isOnline = MutableStateFlow(false)
     var isPreviousFail by mutableStateOf(false)
@@ -74,7 +73,6 @@ class SignInViewModel @Inject constructor(
         Log.d(TAG, "init: ")
         viewModelScope.launch {
             network.networkStatus.collect {
-                Log.d(TAG, "isOnline $it: ")
                 isOnline.value = it
             }
         }
@@ -119,7 +117,7 @@ class SignInViewModel @Inject constructor(
     }
     
     private fun onSignInClick() {
-        if (!isOnline.value) {
+        if (!isOnline.value || !isPreviousFail) {
             return
         }
         checkFieldsValue()

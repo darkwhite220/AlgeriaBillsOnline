@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CenteredTopAppBar(
-    @StringRes titleId: Int,
     modifier: Modifier = Modifier,
+    @StringRes titleId: Int? = null,
     onBackClick: () -> Unit
 ) {
     CenterAlignedTopAppBar(
@@ -27,7 +27,7 @@ fun CenteredTopAppBar(
             }
         },
         title = {
-            Text(text = stringResource(id = titleId))
+            titleId?.let { Text(text = stringResource(id = it)) }
         }
     )
 }
