@@ -9,6 +9,7 @@ import earth.core.network.Constants.DUPLICATE_PASSWORD
 import earth.core.network.Constants.EMAIL
 import earth.core.network.Constants.LOGIN_AUTH_URL
 import earth.core.network.Constants.LOGIN_CONSULT_URL
+import earth.core.network.Constants.LOG_OUT_URL
 import earth.core.network.Constants.NAME
 import earth.core.network.Constants.NO_VALUE
 import earth.core.network.Constants.PASSWORD
@@ -25,6 +26,7 @@ import earth.core.network.Constants.USERNAME
 import earth.core.network.Utils.randomInt
 import earth.core.network.di.KtorHeaders.fetchBillHeaders
 import earth.core.network.di.KtorHeaders.initialHeaders
+import earth.core.network.di.KtorHeaders.logOutHeaders
 import earth.core.network.di.KtorHeaders.signInGetHeaders
 import earth.core.network.di.KtorHeaders.signInPostHeaders
 import earth.core.network.di.KtorHeaders.signupCaptchaHeaders
@@ -116,7 +118,6 @@ class AppNetwork @Inject constructor(
             
             expectSuccess = false
             
-            
             setBody(
                 FormDataContent(
                     Parameters.build {
@@ -168,6 +169,13 @@ class AppNetwork @Inject constructor(
             length = totalLength,
             pdfByteArray = response.body(),
         )
+    }
+    
+    override suspend fun logOut() {
+        client.get(LOG_OUT_URL) {
+            logOutHeaders()
+            expectSuccess = false
+        }
     }
     
     private suspend fun HttpClient.printCookies() {

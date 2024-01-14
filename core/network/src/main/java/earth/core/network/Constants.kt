@@ -10,6 +10,7 @@ object Constants {
     const val HEADER_CONSULT_URL = "$BASE_URL/fconsultation/contenu_index.jsp"
     //    https://consulter-factures.elit.dz/fconsultation/fact.jsp?num_fac=459231108543&mtt_ttc=328.940&filial=SDC
     const val CONSULTING_BILL_URL = "$BASE_URL/fconsultation/"
+    const val LOG_OUT_URL = "$BASE_URL/fconsultation/commun/logout.jsp"
     
     const val ACCEPT_ALL =
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"

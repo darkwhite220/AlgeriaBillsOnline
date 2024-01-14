@@ -70,7 +70,7 @@ internal fun HomeRoute(
     )
     
     LaunchedEffect(key1 = Unit) {
-//        viewModel.initSyncData()
+        viewModel.initSyncData()
     }
 }
 
@@ -136,7 +136,7 @@ private fun HomeScreen(
                         
                         Column(modifier = Modifier.fillMaxSize()) {
                             if (index < usersUiState.data.size) {
-                                usersUiState.data[0].billsPreview?.let { billPreview ->
+                                usersUiState.data[index].billsPreview?.let { billPreview ->
                                     LazyColumn(
                                         verticalArrangement = verticalSpacedBy()
                                     ) {
@@ -233,6 +233,7 @@ private fun SyncUi(
             Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
             Toast.makeText(LocalContext.current, "SyncData Failed", Toast.LENGTH_SHORT)
                 .show()
+            onHomeEvent(HomeEvent.OnFailedSyncUiState)
         }
         
     }

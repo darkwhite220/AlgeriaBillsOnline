@@ -35,7 +35,6 @@ class HomeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
-    // TODO add logout to homeScreen syncData
     
     private val isOnline = MutableStateFlow(false)
     // TODO store the value with user
@@ -96,6 +95,9 @@ class HomeViewModel @Inject constructor(
         when (event) {
             HomeEvent.OnSuccessSyncUiState -> {
                 savedStateHandle[LAST_FETCH_TIME] = Date().time
+                syncUiState = SyncUiState.InitialState
+            }
+            HomeEvent.OnFailedSyncUiState -> {
                 syncUiState = SyncUiState.InitialState
             }
             HomeEvent.OnCreateAccountClick -> TODO()

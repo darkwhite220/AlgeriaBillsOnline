@@ -4,6 +4,7 @@ import earth.core.network.Constants.ACCEPT_ALL
 import earth.core.network.Constants.ACCEPT_IMAGE
 import earth.core.network.Constants.BASE_URL
 import earth.core.network.Constants.HEADER_CONSULT_URL
+import earth.core.network.Constants.LOGIN_CONSULT_URL
 import earth.core.network.Constants.SIGNUP_FORM_URL
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
@@ -96,6 +97,18 @@ object KtorHeaders {
             header("Sec-Fetch-Site", "none")
             header("Sec-Fetch-Mode", "navigate")
             header("Sec-Fetch-Dest", "document")
+            header("Sec-Fetch-User", "?1")
+        }
+    }
+    
+    fun HttpRequestBuilder.logOutHeaders() {
+        headers {
+            header("Accept", ACCEPT_ALL)
+            header(HttpHeaders.Referrer, LOGIN_CONSULT_URL)
+            header("Upgrade-Insecure-Requests", "1")
+            header("Sec-Fetch-Site", "same-origin")
+            header("Sec-Fetch-Mode", "navigate")
+            header("Sec-Fetch-Dest", "frame")
             header("Sec-Fetch-User", "?1")
         }
     }

@@ -129,8 +129,10 @@ class SyncDataImplementation @Inject constructor(
                 }
             }
             result = true
+            appNetwork.logOut()
             delay(DELAY_BETWEEN_EACH_SYNC_REQUEST)
         }
+        // TODO: return reference of throwable initiators & push to the Ui
         return result
     }
     

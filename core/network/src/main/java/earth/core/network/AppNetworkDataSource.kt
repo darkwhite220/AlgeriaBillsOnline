@@ -15,4 +15,6 @@ interface AppNetworkDataSource {
     suspend fun signIn(username: String, password: String): SignInResponse
     
     suspend fun fetchBill(urlEndpoint: String): BillResponse
+    
+    suspend fun logOut()
 }
