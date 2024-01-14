@@ -24,5 +24,6 @@
     <string name="sign_in_failed_desc">Please check the values and try again, If the problem persists contact support.</string>
     <string name="sign_in_failed_wrong_username_desc">Wrong username, Please check the values and try again.</string>
     <string name="sign_in_failed_wrong_password_desc">Wrong password, Please check the values and try again.</string>
+    <string name="sign_in_failed_temporary_lock_desc">Wrong password entered multiple times, Account temporarily locked (5 minutes), Please try again later.</string>
 
 </resources>

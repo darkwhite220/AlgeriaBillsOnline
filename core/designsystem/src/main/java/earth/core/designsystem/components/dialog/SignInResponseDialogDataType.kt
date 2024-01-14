@@ -39,6 +39,14 @@ enum class SignInResponseDialogDataType(
             buttonTextId = R.string.dismiss,
         )
     ),
+    TEMPORARILY_LOCKED_ACCOUNT(
+        dialogData = DialogData(
+            lottieFileName = FAILED_LOTTIE_FILE,
+            titleId = R.string.sign_in_failed,
+            textId = R.string.sign_in_failed_temporary_lock_desc,
+            buttonTextId = R.string.dismiss,
+        )
+    ),
     FAILED(
         dialogData = DialogData(
             lottieFileName = FAILED_LOTTIE_FILE,

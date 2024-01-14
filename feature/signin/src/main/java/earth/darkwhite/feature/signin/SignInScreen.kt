@@ -49,6 +49,7 @@ fun SignInRoute(
     SignInScreen(
         signInFormState = signInFormState,
         signInUiState = signInUiState,
+        isPreviousFail = viewModel.isPreviousFail,
         onSignInEvent = viewModel::onEvent,
         onBackClick = onBackClick,
     )
@@ -65,6 +66,7 @@ fun SignInRoute(
 fun SignInScreen(
     signInFormState: SignInFormState = SignInFormState(),
     signInUiState: SignInUiState = SignInUiState.InitialState,
+    isPreviousFail: Boolean = false,
     onSignInEvent: (SignInEvent) -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -77,7 +79,7 @@ fun SignInScreen(
         )
         
         Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            MyWidthSpacer(largeDp * 2)
+            MyWidthSpacer(largeDp * 3)
             Column(
                 modifier = Modifier
 //                .imePadding() // TODO CHECK IME PADDING
@@ -132,6 +134,7 @@ fun SignInScreen(
                 
                 ButtonWithLoading(
                     textId = R.string.sign_in,
+                    isEnabled = !isPreviousFail && signInUiState != SignInUiState.Loading,
                     isLoading = signInUiState == SignInUiState.Loading,
                     onClick = { onSignInEvent(OnSignInClick) },
                 )
@@ -187,6 +190,9 @@ private fun ShowSignInDialog(
                 }
                 SignInThrowable.BadPassword -> {
                     SignInResponseDialogDataType.FAILED_WRONG_PASSWORD
+                }
+                SignInThrowable.TemporarilyLockedAccount -> {
+                    SignInResponseDialogDataType.TEMPORARILY_LOCKED_ACCOUNT
                 }
                 else -> {
                     if (signInUiState.throwable is ConvertingPdfThrowable.UnhandledSignInResponse) {

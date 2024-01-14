@@ -37,6 +37,8 @@ import earth.core.networkmodel.SignupRequestBody
 import earth.core.networkmodel.SignupResponse
 import earth.core.throwablemodel.SignInThrowable
 import earth.core.throwablemodel.SignInThrowableConstants
+import earth.core.throwablemodel.SignInThrowableConstants.TEMPORARILY_LOCKED_ACCOUNT_KEY
+import earth.core.throwablemodel.SignInThrowableConstants.TEMPORARILY_LOCKED_ACCOUNT_VALUE
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.cookies.cookies
@@ -114,6 +116,7 @@ class AppNetwork @Inject constructor(
             
             expectSuccess = false
             
+            
             setBody(
                 FormDataContent(
                     Parameters.build {
@@ -123,14 +126,22 @@ class AppNetwork @Inject constructor(
                         append(SIGN_IN_BUTTON_Y, randomInt())
                     })
             )
-        }.bodyAsText()
+        }
         
-        if (logIn.contains(SignInThrowableConstants.WRONG_USERNAME) ||
-            logIn.contains(SignInThrowableConstants.WRONG_USERNAME_TWO)
+        val logInBody = logIn.bodyAsText()
+        
+        if (logInBody.contains(SignInThrowableConstants.WRONG_USERNAME) ||
+            logInBody.contains(SignInThrowableConstants.WRONG_USERNAME_TWO)
         ) {
             throw SignInThrowable.BadUsername
-        } else if (logIn.contains(SignInThrowableConstants.WRONG_PASSWORD)) {
+        } else if (logInBody.contains(SignInThrowableConstants.WRONG_PASSWORD)) {
             throw SignInThrowable.BadPassword
+        } else if (logIn.headers.contains(
+                TEMPORARILY_LOCKED_ACCOUNT_KEY,
+                TEMPORARILY_LOCKED_ACCOUNT_VALUE
+            )
+        ) {
+            throw SignInThrowable.TemporarilyLockedAccount
         }
         
         val response = client.get(LOGIN_CONSULT_URL) {
@@ -138,7 +149,7 @@ class AppNetwork @Inject constructor(
         }
         
         return SignInResponse(
-            signInBody = logIn,
+            signInBody = logInBody,
             homePageBody = response.bodyAsText(),
         )
     }

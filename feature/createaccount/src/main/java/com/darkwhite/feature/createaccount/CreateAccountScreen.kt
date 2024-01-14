@@ -158,6 +158,7 @@ private fun CreateAccountScreen(
                 
                 ButtonWithLoading(
                     textId = R.string.create_account,
+                    isEnabled = signupUiState != SignupUiState.Loading,
                     isLoading = signupUiState == SignupUiState.Loading,
                     onClick = { onCreateAccountEvent(OnCreateAccountClick) },
                 )

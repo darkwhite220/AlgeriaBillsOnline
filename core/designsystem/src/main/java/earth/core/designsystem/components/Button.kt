@@ -16,13 +16,14 @@ import earth.core.designsystem.R
 @Composable
 fun ButtonWithLoading(
     @StringRes textId: Int = R.string.password_visibility_icon,
+    isEnabled: Boolean = true,
     isLoading: Boolean = false,
     onClick: () -> Unit = {},
 ) {
     Button(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(.8f),
-        enabled = !isLoading
+        enabled = isEnabled
     ) {
         Text(
             text = stringResource(id = textId)

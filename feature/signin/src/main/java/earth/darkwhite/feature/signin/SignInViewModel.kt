@@ -1,6 +1,9 @@
 package earth.darkwhite.feature.signin
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +35,11 @@ class SignInViewModel @Inject constructor(
     signInUseCase: SignInUseCase,
     private val network: NetworkMonitorRepository,
 ) : ViewModel() {
-    // TODO forget password logic
-    // TODO implement backoff delay
+    // TODO forget password
     
     private val isOnline = MutableStateFlow(false)
+    var isPreviousFail by mutableStateOf(false)
+        private set
     
     private val _signInFormState = MutableStateFlow(SignInFormState())
     val signInFormState: StateFlow<SignInFormState> = _signInFormState.asStateFlow()
@@ -50,7 +54,10 @@ class SignInViewModel @Inject constructor(
                     when (result) {
                         Result.Loading -> SignInUiState.Loading
                         is Result.Success -> SignInUiState.Success(result.data)
-                        is Result.Error -> SignInUiState.Failed(result.exception)
+                        is Result.Error -> {
+                            isPreviousFail = true
+                            SignInUiState.Failed(result.exception)
+                        }
                     }
                 }
         } else {
@@ -92,6 +99,7 @@ class SignInViewModel @Inject constructor(
     }
     
     private fun updateUserName(value: String) {
+        isPreviousFail = false
         _signInFormState.update {
             it.copy(
                 username = value,
@@ -101,6 +109,7 @@ class SignInViewModel @Inject constructor(
     }
     
     private fun updatePassword(value: String) {
+        isPreviousFail = false
         _signInFormState.update {
             it.copy(
                 password = value,
