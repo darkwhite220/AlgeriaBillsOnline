@@ -26,4 +26,20 @@
     <string name="sign_in_failed_wrong_password_desc">Wrong password, Please check the values and try again.</string>
     <string name="sign_in_failed_temporary_lock_desc">Wrong password entered multiple times, Account temporarily locked (5 minutes), Please try again later.</string>
 
+    <!-- Create Account & SignIn screens-->
+    <string name="username">Username</string>
+    <string name="min_username_length">Min 8 alphanumeric characters</string>
+    <string name="email">Email</string>
+    <string name="example_gmail">Example@gmail.com</string>
+    <string name="reference">Reference</string>
+    <string name="example_reference">012345678901234</string>
+    <string name="reference_length">Must be 15 digits</string>
+    <string name="password">Password</string>
+    <string name="password_wrong_format">Wrong format</string>
+    <string name="password_desc">"   Password must contain:\n        - at least 8 characters\n        - at least one uppercase\n        - at least one lowercase\n        - at least one special character (_-*/,\\$!?.\")"</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="repeat_password_desc">Must be same as password</string>
+    <string name="image_code">Image code</string>
+    <string name="image_code_desc">5 alphanumeric characters</string>
+
 </resources>

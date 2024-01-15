@@ -1,7 +1,6 @@
 package earth.darkwhite.feature.signin
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -20,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.designsystem.Util.sendEmail
 import earth.core.designsystem.components.ButtonWithLoading
-import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextDescription
 import earth.core.designsystem.components.TextDisplaySmall
 import earth.core.designsystem.components.dialog.ResponseDialog
@@ -78,73 +76,69 @@ fun SignInScreen(
             titleId = null,
             onBackClick = onBackClick,
         )
-        
-        Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            MyWidthSpacer(largeDp)
-            Column(
-                modifier = Modifier
+        Column(
+            modifier = Modifier
 //                .imePadding() // TODO CHECK IME PADDING
-                    .fillMaxSize()
-                    .weight(1f),
-                verticalArrangement = verticalSpacedBy(largeDp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                val focusManager = LocalFocusManager.current
-                
-                TextDisplaySmall(
-                    textId = R.string.sign_in,
-                    modifier = Modifier.padding(vertical = largeDp)
-                )
-                TextDescription(textId = R.string.sign_in_desc)
-                
-                signInTextFieldMap.entries.forEachIndexed { index, item ->
-                    val focusRequester = remember { FocusRequester() }
-                    LaunchedEffect(Unit) {
-                        if (index == 0) focusRequester.requestFocus()
-                    }
-                    
-                    MyTextField(
-                        focusRequester = focusRequester,
-                        fieldType = item.key.name,
-                        fieldValues = item.value,
-                        value = signInFormState.currentValue(item.key),
-                        isValid = signInFormState.currentIsValid(item.key),
-                        enabled = signInFormState.enabled,
-                        onValueChange = { newValue ->
-                            onFormEventValueChange(
-                                newValue = newValue.trim(),
-                                signInTextFieldTypes = item.key,
-                                onSignInEvent = onSignInEvent,
-                            )
-                        },
-                        onTextFieldEvent = { event ->
-                            when (event) {
-                                TextFieldEvent.OnKeyboardPreviousActions -> {
-                                    focusManager.moveFocus(FocusDirection.Previous)
-                                }
-                                TextFieldEvent.OnKeyboardNextActions -> {
-                                    focusManager.moveFocus(FocusDirection.Next)
-                                }
-                                TextFieldEvent.OnKeyboardDoneActions -> {
-                                    focusManager.clearFocus(true)
-                                    onSignInEvent(OnSignInClick)
-                                }
-                                else -> {}
-                            }
-                        },
-                    )
-                    
+                .fillMaxSize()
+                .padding(horizontal = largeDp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = verticalSpacedBy(largeDp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val focusManager = LocalFocusManager.current
+            
+            TextDisplaySmall(
+                textId = R.string.sign_in,
+                modifier = Modifier.padding(vertical = largeDp)
+            )
+            TextDescription(textId = R.string.sign_in_desc)
+            
+            signInTextFieldMap.entries.forEachIndexed { index, item ->
+                val focusRequester = remember { FocusRequester() }
+                LaunchedEffect(Unit) {
+                    if (index == 0) focusRequester.requestFocus()
                 }
                 
-                ButtonWithLoading(
-                    textId = R.string.sign_in,
-                    isEnabled = !isPreviousFail && signInUiState != SignInUiState.Loading,
-                    isLoading = signInUiState == SignInUiState.Loading,
-                    onClick = { onSignInEvent(OnSignInClick) },
+                MyTextField(
+                    focusRequester = focusRequester,
+                    fieldType = item.key.name,
+                    fieldValues = item.value,
+                    value = signInFormState.currentValue(item.key),
+                    isValid = signInFormState.currentIsValid(item.key),
+                    enabled = signInFormState.enabled,
+                    onValueChange = { newValue ->
+                        onFormEventValueChange(
+                            newValue = newValue.trim(),
+                            signInTextFieldTypes = item.key,
+                            onSignInEvent = onSignInEvent,
+                        )
+                    },
+                    onTextFieldEvent = { event ->
+                        when (event) {
+                            TextFieldEvent.OnKeyboardPreviousActions -> {
+                                focusManager.moveFocus(FocusDirection.Previous)
+                            }
+                            TextFieldEvent.OnKeyboardNextActions -> {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }
+                            TextFieldEvent.OnKeyboardDoneActions -> {
+                                focusManager.clearFocus(true)
+                                onSignInEvent(OnSignInClick)
+                            }
+                            else -> {}
+                        }
+                    },
                 )
                 
             }
-            MyWidthSpacer(largeDp)
+            
+            ButtonWithLoading(
+                textId = R.string.sign_in,
+                isEnabled = !isPreviousFail && signInUiState != SignInUiState.Loading,
+                isLoading = signInUiState == SignInUiState.Loading,
+                onClick = { onSignInEvent(OnSignInClick) },
+            )
+            
         }
     }
 }

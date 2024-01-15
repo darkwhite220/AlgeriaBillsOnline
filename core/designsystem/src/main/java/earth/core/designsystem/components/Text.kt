@@ -45,13 +45,13 @@ fun TextDescription(@StringRes textId: Int) {
 }
 
 @Composable
-fun TextFieldDescription(description: String? = null) {
+fun TextFieldDescription(description: Int? = null) {
     description?.let {
         CompositionLocalProvider(
-            LocalContentColor provides LocalContentColor.current.copy(alpha = .6f)
+            LocalContentColor provides LocalContentColor.current.copy(alpha = .74f)
         ) {
             Text(
-                text = it,
+                text = stringResource(it),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.fillMaxWidth()
             )

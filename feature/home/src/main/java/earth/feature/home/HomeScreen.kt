@@ -70,7 +70,7 @@ internal fun HomeRoute(
     )
     
     LaunchedEffect(key1 = Unit) {
-        viewModel.initSyncData()
+//        viewModel.initSyncData()
     }
 }
 
@@ -210,6 +210,7 @@ private fun NewUserPage(onHomeEvent: (HomeEvent) -> Unit) {
         Text(text = "SignIn")
     }
 }
+
 // TODO CHECK THROWABLE FROM SIGN IN OR BAD FORMAT (if change pass word outside app)
 @Composable
 private fun SyncUi(

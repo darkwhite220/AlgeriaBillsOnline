@@ -49,7 +49,7 @@ fun MyTextField(
             value = value,
             onValueChange = { onValueChange(it) },
             enabled = enabled,
-            label = { Text(text = label) },
+            label = { Text(text = stringResource(label)) },
             placeholder = { PlaceHolder() },
             trailingIcon = {
                 when (fieldType) {
@@ -87,16 +87,19 @@ fun MyTextField(
 
 @Composable
 private fun MyTextFieldItem.PlaceHolder() {
-    placeholder?.let { Text(text = it) }
+    placeholder?.let { Text(text = stringResource(it)) }
 }
 
 @Composable
 private fun MyTextFieldItem.SupportingText(isError: Boolean) {
-    if (supportingText.isNotBlank() && isError) {
-        Text(
-            text = supportingText,
-            color = MaterialTheme.colorScheme.error
-        )
+    supportingText?.let {
+        val supportingText = stringResource(id = it)
+        if (supportingText.isNotBlank() && isError) {
+            Text(
+                text = supportingText,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
     }
 }
 

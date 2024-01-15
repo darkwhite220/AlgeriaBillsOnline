@@ -3,6 +3,7 @@ package com.darkwhite.feature.createaccount
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -27,7 +28,6 @@ import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyHeightSpacer
-import earth.core.designsystem.components.MyWidthSpacer
 import earth.core.designsystem.components.TextFieldDescription
 import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.dialog.ResponseDialog
@@ -93,13 +93,15 @@ private fun CreateAccountScreen(
             onBackClick = onBackClick,
         )
         
-        Row(modifier = Modifier.verticalScroll(rememberScrollState())) {
-            MyWidthSpacer(largeDp)
+        Row(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = largeDp)
+        ) {
             Column(
                 modifier = Modifier
 //                .imePadding() // TODO CHECK IME PADDING
-                    .fillMaxSize()
-                    .weight(1f),
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val focusManager = LocalFocusManager.current
@@ -165,7 +167,6 @@ private fun CreateAccountScreen(
                 
                 MyHeightSpacer(largeDp)
             }
-            MyWidthSpacer(largeDp)
         }
     }
 }
