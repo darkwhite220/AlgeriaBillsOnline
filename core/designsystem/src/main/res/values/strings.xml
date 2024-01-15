@@ -18,8 +18,8 @@
 
     <!-- SignIn Response Dialog-->
     <string name="sign_in_successful">Sign In Successful</string>
-    <string name="sign_in_successful_but_already_exist_in_app">Account Already Saved</string>
-    <string name="sign_in_successful_but_already_exist_in_app_desc">Account holding same \"Reference Number\" already saved in the app, this account won\'t be saved.</string>
+    <string name="sign_in_successful_updated_credentials">Credentials Updated Successfully</string>
+    <string name="sign_in_successful_updated_credentials_desc">Account holding same \"Reference Number\" already saved in the app, it credentials updated successfully.</string>
     <string name="sign_in_failed">Sign In Failed</string>
     <string name="sign_in_failed_desc">Please check the values and try again, If the problem persists contact support.</string>
     <string name="sign_in_failed_wrong_username_desc">Wrong username, Please check the values and try again.</string>

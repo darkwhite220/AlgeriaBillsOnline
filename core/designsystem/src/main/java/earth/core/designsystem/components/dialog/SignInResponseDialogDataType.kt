@@ -15,11 +15,11 @@ enum class SignInResponseDialogDataType(
             buttonTextId = R.string.continue_button,
         )
     ),
-    SUCCESS_ALREADY_EXIST_IN_APP(
+    SUCCESS_CREDENTIAL_UPDATE(
         dialogData = DialogData(
             lottieFileName = SUCCESSFUL_LOTTIE_FILE,
-            titleId = R.string.sign_in_successful_but_already_exist_in_app,
-            textId = R.string.sign_in_successful_but_already_exist_in_app_desc,
+            titleId = R.string.sign_in_successful_updated_credentials,
+            textId = R.string.sign_in_successful_updated_credentials_desc,
             buttonTextId = R.string.continue_button,
         )
     ),

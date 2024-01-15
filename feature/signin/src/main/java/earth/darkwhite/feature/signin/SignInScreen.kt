@@ -177,7 +177,7 @@ private fun ShowSignInDialog(
             val dialogDataType = if (signInUiState.data) {
                 SignInResponseDialogDataType.SUCCESS
             } else {
-                SignInResponseDialogDataType.SUCCESS_ALREADY_EXIST_IN_APP
+                SignInResponseDialogDataType.SUCCESS_CREDENTIAL_UPDATE
             }
             ResponseDialog(
                 dialogData = dialogDataType.dialogData,

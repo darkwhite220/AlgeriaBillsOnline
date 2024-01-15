@@ -29,6 +29,13 @@ class SignInImplementation @Inject constructor(
                     password = signInCredentials.password,
                 )
             )
+        } else {
+            userRepository.insertUser(
+                user.copy(
+                    username = signInCredentials.username,
+                    password = signInCredentials.password,
+                )
+            )
         }
         
         return user == null
