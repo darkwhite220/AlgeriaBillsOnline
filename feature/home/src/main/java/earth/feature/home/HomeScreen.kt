@@ -3,6 +3,7 @@ package earth.feature.home
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -33,12 +34,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.BillPreview
 import earth.core.designsystem.Util
+import earth.core.designsystem.components.MyButton
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
+import earth.core.designsystem.components.TextDescription
+import earth.core.designsystem.components.TextDisplaySmall
+import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED_WRONG_PASSWORD
@@ -47,6 +53,8 @@ import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.TEMPORARILY_LOCKED_ACCOUNT
 import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.indicatorWidthUnselected
+import earth.core.designsystem.components.largeDp
+import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.components.verticalSpacedBy
 import earth.core.throwablemodel.ConvertingPdfThrowable
@@ -142,28 +150,26 @@ private fun HomeScreen(
                         key = { item -> item },
                         modifier = Modifier.weight(1f)
                     ) { index ->
-                        
-                        Column(modifier = Modifier.fillMaxSize()) {
-                            if (index < usersUiState.data.size) {
-                                usersUiState.data[index].billsPreview?.let { billPreview ->
-                                    LazyColumn(
-                                        verticalArrangement = verticalSpacedBy()
-                                    ) {
-                                        items(
-                                            items = billPreview,
-                                            key = { item: BillPreview -> item.billNumber }
-                                        ) { item ->
-                                            Text(text = "$item")
-                                        }
-                                        // Indicators Height (circle)
-                                        item {
-                                            MyHeightSpacer(indicatorWidthUnselected)
-                                        }
+                        if (index < usersUiState.data.size) {
+                            usersUiState.data[index].billsPreview?.let { billPreview ->
+                                LazyColumn(
+                                    verticalArrangement = verticalSpacedBy(),
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
+                                    items(
+                                        items = billPreview,
+                                        key = { item: BillPreview -> item.billNumber }
+                                    ) { item ->
+                                        Text(text = "$item")
+                                    }
+                                    // Indicators Height (circle)
+                                    item {
+                                        MyHeightSpacer(indicatorWidthUnselected)
                                     }
                                 }
-                            } else {
-                                NewUserPage(onHomeEvent = onHomeEvent)
                             }
+                        } else {
+                            AddAccountPage(onHomeEvent = onHomeEvent)
                         }
                     }
                 }
@@ -208,15 +214,35 @@ private fun HomeScreen(
 }
 
 @Composable
-private fun NewUserPage(onHomeEvent: (HomeEvent) -> Unit) {
-    Text(text = "Welcome new user")
-    Button(onClick = { onHomeEvent(HomeEvent.OnCreateAccountClick) }) {
-        Text(text = "Create New Account")
-    }
-    Button(onClick = {
-        onHomeEvent(HomeEvent.OnSignInClick)
-    }) {
-        Text(text = "SignIn")
+private fun AddAccountPage(onHomeEvent: (HomeEvent) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = largeDp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        TextDisplaySmall(textId = R.string.track_more_bills)
+        MyHeightSpacer(height = 40.dp)
+        
+        TextTitleLarge(textId = R.string.need_to_track_bills_for_a_new_place)
+        MyHeightSpacer(mediumDp)
+        TextDescription(textId = R.string.create_an_account_to_track_the_bills)
+        MyHeightSpacer(largeDp)
+        MyButton(
+            textId = R.string.create_account,
+            onClick = { onHomeEvent(HomeEvent.OnCreateAccountClick) }
+        )
+        MyHeightSpacer(largeDp)
+        
+        TextTitleLarge(textId = R.string.have_an_account)
+        MyHeightSpacer(mediumDp)
+        TextDescription(textId = R.string.sign_in_to_continue)
+        MyHeightSpacer(largeDp)
+        MyButton(
+            textId = R.string.sign_in,
+            onClick = { onHomeEvent(HomeEvent.OnSignInClick) }
+        )
     }
 }
 

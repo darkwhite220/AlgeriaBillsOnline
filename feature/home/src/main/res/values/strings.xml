@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="track_more_bills">Track More Bills!</string>
+    <string name="need_to_track_bills_for_a_new_place">Need to track bills for a new place??</string>
+    <string name="create_an_account_to_track_the_bills">Create an account to track the bills</string>
+    <string name="create_account">Create Account</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="sign_in">Sign In</string>
+
     <string name="new_bill_found">New bill found!</string>
     <string name="no_new_bill_found">No new bill found</string>
     <string name="sync_data_error">Sync Data Error</string>

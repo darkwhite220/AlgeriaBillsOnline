@@ -36,3 +36,13 @@ fun ButtonWithLoading(
         }
     }
 }
+
+@Composable
+fun MyButton(
+    @StringRes textId: Int,
+    onClick: () -> Unit
+) {
+    Button(onClick = onClick) {
+        Text(text = stringResource(textId))
+    }
+}
