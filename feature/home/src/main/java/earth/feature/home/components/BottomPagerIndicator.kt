@@ -3,13 +3,17 @@ package earth.feature.home.components
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,14 +25,31 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import earth.core.designsystem.components.indicatorWidthSelected
 import earth.core.designsystem.components.indicatorWidthUnselected
+import earth.core.designsystem.components.smallDp
 
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun BottomPagerIndicator(pagerState: PagerState) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = smallDp),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Indicators(
+            size = pagerState.pageCount,
+            index = pagerState.currentPage
+        )
+    }
+}
 
 /**
  * Indicators Row layout
  */
 @Preview(showBackground = true)
 @Composable
-fun Indicators(
+private fun Indicators(
     size: Int = 2,
     index: Int = 0,
 ) {
@@ -48,7 +69,7 @@ fun Indicators(
  * Indicator
  */
 @Composable
-fun Indicator(
+private fun Indicator(
     isSelected: Boolean,
     indicatorHeight: Dp = indicatorWidthUnselected
 ) {

@@ -3,8 +3,6 @@ package earth.feature.home
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -34,17 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.BillPreview
 import earth.core.designsystem.Util
-import earth.core.designsystem.components.MyButton
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
-import earth.core.designsystem.components.TextDescription
-import earth.core.designsystem.components.TextDisplaySmall
-import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED_WRONG_PASSWORD
@@ -53,14 +46,12 @@ import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.TEMPORARILY_LOCKED_ACCOUNT
 import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.indicatorWidthUnselected
-import earth.core.designsystem.components.largeDp
-import earth.core.designsystem.components.mediumDp
-import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.components.verticalSpacedBy
 import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.SignInThrowable
+import earth.feature.home.components.AddAccountPage
+import earth.feature.home.components.BottomPagerIndicator
 import earth.feature.home.components.HomeTopAppBar
-import earth.feature.home.components.Indicators
 import earth.feature.home.uistate.SyncUiState
 import earth.feature.home.uistate.UsersUiState
 import kotlinx.coroutines.launch
@@ -175,17 +166,7 @@ private fun HomeScreen(
                 }
             }
         }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = smallDp),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            Indicators(
-                size = pagerState.pageCount,
-                index = pagerState.currentPage
-            )
-        }
+        BottomPagerIndicator(pagerState)
     }
     
     if (showBottomSheet) {
@@ -213,38 +194,6 @@ private fun HomeScreen(
     
 }
 
-@Composable
-private fun AddAccountPage(onHomeEvent: (HomeEvent) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = largeDp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TextDisplaySmall(textId = R.string.track_more_bills)
-        MyHeightSpacer(height = 40.dp)
-        
-        TextTitleLarge(textId = R.string.need_to_track_bills_for_a_new_place)
-        MyHeightSpacer(mediumDp)
-        TextDescription(textId = R.string.create_an_account_to_track_the_bills)
-        MyHeightSpacer(largeDp)
-        MyButton(
-            textId = R.string.create_account,
-            onClick = { onHomeEvent(HomeEvent.OnCreateAccountClick) }
-        )
-        MyHeightSpacer(largeDp)
-        
-        TextTitleLarge(textId = R.string.have_an_account)
-        MyHeightSpacer(mediumDp)
-        TextDescription(textId = R.string.sign_in_to_continue)
-        MyHeightSpacer(largeDp)
-        MyButton(
-            textId = R.string.sign_in,
-            onClick = { onHomeEvent(HomeEvent.OnSignInClick) }
-        )
-    }
-}
 
 @Composable
 private fun SyncUi(
