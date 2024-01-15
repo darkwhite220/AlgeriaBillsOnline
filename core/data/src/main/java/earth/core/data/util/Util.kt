@@ -22,6 +22,8 @@ data class CalculationHolder(
 fun SignInResponse.concatThrowableMessage(): String =
     "LOGIN PART".center() + this.signInBody + "\n" + "HOME PAGE PART".center() + this.homePageBody
 
-
-private fun String.center(padding: Int = 10, char: String = "-_-"): String =
+fun String.center(padding: Int = 10, char: String = "-_-"): String =
     "${char.repeat(padding)}$this${char.repeat(padding)}\n"
+
+fun List<String>.listStringToString(): String =
+    "Pdf Format".center() + this.joinToString("\n")

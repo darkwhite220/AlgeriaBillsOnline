@@ -87,7 +87,12 @@ object Util {
         val title = context.getString(titleId)
         
         val intentRequest = Intent(Intent.ACTION_SENDTO)
-        intentRequest.data = Uri.parse("mailto:$email?subject=$title?body=$message")
+        intentRequest.data = if (message.isNullOrBlank()) {
+            Uri.parse("mailto:$email?subject=$title")
+        } else {
+            Uri.parse("mailto:$email?subject=$title&body=\nError Message\n$message")
+        }
+        
         try {
             context.startActivity(Intent.createChooser(intentRequest, "Send mail..."))
         } catch (ex: ActivityNotFoundException) {

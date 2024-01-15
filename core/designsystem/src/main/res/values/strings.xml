@@ -42,4 +42,13 @@
     <string name="image_code">Image code</string>
     <string name="image_code_desc">5 alphanumeric characters</string>
 
+    <!-- Home screen-->
+    <string name="sync_failed">Data Sync Failed</string>
+    <string name="sync_failed_sync_wrong_password_desc">Failed to fetch new bills\nReason: wrong password, sign in with the new credentials to fix.</string>
+    <string name="sync_failed_sync_wrong_username_desc">Failed to fetch new bills\nReason: wrong username, sign in with the new credentials to fix.</string>
+    <string name="sync_failed_sync_temporary_lock_desc">Failed to fetch new bills\nReason: too many attempts, please try again later.</string>
+    <string name="sync_failed_sync_pdf_extractor_desc">Failed to fetch new bills\nReason: failed to extract data, If the problem persists contact support.</string>
+    <string name="sync_failed_desc">Failed to fetch new bills, If the problem persists contact support.</string>
+
+
 </resources>

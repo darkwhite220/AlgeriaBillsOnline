@@ -24,9 +24,9 @@ class SyncDataImplementation @Inject constructor(
     private val billDao: BillDao,
 ) : SyncDataRepository {
     
-    override suspend fun syncData(): Boolean {
+    override suspend fun syncData(): Boolean? {
         val userList: List<User> = userDao.getUsers().map { it.asExternalModel() }
-        var result = false
+        var result: Boolean? = null
         
         userList.forEach { user ->
             // login
@@ -127,8 +127,10 @@ class SyncDataImplementation @Inject constructor(
                         billsList.map { it.asEntity() }
                     )
                 }
+                result = true
+            } else {
+                result = false
             }
-            result = true
             appNetwork.logOut()
             delay(DELAY_BETWEEN_EACH_SYNC_REQUEST)
         }

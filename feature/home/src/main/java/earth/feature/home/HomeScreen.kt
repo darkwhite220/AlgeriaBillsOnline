@@ -32,14 +32,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.BillPreview
+import earth.core.designsystem.Util
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
+import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog
+import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED
+import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED_WRONG_PASSWORD
+import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED_WRONG_USERNAME
+import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.PDF_TEXT_EXTRACTOR
+import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.TEMPORARILY_LOCKED_ACCOUNT
+import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.indicatorWidthUnselected
 import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.components.verticalSpacedBy
+import earth.core.throwablemodel.ConvertingPdfThrowable
+import earth.core.throwablemodel.SignInThrowable
 import earth.feature.home.components.HomeTopAppBar
 import earth.feature.home.components.Indicators
 import earth.feature.home.uistate.SyncUiState
@@ -70,7 +81,7 @@ internal fun HomeRoute(
     )
     
     LaunchedEffect(key1 = Unit) {
-//        viewModel.initSyncData()
+        viewModel.initSyncData()
     }
 }
 
@@ -125,8 +136,6 @@ private fun HomeScreen(
                     MyCircularProgressBar()
                 }
                 is UsersUiState.Successful -> {
-                    Log.d(TAG, "${usersUiState.data}")
-                    
                     HorizontalPager(
                         state = pagerState,
                         verticalAlignment = Alignment.Top,
@@ -211,32 +220,58 @@ private fun NewUserPage(onHomeEvent: (HomeEvent) -> Unit) {
     }
 }
 
-// TODO CHECK THROWABLE FROM SIGN IN OR BAD FORMAT (if change pass word outside app)
 @Composable
 private fun SyncUi(
     syncUiState: SyncUiState,
     onHomeEvent: (HomeEvent) -> Unit
 ) {
+    val context = LocalContext.current
     when (syncUiState) {
         SyncUiState.InitialState -> {}
         SyncUiState.Loading -> {
             MyCircularProgressBar()
         }
         is SyncUiState.Success -> {
-            Log.d(TAG, "HomeScreen: syncData updated")
-            if (syncUiState.isNotEmpty) {
-                Toast.makeText(LocalContext.current, "SyncData updated", Toast.LENGTH_SHORT)
-                    .show()
-                onHomeEvent(HomeEvent.OnSuccessSyncUiState)
+            syncUiState.isNewBills?.let { isNewBills ->
+                val message = if (isNewBills) {
+                    R.string.new_bill_found
+                } else {
+                    R.string.no_new_bill_found
+                }
+                Toast.makeText(context, stringResource(message), Toast.LENGTH_SHORT).show()
             }
+            onHomeEvent(HomeEvent.OnSuccessSyncUiState)
         }
         is SyncUiState.Failed -> {
             Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
-            Toast.makeText(LocalContext.current, "SyncData Failed", Toast.LENGTH_SHORT)
-                .show()
-            onHomeEvent(HomeEvent.OnFailedSyncUiState)
+            var supportMessage: String? = null
+            val dialogDataType: HomeScreenFailedResponseDialog = when (syncUiState.throwable) {
+                SignInThrowable.BadPassword -> FAILED_WRONG_PASSWORD
+                SignInThrowable.BadUsername -> FAILED_WRONG_USERNAME
+                SignInThrowable.TemporarilyLockedAccount -> TEMPORARILY_LOCKED_ACCOUNT
+                ConvertingPdfThrowable.PdfTextExtractorError -> PDF_TEXT_EXTRACTOR
+                else -> {
+                    if (syncUiState.throwable is ConvertingPdfThrowable.BadPdfFormat ||
+                        syncUiState.throwable is ConvertingPdfThrowable.UnhandledSignInResponse
+                    ) {
+                        supportMessage = syncUiState.throwable.message
+                    }
+                    FAILED
+                }
+            }
+            ResponseDialog(
+                dialogData = dialogDataType.dialogData,
+                supportMessage = supportMessage,
+                onDismissClick = { onHomeEvent(HomeEvent.OnFailedSyncUiState) },
+                onContactSupportClick = {
+                    Util.sendEmail(
+                        context = context,
+                        titleId = R.string.sync_data_error,
+                        message = supportMessage
+                    )
+                    onHomeEvent(HomeEvent.OnFailedSyncUiState)
+                },
+            )
         }
-        
     }
 }
-

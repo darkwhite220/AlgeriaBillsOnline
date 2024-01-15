@@ -1,6 +1,5 @@
 package earth.core.data.util
 
-import earth.core.network.Constants
 import earth.core.networkmodel.SignInData
 import earth.core.networkmodel.SignInResponse
 import earth.core.throwablemodel.ConvertingPdfThrowable
@@ -42,24 +41,32 @@ object SignInUtil {
         println("extractData: Address: $address")
 
 //        val update = document.select("p.orange").first()?.text()
-        val billNumber =
-            document.select("tr.tr_pair > td").first()?.text()?.trim() ?: Constants.DEFAULT_VALUE
+        val billNumber = document.select("tr.tr_pair > td").first()?.text()?.trim()
         val date = document.select("tr.tr_pair > td").eq(1).text().trim()
-        val trimestreData = document.select("tr.tr_pair > td").eq(2).text().trim()
-        val trimestre = trimestreData.first().toString()
-        val trimestreYear = trimestreData.takeLast(4)
+        val trimesterData = document.select("tr.tr_pair > td").eq(2).text().trim()
+        val trimester = trimesterData.first().toString()
+        val trimesterYear = trimesterData.takeLast(4)
         
         // Print extracted data
 //        println( update) // Should print: update date
         println(billNumber) // Should print: 412231105103
         println(date) // Should print: 2023-11-15
-        println(trimestreData) // Should print: 4ème Trimestre 2023
-        println(trimestre) // Should print: 4ème Trimestre 2023
-        println(trimestreYear) // Should print: 4ème Trimestre 2023
+        println(trimesterData) // Should print: 4ème Trimestre 2023
+        println(trimester) // Should print: 4ème Trimestre 2023
+        println(trimesterYear) // Should print: 4ème Trimestre 2023
         
-        // Assuming the part you are interested in is within an anchor <a> tag with onclick attribute containing "num_fac"
-        val hrefValue = document.select("a[onclick*=num_fac]").first()?.attr("onclick") ?: ""
+        // <a> tag with onclick attribute containing "num_fac"
+        val hrefValue = document.select("a[onclick*=num_fac]").first()?.attr("onclick")
         println(hrefValue)
+        
+        // First check
+        if (reference.isEmpty() || fullName.isEmpty() || address.isEmpty() ||
+            billNumber.isNullOrEmpty() || date.isEmpty() || trimester.isEmpty() ||
+            trimesterYear.isEmpty() || hrefValue.isNullOrEmpty()
+        ) {
+            throw Exception("Error: (Check 1) Failed to extract data from home page")
+        }
+        
         // Use regular expressions to extract the URL part you're interested in
         val regexPattern = """'([^']*)'""".toRegex()
         val matchResult = regexPattern.find(hrefValue)
@@ -87,14 +94,19 @@ object SignInUtil {
             println("extractData: filial: $filial") // Should print: filial: SDC}
         }
         
+        // Second check
+        if (urlPart.isNullOrEmpty() || mttTtc.isNullOrEmpty()) {
+            throw Exception("Error: (Check 2) Failed to extract data from home page")
+        }
+        
         return SignInData(
             reference = reference,
             fullName = fullName,
             address = address,
             billNumber = billNumber,
             date = date,
-            trimester = trimestre,
-            year = trimestreYear,
+            trimester = trimester,
+            year = trimesterYear,
             amount = mttTtc,
             billUrl = urlPart,
         )

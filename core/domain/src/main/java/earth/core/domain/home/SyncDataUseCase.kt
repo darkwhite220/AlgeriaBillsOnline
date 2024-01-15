@@ -11,7 +11,7 @@ class SyncDataUseCase @Inject constructor(
     private val syncDataRepository: SyncDataRepository
 ) {
     
-    operator fun invoke(): Flow<Boolean> = flow {
+    operator fun invoke(): Flow<Boolean?> = flow {
         val result = withContext(Dispatchers.IO){
             syncDataRepository.syncData()
         }

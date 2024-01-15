@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_bill_found">New bill found!</string>
+    <string name="no_new_bill_found">No new bill found</string>
+    <string name="sync_data_error">Sync Data Error</string>
+</resources>

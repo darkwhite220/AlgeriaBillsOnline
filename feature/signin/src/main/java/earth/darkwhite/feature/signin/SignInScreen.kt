@@ -194,7 +194,7 @@ private fun ShowSignInDialog(
                 }
                 else -> {
                     if (signInUiState.throwable is ConvertingPdfThrowable.UnhandledSignInResponse) {
-                        supportMessage = signInUiState.throwable.data
+                        supportMessage = signInUiState.throwable.message
                     }
                     SignInResponseDialogDataType.FAILED
                 }

@@ -11,19 +11,27 @@ object PdfUtil {
     fun extractDataFromByteArray(byteArray: ByteArray): List<String> {
         val dataAsListOfString: MutableList<String>
         
-        try {
+        val parsedText = try {
             val inputStream = ByteArrayInputStream(byteArray)
             val reader = PdfReader(inputStream)
             val parsedText = PdfTextExtractor.getTextFromPage(reader, 1).trim()
-            
+            reader.close()
+            if (parsedText.isEmpty()) {
+                throw Exception("ParsedText empty error")
+            }
+            parsedText
+        } catch (e: Exception) {
+            println("PdfUtil.extractDataFromByteArray: PdfTextExtractor Error, $e")
+            throw ConvertingPdfThrowable.PdfTextExtractorError
+        }
+        
+        try {
             val cleanedText: MutableList<String> = parsedText.cleanExtractedText()
             println("cleanedText: $cleanedText")
             initialCheck(cleanedText)
             
             dataAsListOfString = cleanedText.prepStringForMainExtraction()
             println("dataAsListOfString: $dataAsListOfString")
-            
-            reader.close()
         } catch (e: Exception) {
             println("PdfUtil.extractDataFromByteArray: $e")
             throw e
@@ -33,19 +41,24 @@ object PdfUtil {
     }
     
     fun String.cleanExtractedText(): MutableList<String> {
-        val change = this.replace(" ", " ")
-        val dataList: MutableList<String> = change.split("\n").toMutableList()
-        for (index in dataList.indices) {
-            dataList[index] = dataList[index].replace(Regex("\\s+"), " ").trim()
-        }
-        // Remove last 6 lines
+        return try {
+            // Remove last 6 lines
 //IMPORTANT
 //* Cette facture peut être utilisée pour le paiement.
 //* Cette facture ne peut être utilisée comme pièce justificative pour les dossiers administratifs.
 //* La société de distribution décline toute responsabilité quant à une utilisation frauduleuse de ce document.
 //GAZ ELEC GAZ ELEC GAZ ELEC GAZ ELEC
 //GAZ ELEC
-        return dataList.subList(0, dataList.size - 6)
+            val change = this.replace(" ", " ")
+            val dataList: MutableList<String> = change.split("\n").toMutableList()
+            for (index in dataList.indices) {
+                dataList[index] = dataList[index].replace(Regex("\\s+"), " ").trim()
+            }
+            dataList.subList(0, dataList.size - 6)
+        } catch (e: Exception) {
+            throw ConvertingPdfThrowable.BadPdfFormat("Parsed Text".center() + this)
+        }
+        
     }
     
     fun initialCheck(cleanedText: List<String>) {
@@ -59,7 +72,7 @@ object PdfUtil {
                 checkMatchingLinesStateSupport(cleanedText)
             }
             else -> {
-                throw ConvertingPdfThrowable.UnhandledPdfFormat(cleanedText)
+                throw ConvertingPdfThrowable.BadPdfFormat(cleanedText.listStringToString())
             }
         }
     }
@@ -84,7 +97,7 @@ object PdfUtil {
         
         initialCheckRegexStrings.forEachIndexed { index, regexString ->
             if (!Regex(regexString).matches(cleanedText.getOrNull(20 + index) ?: ""))
-                throw ConvertingPdfThrowable.BadPdfFormat(cleanedText)
+                throw ConvertingPdfThrowable.BadPdfFormat(cleanedText.listStringToString())
         }
     }
     
@@ -109,7 +122,7 @@ object PdfUtil {
         
         initialCheckRegexStrings.forEachIndexed { index, regexString ->
             if (!Regex(regexString).matches(cleanedText.getOrNull(20 + index) ?: ""))
-                throw ConvertingPdfThrowable.BadPdfFormatWithStateSupport(cleanedText)
+                throw ConvertingPdfThrowable.BadPdfFormat(cleanedText.listStringToString())
         }
     }
     
