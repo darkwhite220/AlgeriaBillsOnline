@@ -3,12 +3,9 @@ package earth.feature.home
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -16,12 +13,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.NavigationBarDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.BillPreview
+import earth.core.database.User
 import earth.core.designsystem.Util
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
@@ -80,13 +76,11 @@ internal fun HomeRoute(
     )
     
     LaunchedEffect(key1 = Unit) {
-//        viewModel.initSyncData()
+        viewModel.initSyncData()
     }
 }
 
-@OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class, ExperimentalFoundationApi::class
-)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreen(
     usersUiState: UsersUiState,
@@ -97,77 +91,65 @@ private fun HomeScreen(
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     
-    val pagerState = when (usersUiState) {
-        is UsersUiState.Successful -> rememberPagerState { usersUiState.data.size + 1 }
-        else -> rememberPagerState { 1 }
-    }
-    
-    Scaffold(
-        modifier = Modifier,
-        topBar = {
+    HomeUiContent(usersUiState = usersUiState) { data ->
+        val users = data.users
+        val pagerSize = users.size + 1
+        val horizontalState = rememberPagerState { pagerSize }
+        val verticalState = rememberPagerState { pagerSize }
+        
+        Column(modifier = Modifier.fillMaxSize()) {
             HomeTopAppBar(
-                canScrollBackward = pagerState.canScrollBackward,
-                canScrollForward = pagerState.canScrollForward,
+                usersListWrapper = data,
+                horizontalState = horizontalState,
+                verticalState = verticalState,
+                canScrollBackward = horizontalState.canScrollBackward,
+                canScrollForward = horizontalState.canScrollForward,
                 onBackwardClick = {
                     scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        horizontalState.animateScrollToPage(horizontalState.currentPage - 1)
                     }
                 },
                 onForwardClick = {
                     scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        horizontalState.animateScrollToPage(horizontalState.currentPage + 1)
                     }
                 }
             )
-        },
-        contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(NavigationBarDefaults.windowInsets)
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues)
-                .fillMaxSize(),
-        ) {
+            
             SyncUi(syncUiState, onHomeEvent)
             
-            when (usersUiState) {
-                UsersUiState.Loading -> {
-                    MyCircularProgressBar()
-                }
-                is UsersUiState.Successful -> {
-                    HorizontalPager(
-                        state = pagerState,
-                        verticalAlignment = Alignment.Top,
-                        key = { item -> item },
-                        modifier = Modifier.weight(1f)
-                    ) { index ->
-                        if (index < usersUiState.data.size) {
-                            usersUiState.data[index].billsPreview?.let { billPreview ->
-                                LazyColumn(
-                                    verticalArrangement = verticalSpacedBy(),
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    items(
-                                        items = billPreview,
-                                        key = { item: BillPreview -> item.billNumber }
-                                    ) { item ->
-                                        Text(text = "$item")
-                                    }
-                                    // Indicators Height (circle)
-                                    item {
-                                        MyHeightSpacer(indicatorWidthUnselected)
-                                    }
-                                }
+            HorizontalPager(
+                state = horizontalState,
+                key = { item -> item },
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier.fillMaxSize()
+            ) { index ->
+                if (index < users.size) {
+                    users[index].billsPreview?.let { billPreview ->
+                        LazyColumn(
+                            verticalArrangement = verticalSpacedBy(),
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(
+                                items = billPreview,
+                                key = { item: BillPreview -> item.billNumber }
+                            ) { item ->
+                                Text(text = "$item")
                             }
-                        } else {
-                            AddAccountPage(onHomeEvent = onHomeEvent)
+                            // Indicators Height (circle)
+                            item {
+                                MyHeightSpacer(indicatorWidthUnselected)
+                            }
                         }
                     }
+                } else {
+                    AddAccountPage(onHomeEvent = onHomeEvent)
                 }
             }
         }
-        BottomPagerIndicator(pagerState)
+        BottomPagerIndicator(horizontalState)
     }
+    
     
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -191,9 +173,27 @@ private fun HomeScreen(
             }
         }
     }
-    
 }
 
+@Composable
+private fun HomeUiContent(
+    usersUiState: UsersUiState,
+    content: @Composable (UsersListWrapper) -> Unit
+) {
+    when (usersUiState) {
+        is UsersUiState.Successful -> {
+            content(UsersListWrapper(usersUiState.data))
+        }
+        UsersUiState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                MyCircularProgressBar()
+            }
+        }
+    }
+}
 
 @Composable
 private fun SyncUi(
@@ -250,3 +250,6 @@ private fun SyncUi(
         }
     }
 }
+
+@Immutable
+data class UsersListWrapper(val users: List<User>)

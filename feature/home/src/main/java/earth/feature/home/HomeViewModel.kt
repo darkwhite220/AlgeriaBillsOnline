@@ -19,7 +19,6 @@ import earth.feature.home.uistate.SyncUiState
 import earth.feature.home.uistate.UsersUiState
 import java.util.*
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -37,13 +36,14 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
+    
     // TODO store the value with user
     private val lastFetchTime = savedStateHandle.getStateFlow(
         key = LAST_FETCH_TIME,
         initialValue = 0
     )
     private val canFetch: Boolean
-        get() = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
+        get() = true // TODO uncomment (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
     
     var syncUiState: SyncUiState by mutableStateOf(SyncUiState.InitialState)
         private set
@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = UsersUiState.Loading
         )
-        
+    
     init {
         Log.d(TAG, "init: ")
         viewModelScope.launch {

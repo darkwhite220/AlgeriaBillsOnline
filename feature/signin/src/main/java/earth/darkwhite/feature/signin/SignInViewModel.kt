@@ -93,7 +93,7 @@ class SignInViewModel @Inject constructor(
     }
     
     fun onFailedDialogClose() {
-        viewModelScope.launch { startSignInRequest.value = false }
+        viewModelScope.launch { startSignInRequest.update { false } }
     }
     
     private fun updateUserName(value: String) {
@@ -117,13 +117,13 @@ class SignInViewModel @Inject constructor(
     }
     
     private fun onSignInClick() {
-        if (!isOnline.value || !isPreviousFail) {
+        if (!isOnline.value || isPreviousFail) {
             return
         }
         checkFieldsValue()
         if (_signInFormState.value.usernameIsValid && _signInFormState.value.passwordIsValid) {
             updateFormFieldEnabledState(false)
-            startSignInRequest.value = true
+            startSignInRequest.update { true }
             updateFormFieldEnabledState(true)
         }
     }

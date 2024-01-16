@@ -26,7 +26,8 @@ fun TextTitleLarge(@StringRes textId: Int, modifier: Modifier = Modifier) {
     Text(
         text = stringResource(textId),
         style = MaterialTheme.typography.titleLarge,
-        modifier = modifier
+        modifier = modifier,
+        textAlign = TextAlign.Center,
     )
 }
 

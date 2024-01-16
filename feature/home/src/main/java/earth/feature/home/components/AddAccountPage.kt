@@ -3,6 +3,7 @@ package earth.feature.home.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +32,10 @@ fun AddAccountPage(onHomeEvent: (HomeEvent) -> Unit) {
         TextDisplaySmall(textId = R.string.track_more_bills)
         MyHeightSpacer(height = 40.dp)
         
-        TextTitleLarge(textId = R.string.need_to_track_bills_for_a_new_place)
+        TextTitleLarge(
+            textId = R.string.need_to_track_bills_for_a_new_place,
+            modifier = Modifier.fillMaxWidth()
+        )
         MyHeightSpacer(mediumDp)
         TextDescription(textId = R.string.create_an_account_to_track_the_bills)
         MyHeightSpacer(largeDp)

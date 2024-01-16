@@ -147,7 +147,7 @@ class CreateAccountViewModel @Inject constructor(
     }
     
     fun onFailedDialogClose() {
-        viewModelScope.launch { startSignupRequest.value = false }
+        viewModelScope.launch { startSignupRequest.update { false } }
     }
     
     private fun onCreateAccountClick() {
@@ -161,18 +161,14 @@ class CreateAccountViewModel @Inject constructor(
                 repeatPasswordIsValid && captchaIsValid
             ) {
                 updateFormFieldEnabledState(false)
-                startSignupRequest.value = true
+                startSignupRequest.update { true }
                 updateFormFieldEnabledState(true)
             }
         }
     }
     
     private fun updateFormFieldEnabledState(enabled: Boolean) {
-        _formUiState.update {
-            it.copy(
-                enabled = enabled,
-            )
-        }
+        _formUiState.update { it.copy(enabled = enabled,) }
     }
     
     private fun checkFieldsValue() {
