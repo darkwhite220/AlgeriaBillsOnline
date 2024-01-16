@@ -29,6 +29,7 @@ class SyncDataImplementation @Inject constructor(
         var result: Boolean? = null
         
         userList.forEach { user ->
+            var newUserCopy = user
             // login
             val signInResponse = extractSignInPageData(
                 appNetwork.signIn(
@@ -40,13 +41,13 @@ class SyncDataImplementation @Inject constructor(
             
             // Save user data from logged in page
             if (user.fullName.isEmpty()) {
-                userDao.insertUser(
-                    user.asEntity().copy(
-                        fullName = signInResponse.fullName,
-                        address = signInResponse.address,
-                        lastBillNumber = signInResponse.billNumber,
-                    )
+                newUserCopy = newUserCopy.copy(
+                    fullName = signInResponse.fullName,
+                    address = signInResponse.address,
+                    lastBillNumber = signInResponse.billNumber,
                 )
+                
+                userDao.insertUser(newUserCopy.asEntity())
             }
             
             val lastBill = billDao.getLastBill(user.reference)?.asExternalModel()
@@ -110,16 +111,16 @@ class SyncDataImplementation @Inject constructor(
                     // Save new user data
                     // gasPCS can be 0 when no consumption registered
                     if (user.gasPCS != gazPCS) {
-                        userDao.insertUser(
-                            user.asEntity().copy(
-                                directionDistribution = direction,
-                                businessAgency = agency,
-                                isHouse = menageType in listOf(MenageType.M, MenageType.M_OUT_CITY),
-                                isInState = menageType in listOf(MenageType.M, MenageType.NM),
-                                electPMD = electricityPMD.value,
-                                gasPCS = gazPCS.toString(),
-                            )
+                        newUserCopy = newUserCopy.copy(
+                            directionDistribution = direction,
+                            businessAgency = agency,
+                            isHouse = menageType in listOf(MenageType.M, MenageType.M_OUT_CITY),
+                            isInState = menageType in listOf(MenageType.M, MenageType.NM),
+                            electPMD = electricityPMD.value,
+                            gasPCS = gazPCS,
                         )
+                        
+                        userDao.insertUser(newUserCopy.asEntity())
                     }
                     
                     // Extract & Insert bills
