@@ -34,6 +34,7 @@ import earth.core.database.User
 import earth.core.designsystem.Util
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
+import earth.core.designsystem.components.MyLinearProgressBar
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.FAILED_WRONG_PASSWORD
@@ -91,7 +92,7 @@ private fun HomeScreen(
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     
-    HomeUiContent(usersUiState = usersUiState) { data ->
+    HomeScreenContent(usersUiState = usersUiState) { data ->
         val users = data.users
         val pagerSize = users.size + 1
         val horizontalState = rememberPagerState { pagerSize }
@@ -116,8 +117,6 @@ private fun HomeScreen(
                 }
             )
             
-            SyncUi(syncUiState, onHomeEvent)
-            
             HorizontalPager(
                 state = horizontalState,
                 key = { item -> item },
@@ -130,6 +129,10 @@ private fun HomeScreen(
                             verticalArrangement = verticalSpacedBy(),
                             modifier = Modifier.fillMaxSize()
                         ) {
+                            // Sync data progress bar
+                            item {
+                                SyncUi(syncUiState, onHomeEvent)
+                            }
                             items(
                                 items = billPreview,
                                 key = { item: BillPreview -> item.billNumber }
@@ -176,7 +179,7 @@ private fun HomeScreen(
 }
 
 @Composable
-private fun HomeUiContent(
+private fun HomeScreenContent(
     usersUiState: UsersUiState,
     content: @Composable (UsersListWrapper) -> Unit
 ) {
@@ -204,7 +207,7 @@ private fun SyncUi(
     when (syncUiState) {
         SyncUiState.InitialState -> {}
         SyncUiState.Loading -> {
-            MyCircularProgressBar()
+            MyLinearProgressBar()
         }
         is SyncUiState.Success -> {
             syncUiState.isNewBills?.let { isNewBills ->

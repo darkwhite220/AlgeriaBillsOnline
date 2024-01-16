@@ -43,7 +43,7 @@ class HomeViewModel @Inject constructor(
         initialValue = 0
     )
     private val canFetch: Boolean
-        get() = true // TODO uncomment (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
+        get() = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
     
     var syncUiState: SyncUiState by mutableStateOf(SyncUiState.InitialState)
         private set
