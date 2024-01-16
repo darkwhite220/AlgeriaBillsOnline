@@ -8,8 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface UserDataRepository {
     
     val userData: Flow<UserData>
+    val lastFetchTime: Flow<Long>
     
     suspend fun setShouldHideOnboarding(newValue: Boolean)
     suspend fun setDarkThemeConfig(newValue: DarkThemeConfig)
     suspend fun setThemeBrand(newValue: ThemeBrand)
+    suspend fun setLastFetchTime(newValue: Long)
 }

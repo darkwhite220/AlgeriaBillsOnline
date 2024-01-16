@@ -12,6 +12,7 @@ class UserDataImplementation @Inject constructor(
 ) : UserDataRepository {
     
     override val userData: Flow<UserData> = preferencesDataStore.userData
+    override val lastFetchTime: Flow<Long> = preferencesDataStore.lastFetchTime
     
     override suspend fun setShouldHideOnboarding(newValue: Boolean) {
         preferencesDataStore.setShouldHideOnboarding(newValue)
@@ -23,6 +24,10 @@ class UserDataImplementation @Inject constructor(
     
     override suspend fun setThemeBrand(newValue: ThemeBrand) {
         preferencesDataStore.setThemeBrand(newValue)
+    }
+    
+    override suspend fun setLastFetchTime(newValue: Long) {
+        preferencesDataStore.setLastFetchTime(newValue)
     }
     
 }

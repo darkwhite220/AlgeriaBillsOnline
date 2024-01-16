@@ -5,12 +5,12 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.common.Result
 import earth.core.common.asResult
+import earth.core.data.UserDataRepository
 import earth.core.data.util.NetworkMonitorRepository
 import earth.core.domain.home.GetBillUseCase
 import earth.core.domain.home.GetUsersUseCase
@@ -31,17 +31,13 @@ class HomeViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
     private val syncDataUseCase: SyncDataUseCase,
     private val getBillUseCase: GetBillUseCase,
-    private val savedStateHandle: SavedStateHandle,
     private val network: NetworkMonitorRepository,
+    private val userDataRepository: UserDataRepository,
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
     
-    // TODO store the value with user
-    private val lastFetchTime = savedStateHandle.getStateFlow(
-        key = LAST_FETCH_TIME,
-        initialValue = 0
-    )
+    private val lastFetchTime = MutableStateFlow(0L)
     private val canFetch: Boolean
         get() = (Date().time - lastFetchTime.value) > DAY_TIME_IN_MILLIS
     
@@ -60,10 +56,18 @@ class HomeViewModel @Inject constructor(
     
     init {
         Log.d(TAG, "init: ")
-        viewModelScope.launch {
-            network.networkStatus.collect {
-                Log.d(TAG, "isOnline $it: ")
-                isOnline.value = it
+        viewModelScope.let { scope ->
+            scope.launch {
+                network.networkStatus.collect {
+                    Log.d(TAG, "isOnline $it ")
+                    isOnline.value = it
+                }
+            }
+            scope.launch {
+                userDataRepository.lastFetchTime.collect {
+                    Log.d(TAG, "lastFetchTime $it ")
+                    lastFetchTime.value = it
+                }
             }
         }
     }
@@ -94,7 +98,7 @@ class HomeViewModel @Inject constructor(
         
         when (event) {
             HomeEvent.OnSuccessSyncUiState -> {
-                savedStateHandle[LAST_FETCH_TIME] = Date().time
+                updateLastFetchTime()
                 syncUiState = SyncUiState.InitialState
             }
             HomeEvent.OnFailedSyncUiState -> {
@@ -105,9 +109,12 @@ class HomeViewModel @Inject constructor(
         }
     }
     
+    private fun updateLastFetchTime() = viewModelScope.launch {
+        userDataRepository.setLastFetchTime(Date().time)
+    }
+    
     companion object {
         private const val TAG = "HomeViewModel"
-        private const val LAST_FETCH_TIME = "last_fetch_time"
         private const val DAY_TIME_IN_MILLIS = 86_400_000
     }
 }
