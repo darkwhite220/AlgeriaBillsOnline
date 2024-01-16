@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp
+import earth.core.designsystem.components.mediumDimAlpha
 import earth.core.designsystem.icon.AppIcons
 
 @Preview(showBackground = true)
@@ -87,7 +88,7 @@ private fun RowScope.ProfileItem() {
             overflow = TextOverflow.Ellipsis,
         )
         CompositionLocalProvider(
-            LocalContentColor provides LocalContentColor.current.copy(alpha = .74f)
+            LocalContentColor provides LocalContentColor.current.copy(alpha = mediumDimAlpha)
         ) {
             Text(
                 text = "User Address in full tha is really long",

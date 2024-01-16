@@ -80,7 +80,7 @@ internal fun HomeRoute(
     )
     
     LaunchedEffect(key1 = Unit) {
-        viewModel.initSyncData()
+//        viewModel.initSyncData()
     }
 }
 
@@ -93,7 +93,7 @@ private fun HomeScreen(
     syncUiState: SyncUiState,
     onHomeEvent: (HomeEvent) -> Unit = {},
 ) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     

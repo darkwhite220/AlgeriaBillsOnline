@@ -78,10 +78,10 @@ fun SignInScreen(
         )
         Column(
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
 //                .imePadding() // TODO CHECK IME PADDING
-                .fillMaxSize()
                 .padding(horizontal = largeDp)
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize(),
             verticalArrangement = verticalSpacedBy(largeDp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

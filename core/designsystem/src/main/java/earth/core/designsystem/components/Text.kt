@@ -33,7 +33,7 @@ fun TextTitleLarge(@StringRes textId: Int, modifier: Modifier = Modifier) {
 @Composable
 fun TextDescription(@StringRes textId: Int) {
     CompositionLocalProvider(
-        LocalContentColor provides LocalContentColor.current.copy(alpha = .74f)
+        LocalContentColor provides LocalContentColor.current.copy(alpha = mediumDimAlpha)
     ) {
         Text(
             text = stringResource(textId),
@@ -48,7 +48,7 @@ fun TextDescription(@StringRes textId: Int) {
 fun TextFieldDescription(description: Int? = null) {
     description?.let {
         CompositionLocalProvider(
-            LocalContentColor provides LocalContentColor.current.copy(alpha = .74f)
+            LocalContentColor provides LocalContentColor.current.copy(alpha = mediumDimAlpha)
         ) {
             Text(
                 text = stringResource(it),

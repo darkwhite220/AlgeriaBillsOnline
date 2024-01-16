@@ -1,8 +1,10 @@
 package com.darkwhite.feature.createaccount
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imeNestedScroll
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -75,6 +77,7 @@ internal fun CreateAccountRoute(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun CreateAccountScreen(
@@ -93,80 +96,77 @@ private fun CreateAccountScreen(
             onBackClick = onBackClick,
         )
         
-        Row(
-            modifier = Modifier
+        Column(
+            modifier = Modifier // TODO CHECK IME PADDING
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = largeDp)
+                .fillMaxSize()
+                .imePadding()
+                .imeNestedScroll(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-//                .imePadding() // TODO CHECK IME PADDING
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                val focusManager = LocalFocusManager.current
-                
-                MyHeightSpacer(largeDp)
-                TextTitleLarge(textId = R.string.register_to_see_your_sonalgaz_bills)
-                MyHeightSpacer(largeDp)
-                
-                createAccountTextFieldMap.entries.forEachIndexed { index, item ->
-                    val focusRequester = remember { FocusRequester() }
-                    LaunchedEffect(Unit) {
-                        if (index == 0) focusRequester.requestFocus()
-                    }
-                    
-                    CaptchaUi(
-                        textFieldType = item.key,
-                        captchaUiState = captchaUiState
-                    )
-                    
-                    MyTextField(
-                        focusRequester = focusRequester,
-                        fieldType = item.key.name,
-                        fieldValues = item.value,
-                        value = formUiState.currentValue(item.key),
-                        isValid = formUiState.currentIsValid(item.key),
-                        enabled = formUiState.enabled,
-                        onValueChange = { newValue ->
-                            onFormEventValueChange(
-                                newValue = newValue,
-                                textFieldTypes = item.key,
-                                onCreateAccountEvent = onCreateAccountEvent,
-                            )
-                        },
-                        onTextFieldEvent = { event ->
-                            when (event) {
-                                TextFieldEvent.OnKeyboardPreviousActions -> {
-                                    focusManager.moveFocus(FocusDirection.Previous)
-                                }
-                                TextFieldEvent.OnKeyboardNextActions -> {
-                                    focusManager.moveFocus(FocusDirection.Next)
-                                }
-                                TextFieldEvent.OnKeyboardDoneActions -> {
-                                    focusManager.clearFocus(true)
-                                }
-                                TextFieldEvent.OnReferenceIconClick -> {
-                                    onShowReferenceDetailClick()
-                                }
-                            }
-                        },
-                    )
-                    
-                    TextFieldDescription(description = item.value.description)
-                    
-                    MyHeightSpacer(mediumDp)
+            val focusManager = LocalFocusManager.current
+            
+            MyHeightSpacer(largeDp)
+            TextTitleLarge(textId = R.string.register_to_see_your_sonalgaz_bills)
+            MyHeightSpacer(largeDp)
+            
+            createAccountTextFieldMap.entries.forEachIndexed { index, item ->
+                val focusRequester = remember { FocusRequester() }
+                LaunchedEffect(Unit) {
+                    if (index == 0) focusRequester.requestFocus()
                 }
                 
-                ButtonWithLoading(
-                    textId = R.string.create_account,
-                    isEnabled = signupUiState != SignupUiState.Loading,
-                    isLoading = signupUiState == SignupUiState.Loading,
-                    onClick = { onCreateAccountEvent(OnCreateAccountClick) },
+                CaptchaUi(
+                    textFieldType = item.key,
+                    captchaUiState = captchaUiState
                 )
                 
-                MyHeightSpacer(largeDp)
+                MyTextField(
+                    focusRequester = focusRequester,
+                    fieldType = item.key.name,
+                    fieldValues = item.value,
+                    value = formUiState.currentValue(item.key),
+                    isValid = formUiState.currentIsValid(item.key),
+                    enabled = formUiState.enabled,
+                    onValueChange = { newValue ->
+                        onFormEventValueChange(
+                            newValue = newValue,
+                            textFieldTypes = item.key,
+                            onCreateAccountEvent = onCreateAccountEvent,
+                        )
+                    },
+                    onTextFieldEvent = { event ->
+                        when (event) {
+                            TextFieldEvent.OnKeyboardPreviousActions -> {
+                                focusManager.moveFocus(FocusDirection.Previous)
+                            }
+                            TextFieldEvent.OnKeyboardNextActions -> {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }
+                            TextFieldEvent.OnKeyboardDoneActions -> {
+                                focusManager.clearFocus(true)
+                            }
+                            TextFieldEvent.OnReferenceIconClick -> {
+                                onShowReferenceDetailClick()
+                            }
+                        }
+                    },
+                )
+                
+                TextFieldDescription(description = item.value.description)
+                
+                MyHeightSpacer(mediumDp)
             }
+            
+            ButtonWithLoading(
+                textId = R.string.create_account,
+                isEnabled = signupUiState != SignupUiState.Loading,
+                isLoading = signupUiState == SignupUiState.Loading,
+                onClick = { onCreateAccountEvent(OnCreateAccountClick) },
+            )
+            
+            MyHeightSpacer(largeDp)
         }
     }
 }

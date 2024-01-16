@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+const val mediumDimAlpha = .74f
 val smallDp = 4.dp
 val mediumDp = 8.dp
 val largeDp = 16.dp
@@ -16,7 +17,6 @@ val extraLargeDp = 24.dp
 val lottieAnimationSize = 100.dp
 val indicatorWidthUnselected = 8.dp
 val indicatorWidthSelected = 20.dp
-
 val largeCorner = 16.dp
 
 @Composable
@@ -29,6 +29,7 @@ fun verticalSpacedBy(value: Dp = mediumDp): Arrangement.Vertical = Arrangement.s
 fun MyHeightSpacer(height: Dp = mediumDp) {
     Spacer(modifier = Modifier.height(height))
 }
+
 @Composable
 fun MyWidthSpacer(width: Dp = mediumDp) {
     Spacer(modifier = Modifier.width(width))
