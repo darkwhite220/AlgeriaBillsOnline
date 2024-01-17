@@ -2,6 +2,7 @@ package earth.feature.home.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -29,6 +30,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,7 @@ import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDimAlpha
 import earth.core.designsystem.components.mediumDp
+import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.icon.AppIcons
 import earth.feature.home.UsersListWrapper
 
@@ -110,11 +113,19 @@ private fun ProfileItem(user: User) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = horizontalSpacedBy(mediumDp),
     ) {
+        val icon = when {
+            user.isHouse && !user.isInState -> AppIcons.HouseOutCity
+            !user.isHouse && user.isInState -> AppIcons.BusinessCity
+            !user.isHouse && !user.isInState -> AppIcons.BusinessOutCity
+            else -> AppIcons.HouseCity
+        }
+        val shape = RoundedCornerShape(mediumDp)
         Image(
-            painter = painterResource(id = AppIcons.TEST_IMAGE),
+            painter = painterResource(id = icon),
             modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape),
+                .size(44.dp)
+                .border(width = 1.dp, color = Color.LightGray, shape = shape)
+                .clip(shape),
             contentDescription = null
         )
         Column(
