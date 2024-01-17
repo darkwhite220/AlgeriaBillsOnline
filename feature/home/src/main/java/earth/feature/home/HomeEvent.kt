@@ -5,4 +5,5 @@ sealed interface HomeEvent {
     data object OnSignInClick : HomeEvent
     data object OnSuccessSyncUiState : HomeEvent
     data object OnFailedSyncUiState : HomeEvent
+    data class OnBillPreviewClick(val billNumber: String) : HomeEvent
 }

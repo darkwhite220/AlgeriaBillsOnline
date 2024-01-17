@@ -104,8 +104,11 @@ class HomeViewModel @Inject constructor(
             HomeEvent.OnFailedSyncUiState -> {
                 syncUiState = SyncUiState.InitialState
             }
-            HomeEvent.OnCreateAccountClick -> TODO()
-            HomeEvent.OnSignInClick -> TODO()
+            is HomeEvent.OnBillPreviewClick -> {
+                // TODO
+            }
+            HomeEvent.OnCreateAccountClick -> {}
+            HomeEvent.OnSignInClick -> {}
         }
     }
     

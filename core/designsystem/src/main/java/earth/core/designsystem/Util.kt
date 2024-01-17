@@ -12,8 +12,14 @@ import earth.core.designsystem.Constants.CAPTCHA_LENGTH
 import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
 import earth.core.designsystem.Constants.MIN_PASSWORD_LENGTH
 import earth.core.designsystem.Constants.MIN_USERNAME_LENGTH
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
+import java.util.*
 
 object Util {
+    
+    fun Float.toPrice(): String = DecimalFormat("0.00").format(this)
     
     fun String.isValidUsername(): Boolean {
         val isLengthValid = this.length > MIN_USERNAME_LENGTH

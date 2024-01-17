@@ -11,4 +11,7 @@ object AppIcons {
     val HouseOutCity = R.drawable.house_out_city
     val BusinessCity = R.drawable.business_city
     val BusinessOutCity = R.drawable.business_out_city
+    
+    val ConsumptionUp = R.drawable.consumption_up
+    val ConsumptionStable = R.drawable.consumption_stable
 }

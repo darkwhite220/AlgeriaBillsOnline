@@ -20,11 +20,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -35,10 +32,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import earth.core.database.User
+import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.homeTopAppBarHeight
 import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp
-import earth.core.designsystem.components.mediumDimAlpha
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.icon.AppIcons
@@ -62,7 +59,7 @@ fun HomeTopAppBar(
         modifier = modifier
             .fillMaxWidth()
             .height(homeTopAppBarHeight)
-            .padding(horizontal = largeDp)
+            .padding(horizontal = smallDp)
     ) {
         IconButton(
             onClick = onBackwardClick,
@@ -132,22 +129,17 @@ private fun ProfileItem(user: User) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.weight(1f)
         ) {
-            Text(
+            TextWithEmphasise(
                 text = user.fullName,
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                alpha = 1f
             )
-            CompositionLocalProvider(
-                LocalContentColor provides LocalContentColor.current.copy(alpha = mediumDimAlpha)
-            ) {
-                Text(
-                    text = user.address,
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            TextWithEmphasise(
+                text = user.address,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+            )
         }
     }
 }

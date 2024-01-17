@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 
 
 @Composable
@@ -32,15 +34,31 @@ fun TextTitleLarge(@StringRes textId: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TextDescription(@StringRes textId: Int) {
+fun TextWithEmphasise(
+    modifier: Modifier = Modifier,
+    @StringRes textId: Int? = null,
+    text: String? = null,
+    style: TextStyle = MaterialTheme.typography.titleSmall,
+    textAlign: TextAlign = TextAlign.Center,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Ellipsis,
+    alpha: Float = mediumDimAlpha,
+) {
+    val textValue = when {
+        textId != null -> stringResource(textId)
+        text != null -> text
+        else -> ""
+    }
     CompositionLocalProvider(
-        LocalContentColor provides LocalContentColor.current.copy(alpha = mediumDimAlpha)
+        LocalContentColor provides LocalContentColor.current.copy(alpha = alpha)
     ) {
         Text(
-            text = stringResource(textId),
-            style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
+            text = textValue,
+            style = style,
+            modifier = modifier,
+            textAlign = textAlign,
+            maxLines = maxLines,
+            overflow = overflow,
         )
     }
 }

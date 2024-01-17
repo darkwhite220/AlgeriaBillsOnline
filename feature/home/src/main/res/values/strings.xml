@@ -11,4 +11,9 @@
     <string name="new_bill_found">New bill found!</string>
     <string name="no_new_bill_found">No new bill found</string>
     <string name="sync_data_error">Sync Data Error</string>
+    <string name="trimester">Trimester</string>
+    <string name="consumption_level">Consumption level</string>
+    <string name="bill_n">Bill N°: %1$s</string>
+    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
+    <string name="total_price">%1$s DA</string>
 </resources>

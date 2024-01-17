@@ -5,9 +5,10 @@ import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
@@ -43,12 +44,16 @@ import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.
 import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.TEMPORARILY_LOCKED_ACCOUNT
 import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.indicatorWidthUnselected
+import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.verticalSpacedBy
 import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.SignInThrowable
+import earth.feature.home.HomeScreenContentType.BOTTOM_INDICATORS_PADDING
 import earth.feature.home.components.AddAccountPage
+import earth.feature.home.components.BillPreviewItem
 import earth.feature.home.components.BottomPagerIndicator
 import earth.feature.home.components.HomeTopAppBar
+import earth.feature.home.components.consumptionLevel
 import earth.feature.home.uistate.SyncUiState
 import earth.feature.home.uistate.UsersUiState
 import kotlinx.coroutines.launch
@@ -126,21 +131,32 @@ private fun HomeScreen(
                 if (index < users.size) {
                     users[index].billsPreview?.let { billPreview ->
                         LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
                             verticalArrangement = verticalSpacedBy(),
-                            modifier = Modifier.fillMaxSize()
+                            contentPadding = PaddingValues(largeDp)
                         ) {
                             // Sync data progress bar
-                            item {
+                            item(contentType = HomeScreenContentType.SYNC_LOADING) {
                                 SyncUi(syncUiState, onHomeEvent)
                             }
-                            items(
+                            // Bill preview items
+                            itemsIndexed(
                                 items = billPreview,
-                                key = { item: BillPreview -> item.billNumber }
-                            ) { item ->
-                                Text(text = "$item")
+                                key = { _, item: BillPreview -> item.billNumber },
+                                contentType = { _, _ -> HomeScreenContentType.BILL_PREVIEW_ITEMS },
+                            ) { index, item ->
+                                BillPreviewItem(
+                                    onHomeEvent = onHomeEvent,
+                                    item = item,
+                                    consumptionLevel = consumptionLevel(
+                                        billPreview = billPreview,
+                                        index = index,
+                                        item = item
+                                    )
+                                )
                             }
                             // Indicators Height (circle)
-                            item {
+                            item(contentType = BOTTOM_INDICATORS_PADDING) {
                                 MyHeightSpacer(indicatorWidthUnselected)
                             }
                         }
@@ -256,3 +272,7 @@ private fun SyncUi(
 
 @Immutable
 data class UsersListWrapper(val users: List<User>)
+
+private enum class HomeScreenContentType {
+    SYNC_LOADING, BILL_PREVIEW_ITEMS, BOTTOM_INDICATORS_PADDING
+}

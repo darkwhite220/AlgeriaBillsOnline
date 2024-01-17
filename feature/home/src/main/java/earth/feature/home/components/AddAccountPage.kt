@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import earth.core.designsystem.components.MyButton
 import earth.core.designsystem.components.MyHeightSpacer
-import earth.core.designsystem.components.TextDescription
 import earth.core.designsystem.components.TextDisplaySmall
+import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
@@ -37,7 +37,10 @@ fun AddAccountPage(onHomeEvent: (HomeEvent) -> Unit) {
             modifier = Modifier.fillMaxWidth()
         )
         MyHeightSpacer(mediumDp)
-        TextDescription(textId = R.string.create_an_account_to_track_the_bills)
+        TextWithEmphasise(
+            modifier = Modifier.fillMaxWidth(),
+            textId = R.string.create_an_account_to_track_the_bills
+        )
         MyHeightSpacer(largeDp)
         MyButton(
             textId = R.string.create_account,
@@ -47,7 +50,10 @@ fun AddAccountPage(onHomeEvent: (HomeEvent) -> Unit) {
         
         TextTitleLarge(textId = R.string.have_an_account)
         MyHeightSpacer(mediumDp)
-        TextDescription(textId = R.string.sign_in_to_continue)
+        TextWithEmphasise(
+            modifier = Modifier.fillMaxWidth(),
+            textId = R.string.sign_in_to_continue
+        )
         MyHeightSpacer(largeDp)
         MyButton(
             textId = R.string.sign_in,
