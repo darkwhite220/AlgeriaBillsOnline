@@ -22,6 +22,7 @@ import earth.core.designsystem.Util.isValidEmail
 import earth.core.designsystem.Util.isValidPassword
 import earth.core.designsystem.Util.isValidReference
 import earth.core.designsystem.Util.isValidUsername
+import earth.core.domain.SetLastFetchTimeUseCase
 import earth.core.domain.createaccount.GetSignupCaptchaUseCase
 import earth.core.domain.createaccount.GetSignupStateUseCase
 import earth.core.domain.createaccount.InsertNewUserUseCase
@@ -46,6 +47,7 @@ class CreateAccountViewModel @Inject constructor(
     getSignupStateUseCase: GetSignupStateUseCase,
     insertNewUserUseCase: InsertNewUserUseCase,
     private val network: NetworkMonitorRepository,
+    private val setLastFetchTimeUseCase: SetLastFetchTimeUseCase,
 ) : ViewModel() {
     
     // TODO Captcha error implement
@@ -91,6 +93,7 @@ class CreateAccountViewModel @Inject constructor(
                         is ResultNoData.Loading -> SignupUiState.Loading
                         is ResultNoData.Success -> {
                             insertNewUserUseCase(_formUiState.value.asNewUser())
+                            updateLastFetchTime()
                             SignupUiState.Success
                         }
                         is ResultNoData.Error -> {
@@ -248,6 +251,10 @@ class CreateAccountViewModel @Inject constructor(
                 )
             }
         }
+    }
+    
+    private fun updateLastFetchTime() = viewModelScope.launch {
+        setLastFetchTimeUseCase.invoke(0L)
     }
     
     companion object {

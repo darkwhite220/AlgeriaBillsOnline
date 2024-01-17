@@ -12,6 +12,7 @@ import earth.core.common.asResult
 import earth.core.data.util.NetworkMonitorRepository
 import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.core.designsystem.Util.isValidSignInPassword
+import earth.core.domain.SetLastFetchTimeUseCase
 import earth.core.domain.signin.SignInUseCase
 import earth.darkwhite.feature.signin.uistate.SignInFormState
 import earth.darkwhite.feature.signin.uistate.SignInUiState
@@ -34,6 +35,7 @@ import kotlinx.coroutines.launch
 class SignInViewModel @Inject constructor(
     signInUseCase: SignInUseCase,
     private val network: NetworkMonitorRepository,
+    private val setLastFetchTimeUseCase: SetLastFetchTimeUseCase,
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
@@ -52,7 +54,10 @@ class SignInViewModel @Inject constructor(
                 .map { result ->
                     when (result) {
                         Result.Loading -> SignInUiState.Loading
-                        is Result.Success -> SignInUiState.Success(result.data)
+                        is Result.Success -> {
+                            updateLastFetchTime()
+                            SignInUiState.Success(result.data)
+                        }
                         is Result.Error -> {
                             isPreviousFail = true
                             SignInUiState.Failed(result.exception)
@@ -139,6 +144,10 @@ class SignInViewModel @Inject constructor(
     
     private fun updateFormFieldEnabledState(newValue: Boolean) {
         _signInFormState.update { it.copy(enabled = newValue) }
+    }
+    
+    private fun updateLastFetchTime() = viewModelScope.launch {
+        setLastFetchTimeUseCase.invoke(0L)
     }
     
     companion object {

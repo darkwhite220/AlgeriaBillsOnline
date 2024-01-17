@@ -12,6 +12,7 @@ import earth.core.common.Result
 import earth.core.common.asResult
 import earth.core.data.UserDataRepository
 import earth.core.data.util.NetworkMonitorRepository
+import earth.core.domain.SetLastFetchTimeUseCase
 import earth.core.domain.home.GetBillUseCase
 import earth.core.domain.home.GetUsersUseCase
 import earth.core.domain.home.SyncDataUseCase
@@ -33,6 +34,7 @@ class HomeViewModel @Inject constructor(
     private val getBillUseCase: GetBillUseCase,
     private val network: NetworkMonitorRepository,
     private val userDataRepository: UserDataRepository,
+    private val setLastFetchTimeUseCase: SetLastFetchTimeUseCase,
 ) : ViewModel() {
     
     private val isOnline = MutableStateFlow(false)
@@ -113,7 +115,7 @@ class HomeViewModel @Inject constructor(
     }
     
     private fun updateLastFetchTime() = viewModelScope.launch {
-        userDataRepository.setLastFetchTime(Date().time)
+        setLastFetchTimeUseCase.invoke(Date().time)
     }
     
     companion object {
