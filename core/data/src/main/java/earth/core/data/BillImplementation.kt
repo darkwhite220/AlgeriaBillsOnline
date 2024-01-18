@@ -23,8 +23,8 @@ class BillImplementation @Inject constructor(
             it.map { billPreviewEntity -> billPreviewEntity.asExternalModel() }
         }
     
-    override fun getBill(reference: String): Flow<Bill> =
-        billDao.getBill(reference).map { it.asExternalModel() }
+    override fun getBill(billNumber: String): Flow<Bill> =
+        billDao.getBill(billNumber).map { it.asExternalModel() }
     
     override suspend fun insertBills(bills: List<Bill>) =
         billDao.insertBills(bills.map { it.asEntity() })

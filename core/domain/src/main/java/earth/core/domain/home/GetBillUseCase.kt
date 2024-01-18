@@ -9,7 +9,7 @@ class GetBillUseCase @Inject constructor(
     private val billRepository: BillRepository
 ) {
     
-    operator fun invoke(reference: String): Flow<Bill> =
-        billRepository.getBill(reference)
+    operator fun invoke(billNumber: String): Flow<Bill> =
+        billRepository.getBill(billNumber)
     
 }

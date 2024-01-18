@@ -30,8 +30,8 @@ interface BillDao {
 //    WHERE reference MATCH :reference
 //    fun getBillsPreview(reference: String): Flow<List<BillPreviewEntity>>
     
-    @Query("SELECT * FROM bill_table WHERE reference MATCH :reference")
-    fun getBill(reference: String): Flow<BillEntity>
+    @Query("SELECT * FROM bill_table WHERE bill_number LIKE :billNumber")
+    fun getBill(billNumber: String): Flow<BillEntity>
     
     @Query("SELECT * FROM bill_table WHERE reference LIKE :reference ORDER BY bill_number DESC LIMIT 1")
     fun getLastBill(reference: String): BillEntity?
@@ -39,6 +39,6 @@ interface BillDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertBills(billEntity: List<BillEntity>)
     
-    @Query("DELETE FROM bill_table WHERE reference MATCH :reference")
+    @Query("DELETE FROM bill_table WHERE reference LIKE :reference")
     suspend fun deleteBills(reference: String)
 }

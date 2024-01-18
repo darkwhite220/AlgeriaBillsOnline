@@ -16,4 +16,9 @@
     <string name="bill_n">Bill N°: %1$s</string>
     <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
     <string name="total_price">%1$s DA</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="electricity">Electricity</string>
+    <string name="gaz">Gaz</string>
+    <string name="close">Close</string>
+    <string name="total">Total</string>
 </resources>

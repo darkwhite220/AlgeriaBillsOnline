@@ -10,6 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 
@@ -24,12 +25,32 @@ fun TextDisplaySmall(@StringRes textId: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TextTitleLarge(@StringRes textId: Int, modifier: Modifier = Modifier) {
+fun TextTitleLarge(
+    @StringRes textId: Int,
+    modifier: Modifier = Modifier,
+    fontWeight: FontWeight = FontWeight.Normal
+) {
     Text(
         text = stringResource(textId),
         style = MaterialTheme.typography.titleLarge,
         modifier = modifier,
         textAlign = TextAlign.Center,
+        fontWeight = fontWeight
+    )
+}
+
+@Composable
+fun TextTitleMedium(
+    @StringRes textId: Int,
+    modifier: Modifier = Modifier,
+    fontWeight: FontWeight = FontWeight.SemiBold
+) {
+    Text(
+        text = stringResource(textId),
+        style = MaterialTheme.typography.titleMedium,
+        modifier = modifier,
+        textAlign = TextAlign.Center,
+        fontWeight = fontWeight
     )
 }
 
