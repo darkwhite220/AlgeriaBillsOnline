@@ -174,7 +174,7 @@ object ExtractionUtil {
             gazConsumptionCost = gazConsumptionCost.toBigDecimal(),
             stateSupport = stateSupport.toBigDecimal(),
             rightsAndTaxes = rightsAndTaxes,
-            totalHT = amountHT.toBigDecimal(),
+            totalHT = amountHT.toBigDecimal() - rightsAndTaxes.toBigDecimal(),
             electricityTva = electricity.totalTVA,
             gazTva = gaz.totalTVA,
             totalTva = tva.toBigDecimal(),

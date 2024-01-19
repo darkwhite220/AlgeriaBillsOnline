@@ -88,6 +88,7 @@ internal fun HomeRoute(
             sheetState = sheetState,
             bill = bill,
             onHomeEvent = { event ->
+                // TODO add download support
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                     if (!sheetState.isVisible) {
                         viewModel.onEvent(event)

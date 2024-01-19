@@ -249,13 +249,6 @@ private class BillBottomSheetUtil(context: Context, bill: Bill) {
     )
     val total = listOf(
         BillStringLine(
-            R.string.rights_and_taxes,
-            context.getString(
-                R.string.price_da,
-                bill.rightsAndTaxes.toPrice(),
-            )
-        ),
-        BillStringLine(
             R.string.total_amount_ht,
             context.getString(
                 R.string.electricity_consumption_value,
@@ -267,6 +260,13 @@ private class BillBottomSheetUtil(context: Context, bill: Bill) {
             context.getString(
                 R.string.price_da,
                 bill.totalTva,
+            )
+        ),
+        BillStringLine(
+            R.string.rights_and_taxes,
+            context.getString(
+                R.string.price_da,
+                bill.rightsAndTaxes.toPrice(),
             )
         ),
         BillStringLine(
