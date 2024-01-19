@@ -767,8 +767,11 @@ object ExtractionUtil {
             menageType = menageType,
         )
         val stateSupport =
-            (electricity.totalHT + electricity.totalTVA + gaz.totalHT + gaz.totalTVA +
-                rightsAndTaxes.toBigDecimal()) - totalTTCNoTimbre
+            ((electricity.totalHT + electricity.totalTVA + gaz.totalHT + gaz.totalTVA +
+                rightsAndTaxes.toBigDecimal()) - totalTTCNoTimbre).let {
+                    if (it <= "0".toBigDecimal()) "0.00".toBigDecimal() else it
+            }
+        
         
         onDone(gazPCS)
         // Calculate the float on consumption: n*UnitPrice = XX.xxxx (Clip to only 2 digits) = XX.xx

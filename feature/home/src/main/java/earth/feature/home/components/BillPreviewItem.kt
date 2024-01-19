@@ -19,6 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import earth.core.database.BillPreview
+import earth.core.designsystem.Util.getNumberSuffix
+import earth.core.designsystem.Util.printDate
 import earth.core.designsystem.Util.toPrice
 import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.horizontalSpacedBy
@@ -65,12 +67,10 @@ fun BillPreviewItem(
                 val date = stringResource(
                     R.string.bill_trimester_date,
                     item.trimester,
-                    "st",
+                    stringResource(item.trimester.toInt().getNumberSuffix()),
                     stringResource(R.string.trimester),
                     item.year,
-                    item.date.let {
-                        if (it.isNotEmpty()) " ($it)" else ""
-                    }
+                    item.date.printDate()
                 )
                 TextWithEmphasise(
                     text = date,
@@ -80,7 +80,7 @@ fun BillPreviewItem(
             }
             
             TextWithEmphasise(
-                text = stringResource(R.string.total_price, item.totalTTC.toPrice()),
+                text = stringResource(R.string.price_da, item.totalTTC.toPrice()),
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
             )

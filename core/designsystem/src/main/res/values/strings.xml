@@ -49,6 +49,10 @@
     <string name="sync_failed_sync_temporary_lock_desc">Failed to fetch new bills\nReason: too many attempts, please try again later.</string>
     <string name="sync_failed_sync_pdf_extractor_desc">Failed to fetch new bills\nReason: failed to extract data, If the problem persists contact support.</string>
     <string name="sync_failed_desc">Failed to fetch new bills, If the problem persists contact support.</string>
+    <string name="trimester_suffix_one">st</string>
+    <string name="trimester_suffix_two">nd</string>
+    <string name="trimester_suffix_three">rd</string>
+    <string name="trimester_suffix_four">th</string>
 
 
 </resources>

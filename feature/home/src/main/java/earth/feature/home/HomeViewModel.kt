@@ -133,6 +133,9 @@ class HomeViewModel @Inject constructor(
             HomeEvent.OnBillCloseClick -> {
                 updateSelectedBill(SELECTED_BILL_DEFAULT)
             }
+            HomeEvent.OnBillDownloadClick -> {
+                // TODO download pdf
+            }
             HomeEvent.OnCreateAccountClick -> {
                 // No op
             }

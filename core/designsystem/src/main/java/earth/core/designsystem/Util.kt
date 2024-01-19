@@ -12,6 +12,7 @@ import earth.core.designsystem.Constants.CAPTCHA_LENGTH
 import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
 import earth.core.designsystem.Constants.MIN_PASSWORD_LENGTH
 import earth.core.designsystem.Constants.MIN_USERNAME_LENGTH
+import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
@@ -20,6 +21,19 @@ import java.util.*
 object Util {
     
     fun Float.toPrice(): String = DecimalFormat("0.00").format(this)
+    
+    fun Int.toPrice(): String = DecimalFormat("0.00").format(this)
+    
+    fun Int.getNumberSuffix(): Int {
+        return when (this) {
+            1 -> R.string.trimester_suffix_one
+            2 -> R.string.trimester_suffix_two
+            3 -> R.string.trimester_suffix_three
+            else -> R.string.trimester_suffix_four
+        }
+    }
+    
+    fun String.printDate(): String = if (this.isNotEmpty()) " ($this)" else ""
     
     fun String.isValidUsername(): Boolean {
         val isLengthValid = this.length > MIN_USERNAME_LENGTH
