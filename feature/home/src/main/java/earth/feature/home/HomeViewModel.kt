@@ -14,8 +14,11 @@ import earth.core.common.asResult
 import earth.core.data.UserDataRepository
 import earth.core.data.util.NetworkMonitorRepository
 import earth.core.database.Bill
+import earth.core.database.BillDownload
+import earth.core.database.asBillDownload
 import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.core.domain.SetLastFetchTimeUseCase
+import earth.core.domain.home.DownloadBillUseCase
 import earth.core.domain.home.GetBillUseCase
 import earth.core.domain.home.GetUsersUseCase
 import earth.core.domain.home.SyncDataUseCase
@@ -33,20 +36,25 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+// TODO download ui state
+
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
     private val syncDataUseCase: SyncDataUseCase,
     private val getBillUseCase: GetBillUseCase,
+    private val downloadBillUseCase: DownloadBillUseCase,
     private val network: NetworkMonitorRepository,
     private val savedStateHandle: SavedStateHandle,
     private val userDataRepository: UserDataRepository,
     private val setLastFetchTimeUseCase: SetLastFetchTimeUseCase,
 ) : ViewModel() {
     
+    var onDownload by mutableStateOf(EMPTY_STRING)
+    
     val selectedBill: StateFlow<Bill?> =
-        savedStateHandle.getStateFlow(SELECTED_BILL_NUMBER, SELECTED_BILL_DEFAULT)
+        savedStateHandle.getStateFlow(SELECTED_BILL_NUMBER, EMPTY_STRING)
             .flatMapLatest { billNumber ->
                 if (billNumber.isEmpty()) {
                     flowOf(null)
@@ -118,7 +126,6 @@ class HomeViewModel @Inject constructor(
     }
     
     fun onEvent(event: HomeEvent) {
-        
         when (event) {
             HomeEvent.OnSuccessSyncUiState -> {
                 updateLastFetchTime()
@@ -131,10 +138,10 @@ class HomeViewModel @Inject constructor(
                 updateSelectedBill(event.billNumber)
             }
             HomeEvent.OnBillCloseClick -> {
-                updateSelectedBill(SELECTED_BILL_DEFAULT)
+                updateSelectedBill(EMPTY_STRING)
             }
-            HomeEvent.OnBillDownloadClick -> {
-                // TODO download pdf
+            is HomeEvent.OnBillDownloadClick -> {
+                downloadBill(event.bill.asBillDownload())
             }
             HomeEvent.OnCreateAccountClick -> {
                 // No op
@@ -142,6 +149,13 @@ class HomeViewModel @Inject constructor(
             HomeEvent.OnSignInClick -> {
                 // No op
             }
+        }
+    }
+    
+    private fun downloadBill(billDownload: BillDownload) {
+        viewModelScope.launch {
+            onDownload = downloadBillUseCase.invoke(billDownload)
+            updateSelectedBill(EMPTY_STRING)
         }
     }
     
@@ -153,10 +167,14 @@ class HomeViewModel @Inject constructor(
         setLastFetchTimeUseCase.invoke(Date().time)
     }
     
+    fun resetDownloadData() {
+        onDownload = EMPTY_STRING
+    }
+    
     companion object {
         private const val TAG = "HomeViewModel"
         private const val SELECTED_BILL_NUMBER = "selected_bill"
-        private const val SELECTED_BILL_DEFAULT = ""
+        private const val EMPTY_STRING = ""
         private const val DAY_TIME_IN_MILLIS = 86_400_000
     }
 }

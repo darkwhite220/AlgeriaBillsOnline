@@ -145,7 +145,7 @@ fun BillBottomSheet(
                 
                 Row(horizontalArrangement = horizontalSpacedBy()) {
                     Button(
-                        onClick = { onHomeEvent(HomeEvent.OnBillDownloadClick) },
+                        onClick = { onHomeEvent(HomeEvent.OnBillDownloadClick(bill)) },
                         enabled = bill.pdfByteArray != null,
                         modifier = Modifier.weight(1f)
                     ) {

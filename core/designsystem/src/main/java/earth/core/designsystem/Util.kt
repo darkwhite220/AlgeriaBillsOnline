@@ -12,13 +12,25 @@ import earth.core.designsystem.Constants.CAPTCHA_LENGTH
 import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
 import earth.core.designsystem.Constants.MIN_PASSWORD_LENGTH
 import earth.core.designsystem.Constants.MIN_USERNAME_LENGTH
-import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
-import java.text.NumberFormat
-import java.util.*
 
 object Util {
+    
+    fun showToast(context: Context, @StringRes textId: Int, duration: Int = Toast.LENGTH_LONG) {
+        Toast.makeText(
+            context,
+            context.getString(textId),
+            duration
+        ).show()
+    }
+    
+    fun showToast(context: Context, text: String, duration: Int = Toast.LENGTH_LONG) {
+        Toast.makeText(
+            context,
+            text,
+            duration
+        ).show()
+    }
     
     fun Float.toPrice(): String = DecimalFormat("0.00").format(this)
     

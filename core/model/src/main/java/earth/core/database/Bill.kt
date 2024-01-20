@@ -115,3 +115,10 @@ data class Bill(
     }
     
 }
+
+fun Bill.asBillDownload() = BillDownload(
+    reference = reference,
+    trimester = trimester,
+    year = year,
+    byteArray = pdfByteArray!!,
+)

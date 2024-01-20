@@ -2,6 +2,8 @@ package earth.feature.home
 
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,16 +19,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import earth.core.database.Bill
 import earth.core.database.BillPreview
 import earth.core.database.User
 import earth.core.designsystem.Util
+import earth.core.designsystem.Util.showToast
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.MyLinearProgressBar
@@ -48,6 +55,7 @@ import earth.feature.home.components.BillBottomSheet
 import earth.feature.home.components.BillPreviewItem
 import earth.feature.home.components.BottomPagerIndicator
 import earth.feature.home.components.HomeTopAppBar
+import earth.feature.home.components.OnBillDownloadClick
 import earth.feature.home.components.consumptionLevel
 import earth.feature.home.uistate.SyncUiState
 import earth.feature.home.uistate.UsersUiState
@@ -63,12 +71,24 @@ internal fun HomeRoute(
     onSignInClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    
+    var onBillDownloadClick by remember { mutableStateOf<Bill?>(null) }
+    val askPermission =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                viewModel.onEvent(HomeEvent.OnBillDownloadClick(onBillDownloadClick!!))
+            } else {
+                showToast(context = context, textId = R.string.permission_denied)
+            }
+        }
     
     val usersUiState by viewModel.usersUiState.collectAsStateWithLifecycle()
     val selectedBill by viewModel.selectedBill.collectAsStateWithLifecycle()
     val syncUiState = viewModel.syncUiState
+    val onDownload = viewModel.onDownload
     
     HomeScreen(
         scope = scope,
@@ -88,14 +108,33 @@ internal fun HomeRoute(
             sheetState = sheetState,
             bill = bill,
             onHomeEvent = { event ->
-                // TODO add download support
-                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                    if (!sheetState.isVisible) {
-                        viewModel.onEvent(event)
+                if (event is HomeEvent.OnBillDownloadClick) {
+                    onBillDownloadClick = event.bill
+                } else {
+                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                        if (!sheetState.isVisible) {
+                            viewModel.onEvent(event)
+                        }
                     }
                 }
             },
         )
+    }
+    
+    onBillDownloadClick?.let {
+        OnBillDownloadClick(
+            askPermission = askPermission,
+            onClick = { viewModel.onEvent(HomeEvent.OnBillDownloadClick(it)) }
+        )
+    }
+    
+    if (onDownload.isNotEmpty()) {
+        onBillDownloadClick = null
+        showToast(
+            context = LocalContext.current,
+            text = stringResource(R.string.file_saved_download, onDownload)
+        )
+        viewModel.resetDownloadData()
     }
     
     LaunchedEffect(key1 = Unit) {
