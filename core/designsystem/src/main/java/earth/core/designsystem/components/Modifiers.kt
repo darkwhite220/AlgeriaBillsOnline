@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -23,6 +24,8 @@ val indicatorWidthUnselected = 8.dp
 val indicatorWidthSelected = 30.dp
 val largeCorner = 16.dp
 val homeTopAppBarHeight = 54.dp
+
+val cardShape = RoundedCornerShape(largeDp)
 
 @Composable
 fun horizontalSpacedBy(value: Dp = mediumDp): Arrangement.Horizontal = Arrangement.spacedBy(value)

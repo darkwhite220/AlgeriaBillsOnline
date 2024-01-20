@@ -53,6 +53,29 @@
     <string name="trimester_suffix_two">nd</string>
     <string name="trimester_suffix_three">rd</string>
     <string name="trimester_suffix_four">th</string>
+    <!-- Home screen bottomSheet-->
+    <string name="electricity">Electricity</string>
+    <string name="gaz">Gaz</string>
+    <string name="consumption_level">Consumption level</string>
+    <string name="bill_n">Bill N°: %1$s</string>
+    <string name="Period">Period:</string>
+    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
+    <string name="trimester">Trimester</string>
+    <string name="consumption">Consumption:</string>
+    <string name="electricity_consumption_value">%1$s kWh</string>
+    <string name="gaz_consumption_value">%1$s m3</string>
+    <string name="amount_ht">Amount HT:</string>
+    <string name="price_da">%1$s DA</string>
+    <string name="vat">VAT:</string>
+    <string name="total">Total</string>
+    <string name="close">Close</string>
+    <string name="total_amount_ht">Total Amount HT:</string>
+    <string name="total_vat">Total VAT:</string>
+    <string name="rights_and_taxes">Rights &amp; Tax:</string>
+    <string name="state_support">State Support:</string>
+    <string name="net_payable_ttc">Net Payable TTC:</string>
+    <string name="timbre">Timbre:</string>
+    <string name="total_to_pay">Total To Pay:</string>
 
 
 </resources>
