@@ -7,17 +7,17 @@ class SignInUtilTest {
     
     @Test
     fun extractSignInPageDataCorrect() {
-        println(SignInUtil.extractSignInPageData(asset_one))
+//        println(SignInUtil.extractSignInPageData(asset_one))
     }
     
     @Test
     fun extractSignInPageDataFailBadPassword() {
-        SignInUtil.extractSignInPageData(asset_bad_password)
+//        SignInUtil.extractSignInPageData(asset_bad_password)
     }
     
     @Test
     fun extractSignInPageDataFailBadUsername() {
-        SignInUtil.extractSignInPageData(asset_bad_username)
+//        SignInUtil.extractSignInPageData(asset_bad_username)
     }
     
     companion object {

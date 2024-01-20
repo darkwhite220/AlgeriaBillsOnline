@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.absoluteValue
 
 const val mediumDimAlpha = .74f
+const val lowDimAlpha = .4f
 val smallDp = 4.dp
 val mediumDp = 8.dp
 val largeDp = 16.dp
