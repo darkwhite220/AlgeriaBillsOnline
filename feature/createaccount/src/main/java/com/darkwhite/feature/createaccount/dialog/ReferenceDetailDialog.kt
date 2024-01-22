@@ -28,7 +28,7 @@ fun ReferenceDetailDialog(
                 painter = painterResource(id = AppIcons.BillReference),
                 modifier = modifier.fillMaxWidth(),
                 contentScale = ContentScale.FillWidth,
-                contentDescription = stringResource(id = R.string.reference_detail_icon)
+                contentDescription = stringResource(id = R.string.reference_detail_image)
             )
         }
     }

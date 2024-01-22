@@ -129,7 +129,7 @@ private fun MyTextFieldItem.ReferenceTrailingIcon(
         IconButton(onClick = onClick) {
             Icon(
                 imageVector = Icons.Outlined.Info,
-                contentDescription = stringResource(R.string.reference_detail_icon)
+                contentDescription = stringResource(R.string.reference_detail_image)
             )
         }
     }

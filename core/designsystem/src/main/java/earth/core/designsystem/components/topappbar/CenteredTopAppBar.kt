@@ -1,5 +1,6 @@
 package earth.core.designsystem.components.topappbar
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -10,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -17,7 +19,9 @@ import androidx.compose.ui.res.stringResource
 fun CenteredTopAppBar(
     modifier: Modifier = Modifier,
     @StringRes titleId: Int? = null,
-    onBackClick: () -> Unit
+    @DrawableRes actionIconId: Int? = null,
+    onBackClick: () -> Unit,
+    onActionClick: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
@@ -28,6 +32,13 @@ fun CenteredTopAppBar(
         },
         title = {
             titleId?.let { Text(text = stringResource(id = it)) }
+        },
+        actions = {
+            actionIconId?.let {
+                IconButton(onClick = onActionClick) {
+                    Icon(painter = painterResource(actionIconId), contentDescription = null)
+                }
+            }
         }
     )
 }

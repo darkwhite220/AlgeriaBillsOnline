@@ -15,7 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
@@ -50,6 +52,7 @@ internal fun EstimateRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val billEstimate = viewModel.billEstimate
+    var showDetailDialog by remember { mutableStateOf(false) }
     
     EstimateScreen(
         uiState = uiState,
@@ -57,7 +60,12 @@ internal fun EstimateRoute(
         onEstimateEvent = viewModel::onEvent,
         onSettingsClick = onSettingsClick,
         onBackClick = onBackClick,
+        onShowDetailDialogClick = { showDetailDialog = true },
     )
+    
+    if (showDetailDialog) {
+        EstimateDetailDialog { showDetailDialog = false }
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -69,6 +77,7 @@ private fun EstimateScreen(
     onEstimateEvent: (EstimateEvent) -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
+    onShowDetailDialogClick: () -> Unit = {},
 ) {
     val backdropScaffoldState =
         rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
@@ -79,6 +88,8 @@ private fun EstimateScreen(
             CenteredTopAppBar(
                 titleId = R.string.estimate,
                 onBackClick = onBackClick,
+                actionIconId = AppIcons.Info,
+                onActionClick = onShowDetailDialogClick
             )
         },
         backLayerBackgroundColor = MaterialTheme.colorScheme.background,

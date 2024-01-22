@@ -24,5 +24,15 @@
     <string name="electricity_dpm_40">Electricity DPM: 40</string>
     <string name="electricity_dpm_60">Electricity DPM: 60</string>
     <string name="electricity_dpm_80">Electricity DPM: 80</string>
+    <!--Dialog Details-->
+    <string name="estimate_details">Estimate Details</string>
+    <string name="elect_pmd_image">Electricity PMD</string>
+    <string name="gas_pcs_image">Gas PCS</string>
+    <string name="select_menage_details">"\n                    1) Select the type of menage:\n                        - Household in city\n                        - Household outside city (No district seat)\n                        - None Household (Store/Factory) in city\n                        - None Household  outside city (No district seat)\n                "</string>
+    <string name="select_state_support_details"><![CDATA["\n                    2) State Support on electricity consumption:\n                        - 65% for Sonelgaz retirees & south provinces\n                        - 25% south provinces for none agriculture\n                        - 10% for Djelfa, El Bayadh & Naama\n                        - 0% the rest\n                "]]></string>
+    <string name="select_elect_pmd_details">3) Electricity PMD: from your previews bills</string>
+    <string name="select_gas_pcs_details">4) Gas PCS: from your previews bills</string>
+    <string name="select_consumption_details"><![CDATA[5 & 6) Electricity & Gas consumption you want to estimate]]></string>
+    <string name="select_details_note">Note: Estimation is +/-0.01 DA accurate without State Support.</string>
 
 </resources>

@@ -17,7 +17,9 @@ object AppIcons {
     
     val Info = R.drawable.info_outline_24
     
-    val Discount = R.drawable.percent_24
     val LightningBolt = R.drawable.lightning_bolt
     val Fire = R.drawable.fire
+    
+    val ElectricityPMD = R.drawable.elect_pmd
+    val GasPcs = R.drawable.gas_pcs
 }
