@@ -51,6 +51,7 @@ class SyncDataImplementation @Inject constructor(
             }
             
             val lastBill = billDao.getLastBill(user.reference)?.asExternalModel()
+            Log.d(TAG, "syncData: lastBill $lastBill")
             
             if (user.lastBillNumber != signInResponse.billNumber ||
                 lastBill == null ||
@@ -90,6 +91,7 @@ class SyncDataImplementation @Inject constructor(
                             }
                         )
                     )
+                    Log.d(TAG, "syncData: new mainBillData = ${billsList[0]} ")
                     
                     // Extract Previous Bills
                     billsList.addAll(

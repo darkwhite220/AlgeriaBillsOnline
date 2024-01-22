@@ -46,6 +46,7 @@ import earth.core.designsystem.components.dialog.HomeScreenFailedResponseDialog.
 import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.indicatorWidthUnselected
 import earth.core.designsystem.components.largeDp
+import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.verticalSpacedBy
 import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.SignInThrowable
@@ -186,7 +187,9 @@ private fun HomeScreen(
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = verticalSpacedBy(),
-                            contentPadding = PaddingValues(largeDp)
+                            contentPadding = PaddingValues(
+                                vertical = mediumDp, horizontal = largeDp
+                            )
                         ) {
                             // Sync data progress bar
                             item(contentType = HomeScreenContentType.SYNC_LOADING) {
@@ -261,7 +264,8 @@ private fun SyncUi(
                 } else {
                     R.string.no_new_bill_found
                 }
-                Toast.makeText(context, stringResource(message), Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "SyncUi: isNewBills= $isNewBills")
+                showToast(context, message, Toast.LENGTH_SHORT)
             }
             onHomeEvent(HomeEvent.OnSuccessSyncUiState)
         }
