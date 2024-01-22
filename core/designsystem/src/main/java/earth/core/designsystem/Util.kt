@@ -12,6 +12,7 @@ import earth.core.designsystem.Constants.CAPTCHA_LENGTH
 import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
 import earth.core.designsystem.Constants.MIN_PASSWORD_LENGTH
 import earth.core.designsystem.Constants.MIN_USERNAME_LENGTH
+import java.math.BigDecimal
 import java.text.DecimalFormat
 
 object Util {
@@ -32,9 +33,13 @@ object Util {
         ).show()
     }
     
-    fun Float.toPrice(): String = DecimalFormat("0.00").format(this)
+    private val decimalFormat = DecimalFormat("0.00")
     
-    fun Int.toPrice(): String = DecimalFormat("0.00").format(this)
+    fun Float.toPrice(): String = decimalFormat.format(this)
+    
+    fun Int.toPrice(): String = decimalFormat.format(this)
+    
+    fun BigDecimal.toPrice(): String = decimalFormat.format(this)
     
     fun Int.getNumberSuffix(): Int {
         return when (this) {

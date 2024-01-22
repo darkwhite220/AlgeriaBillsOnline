@@ -14,4 +14,10 @@ object AppIcons {
     
     val ConsumptionUp = R.drawable.consumption_up
     val ConsumptionStable = R.drawable.consumption_stable
+    
+    val Info = R.drawable.info_outline_24
+    
+    val Discount = R.drawable.percent_24
+    val LightningBolt = R.drawable.lightning_bolt
+    val Fire = R.drawable.fire
 }

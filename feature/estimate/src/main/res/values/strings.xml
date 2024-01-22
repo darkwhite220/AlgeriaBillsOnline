@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="estimate">Estimate</string>
+    <string name="electricity_consumption">Electricity Consumption</string>
+    <string name="gas_pcs">Gaz PCS</string>
+    <string name="gas_pcs_hint">Gaz PCS 8.80</string>
+    <string name="gaz_consumption">Gaz Consumption</string>
+
+    <!--MenageType-->
+    <string name="household_city">Household (In City)</string>
+    <string name="household_out_city">Household (Outside City)</string>
+    <string name="none_household_city">Store/Factory (In City)</string>
+    <string name="none_household_out_city">Store/Factory (Outside City)</string>
+    <!--StateSupport-->
+    <string name="state_support_none">No State Support: 0%</string>
+    <string name="state_support_high_plateau">State Support: 10%</string>
+    <string name="state_support_sought_none_agriculture">State Support: 25%</string>
+    <string name="state_support_sought_agriculture">State Support: 65%</string>
+    <!--ElectricityDPM-->
+    <string name="electricity_dpm_4">Electricity DPM: 4</string>
+    <string name="electricity_dpm_6">Electricity DPM: 6</string>
+    <string name="electricity_dpm_12">Electricity DPM: 12</string>
+    <string name="electricity_dpm_20">Electricity DPM: 20</string>
+    <string name="electricity_dpm_40">Electricity DPM: 40</string>
+    <string name="electricity_dpm_60">Electricity DPM: 60</string>
+    <string name="electricity_dpm_80">Electricity DPM: 80</string>
+
 </resources>

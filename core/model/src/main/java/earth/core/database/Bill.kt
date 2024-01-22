@@ -3,45 +3,45 @@ package earth.core.database
 import java.math.BigDecimal
 
 data class Bill(
-    val reference: String,
-    val isPaid: Boolean,
+    val reference: String = "",
+    val isPaid: Boolean = false,
     
-    val pdfByteArray: ByteArray?,
-    val billNumber: String,
-    val date: String,
-    val trimester: String,
-    val year: String,
-    val ebp: String,
-    val ebb: String,
+    val pdfByteArray: ByteArray? = null,
+    val billNumber: String = "",
+    val date: String = "",
+    val trimester: String = "1",
+    val year: String = "",
+    val ebp: String = "",
+    val ebb: String = "",
     
-    val electricityMeterNumber: String,
-    val electNewValue: Int,
-    val electOldValue: Int,
-    val electConsumption: BigDecimal,
-    val electConsumptionCost: BigDecimal,
+    val electricityMeterNumber: String = "",
+    val electNewValue: Int = 0,
+    val electOldValue: Int = 0,
+    val electConsumption: BigDecimal = "0".toBigDecimal(),
+    val electConsumptionCost: BigDecimal = "0".toBigDecimal(),
     
-    val gazMeterNumber: String,
-    val gazNewValue: Int,
-    val gazOldValue: Int,
-    val gazConsumption: BigDecimal,
-    val gazConsumptionCost: BigDecimal,
+    val gazMeterNumber: String = "",
+    val gazNewValue: Int = 0,
+    val gazOldValue: Int = 0,
+    val gazConsumption: BigDecimal = "0".toBigDecimal(),
+    val gazConsumptionCost: BigDecimal = "0".toBigDecimal(),
     
-    val stateSupport: BigDecimal,
+    val stateSupport: BigDecimal = "0".toBigDecimal(),
     // Taxe d'habitation (can be 600/300/150/75) +
     // Droit fixe sur consommation (0, 25, 50, 100) 70-190-390kWh
-    val rightsAndTaxes: Int,
+    val rightsAndTaxes: Int = 0,
     // electConsumptionCost + gazConsumptionCost + rightsAndTaxes
-    val totalHT: BigDecimal,
-    val electricityTva: BigDecimal,
-    val gazTva: BigDecimal,
+    val totalHT: BigDecimal = "0".toBigDecimal(),
+    val electricityTva: BigDecimal = "0".toBigDecimal(),
+    val gazTva: BigDecimal = "0".toBigDecimal(),
     // 9% + 19% TAVs
-    val totalTva: BigDecimal,
+    val totalTva: BigDecimal = "0".toBigDecimal(),
     
-    val totalTTCNoTimbre: BigDecimal,
+    val totalTTCNoTimbre: BigDecimal = "0".toBigDecimal(),
     // 1% of total rounded to Int
-    val timbre: BigDecimal,
+    val timbre: BigDecimal = "0".toBigDecimal(),
     // total + timbre
-    val totalTTC: BigDecimal,
+    val totalTTC: BigDecimal = "0".toBigDecimal(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

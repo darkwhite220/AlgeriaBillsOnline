@@ -7,6 +7,7 @@ import java.math.RoundingMode
 
 fun BigDecimal.round(): BigDecimal = this.setScale(2, RoundingMode.HALF_EVEN)
 fun BigDecimal.roundDown(): BigDecimal = this.setScale(2, RoundingMode.DOWN)
+fun BigDecimal.timbreRound(): BigDecimal = this.setScale(0, RoundingMode.UP)
 
 data class CalculationHolder(
     val firstTotalHT: BigDecimal = "0".toBigDecimal(),

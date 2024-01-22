@@ -23,6 +23,7 @@ val lottieAnimationSize = 100.dp
 val indicatorWidthUnselected = 8.dp
 val indicatorWidthSelected = 30.dp
 val largeCorner = 16.dp
+val iconSize = 24.dp
 val homeTopAppBarHeight = 54.dp
 
 val cardShape = RoundedCornerShape(largeDp)

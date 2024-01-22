@@ -175,7 +175,7 @@ class BillBottomSheetUtil(context: Context, bill: Bill) {
         BillStringLine(
             R.string.total_amount_ht,
             context.getString(
-                R.string.electricity_consumption_value,
+                R.string.price_da,
                 bill.totalHT
             )
         ),
@@ -211,7 +211,7 @@ class BillBottomSheetUtil(context: Context, bill: Bill) {
             R.string.timbre,
             context.getString(
                 R.string.price_da,
-                bill.timbre,
+                bill.timbre.toPrice(),
             )
         ),
         BillStringLine(

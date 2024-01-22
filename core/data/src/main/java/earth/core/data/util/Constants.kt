@@ -14,7 +14,7 @@ object Constants {
     val SOUTH_DISCOUNT_PERCENT = "0.65".toBigDecimal()
     
     val TIMBRE_PERCENT_FROM_TOTAL = "0.01".toBigDecimal()
-    val MIN_TIMBRE_VALUE = "5".toBigDecimal()
+    val MIN_TIMBRE_VALUE = "5.00".toBigDecimal()
     
     val PMD_MARGIN = "0.1".toBigDecimal()
     
@@ -41,6 +41,7 @@ object Constants {
     val SECOND_TAV = "0.19".toBigDecimal()
     
     val GAZ_DEFAULT_CONSUMPTION_VALUE = "85.5".toBigDecimal()
+    val GAZ_DEFAULT_PCS_VALUE = "8.80".toBigDecimal()
     
     val GAZ_MENAGE_FIRST_TRANCHE = "1125".toBigDecimal()
     val GAZ_MENAGE_FIRST_TRANCHE_PRICE = "0.1682".toBigDecimal()
