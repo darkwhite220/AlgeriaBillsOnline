@@ -14,6 +14,7 @@ androidGradle = "8.2.0"
 hiltNavigationCompose = "1.1.0"
 kotlin = "1.9.10"
 kotlinxCoroutines = "1.7.1"
+work-manager = "2.9.0"
 # @keep
 lottie = "6.1.0"
 hilt = "2.48"
@@ -67,6 +68,7 @@ androidx-compose-material3-windowSizeClass = { module = "androidx.compose.materi
 androidx-compose-paging = { module = "androidx.paging:paging-compose" } # not in budle
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+work-manager = { module = "androidx.work:work-runtime-ktx", version.ref = "work-manager" }
 # @keep
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
