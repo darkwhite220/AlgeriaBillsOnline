@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,8 +30,12 @@ import androidx.work.WorkManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import earth.core.data.util.NetworkMonitorRepository
+import earth.core.designsystem.Constants.ARABIC_LANGUAGE_TAG
+import earth.core.designsystem.Constants.ENGLISH_LANGUAGE_TAG
+import earth.core.designsystem.Constants.FRENCH_LANGUAGE_TAG
 import earth.core.designsystem.theme.AlgeriaBillsTheme
 import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.LanguageConfig
 import earth.core.preferencesmodel.ThemeBrand
 import earth.darkwhite.algeriabills.ui.AlgeriaBillsApp
 import earth.darkwhite.algeriabills.worker.SyncDataWorker
@@ -77,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val systemUiController = rememberSystemUiController()
             val darkTheme = shouldUseDarkTheme(uiState)
+            AppLocales(uiState)
             
             // Update the dark content of the system bars to match the theme
             DisposableEffect(systemUiController, darkTheme) {
@@ -142,4 +149,20 @@ fun shouldUseDarkTheme(
         DarkThemeConfig.LIGHT -> false
         DarkThemeConfig.DARK -> true
     }
+}
+
+@Composable
+fun AppLocales(uiState: MainActivityUiState) {
+    val language = when (uiState) {
+        MainActivityUiState.Loading -> AppCompatDelegate.getApplicationLocales().toLanguageTags()
+        is MainActivityUiState.Success -> when (uiState.userData.language) {
+            LanguageConfig.ENGLISH -> ENGLISH_LANGUAGE_TAG
+            LanguageConfig.FRENCH -> FRENCH_LANGUAGE_TAG
+            LanguageConfig.ARABIC -> ARABIC_LANGUAGE_TAG
+        }
+    }
+    AppCompatDelegate.setApplicationLocales(
+        LocaleListCompat.forLanguageTags(language)
+    )
+//    return if (language == ARABIC_LANGUAGE_TAG) LayoutDirection.Rtl else LayoutDirection.Ltr
 }

@@ -77,6 +77,8 @@
     <string name="net_payable_ttc">Net Payable TTC:</string>
     <string name="timbre">Timbre:</string>
     <string name="total_to_pay">Total To Pay:</string>
+    <string name="share_app">Share the App</string>
+    <string name="app_name">Algeria Bills Online</string>
 
 
 </resources>

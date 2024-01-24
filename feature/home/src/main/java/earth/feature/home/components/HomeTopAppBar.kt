@@ -15,9 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,15 +24,14 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import earth.core.database.User
 import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.homeTopAppBarHeight
 import earth.core.designsystem.components.horizontalSpacedBy
-import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.icon.AppIcons
@@ -65,7 +61,10 @@ fun HomeTopAppBar(
             onClick = onBackwardClick,
             enabled = canScrollBackward
         ) {
-            Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+            Icon(
+                painter = painterResource(id = AppIcons.ArrowRight), contentDescription = null,
+                modifier = Modifier.rotate(180f)
+            )
         }
         
         VerticalPager(
@@ -87,7 +86,7 @@ fun HomeTopAppBar(
             onClick = onForwardClick,
             enabled = canScrollForward
         ) {
-            Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
+            Icon(painter = painterResource(id = AppIcons.ArrowRight), contentDescription = null)
         }
     }
     

@@ -10,4 +10,9 @@ object Constants {
     const val MIN_USERNAME_LENGTH = 7
     const val CAPTCHA_LENGTH = 5
     const val VIEW_MODEL_SUBSCRIPTION_TIME = 5_000L
+    
+    // Settings - Language
+    const val ENGLISH_LANGUAGE_TAG = "en"
+    const val FRENCH_LANGUAGE_TAG = "fr"
+    const val ARABIC_LANGUAGE_TAG = "ar"
 }

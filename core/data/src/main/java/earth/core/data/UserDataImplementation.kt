@@ -2,6 +2,7 @@ package earth.core.data
 
 import earth.core.datastore.PreferencesDataStore
 import earth.core.preferencesmodel.DarkThemeConfig
+import earth.core.preferencesmodel.LanguageConfig
 import earth.core.preferencesmodel.ThemeBrand
 import earth.core.preferencesmodel.UserData
 import javax.inject.Inject
@@ -29,6 +30,18 @@ class UserDataImplementation @Inject constructor(
     
     override suspend fun setLastFetchTime(newValue: Long) {
         preferencesDataStore.setLastFetchTime(newValue)
+    }
+    
+    override suspend fun setNotificationStatus(newValue: Boolean) {
+        preferencesDataStore.setNotificationStatus(newValue)
+    }
+    
+    override suspend fun setFirstLaunch(newValue: Boolean) {
+        preferencesDataStore.setFirstLaunch(newValue)
+    }
+    
+    override suspend fun setLanguage(newValue: LanguageConfig) {
+        preferencesDataStore.setLanguage(newValue)
     }
     
 }

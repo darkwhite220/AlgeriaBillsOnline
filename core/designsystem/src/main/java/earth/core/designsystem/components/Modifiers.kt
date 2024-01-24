@@ -1,5 +1,8 @@
 package earth.core.designsystem.components
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -28,6 +33,13 @@ val homeTopAppBarHeight = 54.dp
 
 val cardShape = RoundedCornerShape(largeDp)
 
+fun Modifier.customContentSizeAnimation(): Modifier = animateContentSize(
+    animationSpec = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+    )
+)
+
 @Composable
 fun horizontalSpacedBy(value: Dp = mediumDp): Arrangement.Horizontal = Arrangement.spacedBy(value)
 
@@ -42,6 +54,15 @@ fun MyHeightSpacer(height: Dp = mediumDp) {
 @Composable
 fun MyWidthSpacer(width: Dp = mediumDp) {
     Spacer(modifier = Modifier.width(width))
+}
+
+@Composable
+fun MyDivider(modifier: Modifier = Modifier, thickness: Int = 1) {
+    Divider(
+        modifier = modifier,
+        thickness = thickness.dp,
+        color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f)
+    )
 }
 
 /**

@@ -141,4 +141,37 @@ object Util {
                 .show()
         }
     }
+    
+    fun shareApp(context: Context) {
+        val intentShare = Intent(Intent.ACTION_SEND)
+        val title = R.string.app_name
+        val description = " http://play.google.com/store/apps/details?id=" + context.packageName
+        intentShare.type = "text/plain"
+        intentShare.putExtra(Intent.EXTRA_SUBJECT, title)
+        intentShare.putExtra(Intent.EXTRA_TEXT, description)
+        context.startActivity(
+            Intent.createChooser(
+                intentShare,
+                context.getString(R.string.share_app)
+            )
+        )
+    }
+    
+    fun rateApp(context: Context) {
+        try {
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=" + context.packageName)
+                )
+            )
+        } catch (e: ActivityNotFoundException) {
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + context.packageName)
+                )
+            )
+        }
+    }
 }

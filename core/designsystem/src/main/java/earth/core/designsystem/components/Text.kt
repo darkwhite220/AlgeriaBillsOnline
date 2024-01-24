@@ -2,6 +2,7 @@ package earth.core.designsystem.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -97,4 +98,15 @@ fun TextFieldDescription(description: Int? = null) {
             )
         }
     }
+}
+
+@Composable
+fun SettingsDialogSectionTitle(@StringRes textId: Int) {
+    Text(
+        text = stringResource(id = textId),
+        style = MaterialTheme.typography.titleLarge,
+        modifier = Modifier
+            .padding(mediumDp)
+            .fillMaxWidth()
+    )
 }

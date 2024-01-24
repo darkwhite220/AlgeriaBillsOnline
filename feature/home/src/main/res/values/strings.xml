@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="track_more_bills">Track More Bills!</string>
-    <string name="need_to_track_bills_for_a_new_place">Need to track bills for a new place??</string>
+    <string name="need_to_track_bills_for_a_new_place">Need to track bills for a new place?</string>
     <string name="create_an_account_to_track_the_bills">Create an account to track the bills</string>
     <string name="create_account">Create Account</string>
     <string name="have_an_account">Have an account?</string>
