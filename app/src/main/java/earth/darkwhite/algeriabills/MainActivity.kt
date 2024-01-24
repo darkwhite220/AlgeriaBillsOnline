@@ -19,6 +19,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import earth.core.data.util.NetworkMonitorRepository
@@ -26,6 +32,8 @@ import earth.core.designsystem.theme.AlgeriaBillsTheme
 import earth.core.preferencesmodel.DarkThemeConfig
 import earth.core.preferencesmodel.ThemeBrand
 import earth.darkwhite.algeriabills.ui.AlgeriaBillsApp
+import earth.darkwhite.algeriabills.worker.SyncDataWorker
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -43,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         
+        initSyncDataWorker()
+
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
         
@@ -89,6 +99,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    
+    private fun initSyncDataWorker() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        // TODO implement fetch time logic
+        val work = PeriodicWorkRequestBuilder<SyncDataWorker>(15, TimeUnit.MINUTES)
+            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+            .setInitialDelay(1, TimeUnit.DAYS)
+            .setConstraints(constraints)
+            .build()
+        
+        WorkManager.getInstance(this.applicationContext)
+            .enqueueUniquePeriodicWork(
+                "SyncDataWork",
+                ExistingPeriodicWorkPolicy.KEEP,
+                work
+            )
     }
 }
 

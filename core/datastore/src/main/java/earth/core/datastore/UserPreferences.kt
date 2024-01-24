@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import earth.core.datastore.PreferencesDataStore.DefaultValues.DARK_THEME_CONFIG_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.LAST_FETCH_TIME_DEFAULT
+import earth.core.datastore.PreferencesDataStore.DefaultValues.NOTIFICATION_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.SHOULD_HIDE_ONBOARDING_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.THEME_BRAND_DEFAULT
 import earth.core.preferencesmodel.DarkThemeConfig
@@ -22,6 +23,11 @@ import kotlinx.coroutines.flow.map
 class PreferencesDataStore @Inject constructor(
     private val userPreferences: DataStore<Preferences>
 ) {
+    
+    val isNotificationEnabled: Flow<Boolean> = userPreferences.data
+        .map {
+            it[PreferencesKeys.NOTIFICATION] ?: NOTIFICATION_DEFAULT
+        }
     
     val lastFetchTime: Flow<Long> = userPreferences.data
         .map {
@@ -74,6 +80,7 @@ class PreferencesDataStore @Inject constructor(
         val DARK_THEME_CONFIG = stringPreferencesKey("dark_theme_config")
         val THEME_BRAND = stringPreferencesKey("theme_brand")
         val LAST_FETCH_TIME = longPreferencesKey("last_fetch_time")
+        val NOTIFICATION = booleanPreferencesKey("notification")
     }
     
     private object DefaultValues {
@@ -81,6 +88,7 @@ class PreferencesDataStore @Inject constructor(
         val DARK_THEME_CONFIG_DEFAULT = DarkThemeConfig.FOLLOW_SYSTEM.name
         val THEME_BRAND_DEFAULT = ThemeBrand.DEFAULT.name
         const val LAST_FETCH_TIME_DEFAULT = 0L
+        const val NOTIFICATION_DEFAULT = true
     }
     
     companion object {

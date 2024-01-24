@@ -13,6 +13,7 @@ class UserDataImplementation @Inject constructor(
     
     override val userData: Flow<UserData> = preferencesDataStore.userData
     override val lastFetchTime: Flow<Long> = preferencesDataStore.lastFetchTime
+    override val isNotificationEnabled: Flow<Boolean> = preferencesDataStore.isNotificationEnabled
     
     override suspend fun setShouldHideOnboarding(newValue: Boolean) {
         preferencesDataStore.setShouldHideOnboarding(newValue)

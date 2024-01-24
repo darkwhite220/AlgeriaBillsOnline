@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Algeria Bills Online</string>
     <string name="not_connected">Not connected</string>
+
+    <string name="sync_new_bills">Sync new bills</string>
+    <string name="sync_bills">Sync bills</string>
+    <string name="sync_successful_new_bill_found">Sync successful, New bill found!</string>
+    <string name="sync_failed_contact_support">Sync failed, Please contact support if problem persists.</string>
 </resources>

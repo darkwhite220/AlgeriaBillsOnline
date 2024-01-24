@@ -81,6 +81,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     
+    implementation(libs.work.manager)
+    implementation(libs.hilt.worker)
+    
     implementation(libs.junit)
     implementation(libs.androidx.test.ext.junit)
 }
