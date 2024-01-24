@@ -18,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,12 +30,19 @@ import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
+import earth.core.designsystem.Util
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.TextFieldDescription
 import earth.core.designsystem.components.TextTitleLarge
 import earth.core.designsystem.components.dialog.ResponseDialog
-import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED_EXISTING_USERNAME
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED_SERVER_ERROR_TRY_LATER
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED_WRONG_CAPTCHA
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED_WRONG_EMAIL
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED_WRONG_REFERENCE
+import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.SUCCESS
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.textfield.CreateAccountTextFieldTypes
@@ -43,6 +52,7 @@ import earth.core.designsystem.components.textfield.createAccountTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
 import earth.core.throwablemodel.SignupThrowable
 import earth.feature.createaccount.R
+import java.net.UnknownHostException
 
 
 @Composable
@@ -210,31 +220,24 @@ private fun ShowSignupDialog(
     when (signupUiState) {
         SignupUiState.Success -> {
             ResponseDialog(
-                dialogData = SignUpResponseDialogDataType.SUCCESS.dialogData,
+                dialogData = SUCCESS.dialogData,
                 onDismissClick = onSuccessDialogClose
             )
         }
         is SignupUiState.Failed -> {
             println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.throwable}")
+            if (signupUiState.throwable is UnknownHostException) {
+                Util.showToast(LocalContext.current, stringResource(R.string.not_connected_to_the_internet))
+                return
+            }
             val signUpResponseDialogDataType = when (signupUiState.throwable) {
-                SignupThrowable.FailedTryLaterException -> {
-                    SignUpResponseDialogDataType.FAILED_SERVER_ERROR_TRY_LATER
-                }
-                SignupThrowable.WrongCaptchaException -> {
-                    SignUpResponseDialogDataType.FAILED_WRONG_CAPTCHA
-                }
-                SignupThrowable.WrongReferenceException -> {
-                    SignUpResponseDialogDataType.FAILED_WRONG_REFERENCE
-                }
-                SignupThrowable.WrongEmailException -> {
-                    SignUpResponseDialogDataType.FAILED_WRONG_EMAIL
-                }
-                SignupThrowable.ExistingUsernameException -> {
-                    SignUpResponseDialogDataType.FAILED_EXISTING_USERNAME
-                }
-                else -> {
-                    SignUpResponseDialogDataType.FAILED
-                }
+                SignupThrowable.FailedTryLaterException -> FAILED_SERVER_ERROR_TRY_LATER
+                SignupThrowable.WrongCaptchaException -> FAILED_WRONG_CAPTCHA
+                SignupThrowable.WrongReferenceException -> FAILED_WRONG_REFERENCE
+                SignupThrowable.WrongEmailException -> FAILED_WRONG_EMAIL
+                SignupThrowable.ExistingUsernameException -> FAILED_EXISTING_USERNAME
+                else -> FAILED
+                
             }
             ResponseDialog(
                 dialogData = signUpResponseDialogDataType.dialogData,
