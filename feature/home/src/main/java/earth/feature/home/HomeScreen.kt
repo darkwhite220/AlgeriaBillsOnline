@@ -190,7 +190,7 @@ private fun HomeScreen(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = verticalSpacedBy(),
                             contentPadding = PaddingValues(
-                                vertical = mediumDp, horizontal = largeDp
+                                start = largeDp, end = largeDp, top = mediumDp
                             )
                         ) {
                             // Sync data progress bar
