@@ -16,8 +16,10 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import earth.core.designsystem.Util
 import earth.core.designsystem.Util.sendEmail
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.TextDisplaySmall
@@ -37,6 +39,7 @@ import earth.darkwhite.feature.signin.SignInEvent.OnSignInClick
 import earth.darkwhite.feature.signin.uistate.SignInFormState
 import earth.darkwhite.feature.signin.uistate.SignInUiState
 import earth.feature.signin.R
+import java.net.UnknownHostException
 
 @Composable
 fun SignInRoute(
@@ -184,6 +187,10 @@ private fun ShowSignInDialog(
         is SignInUiState.Failed -> {
             println("ShowSignInDialog SignInUiState.Failed: ${signInUiState.throwable}")
             val context = LocalContext.current
+            if (signInUiState.throwable is UnknownHostException) {
+                Util.showToast(context, stringResource(R.string.not_connected_to_the_internet))
+                return
+            }
             var supportMessage: String? = null
             val dialogDataType = when (signInUiState.throwable) {
                 SignInThrowable.BadUsername -> {
