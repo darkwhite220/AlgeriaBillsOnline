@@ -20,7 +20,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -227,7 +226,7 @@ private fun ShowSignupDialog(
         is SignupUiState.Failed -> {
             println("ShowSignupDialog SignupUiState.Failed: ${signupUiState.throwable}")
             if (signupUiState.throwable is UnknownHostException) {
-                Util.showToast(LocalContext.current, stringResource(R.string.not_connected_to_the_internet))
+                Util.noInternetConnection(LocalContext.current)
                 return
             }
             val signUpResponseDialogDataType = when (signupUiState.throwable) {

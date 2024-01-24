@@ -14,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
+import earth.core.designsystem.Util.noInternetConnection
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.largeCorner
@@ -54,6 +56,7 @@ fun CaptchaUi(
                     ImageCaptcha(modifier = modifier, bitmap = captchaUiState.captchaBitmap)
                 }
                 is CaptchaUiState.Failed -> {
+                    noInternetConnection(LocalContext.current)
                     ImageCaptcha(modifier = modifier, bitmap = null)
                     // TODO show broken image + reload icon if captcha fails
                     Log.e("ImageCaptcha", "CaptchaUi: FAILED, ${captchaUiState.exception}")

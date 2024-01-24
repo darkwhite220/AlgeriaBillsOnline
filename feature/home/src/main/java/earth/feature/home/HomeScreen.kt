@@ -33,6 +33,7 @@ import earth.core.database.Bill
 import earth.core.database.BillPreview
 import earth.core.database.User
 import earth.core.designsystem.Util
+import earth.core.designsystem.Util.noInternetConnection
 import earth.core.designsystem.Util.showToast
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
@@ -273,7 +274,7 @@ private fun SyncUi(
         is SyncUiState.Failed -> {
             Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
             if (syncUiState.throwable is UnknownHostException) {
-                showToast(context, stringResource(R.string.not_connected_to_the_internet))
+                noInternetConnection(context)
                 return
             }
             var supportMessage: String? = null

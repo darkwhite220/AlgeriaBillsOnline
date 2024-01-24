@@ -22,5 +22,4 @@
     <string name="file_saved_download">File saved: Download/%1$s</string>
     <string name="permission_denied">Permission denied, Can\'t download file.</string>
     <string name="close">Close</string>
-    <string name="not_connected_to_the_internet">Not connected to the internet</string>
 </resources>

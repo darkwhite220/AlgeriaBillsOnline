@@ -17,6 +17,10 @@ import java.text.DecimalFormat
 
 object Util {
     
+    fun noInternetConnection(context: Context) {
+        showToast(context, context.getString(R.string.not_connected_to_the_internet))
+    }
+    
     fun showToast(context: Context, @StringRes textId: Int, duration: Int = Toast.LENGTH_LONG) {
         Toast.makeText(
             context,

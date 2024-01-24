@@ -2,6 +2,7 @@
 <resources>
     <string name="password_visibility_icon">Visibility Icon</string>
     <string name="reference_detail_image">Reference Detail</string>
+    <string name="not_connected_to_the_internet">Not connected to the internet</string>
 
     <!-- SignUp Response Dialog-->
     <string name="account_creation_successful">Account Creation Successful</string>
