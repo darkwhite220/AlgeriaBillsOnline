@@ -60,6 +60,7 @@ import earth.feature.home.components.OnBillDownloadClick
 import earth.feature.home.components.consumptionLevel
 import earth.feature.home.uistate.SyncUiState
 import earth.feature.home.uistate.UsersUiState
+import java.net.UnknownHostException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -271,6 +272,10 @@ private fun SyncUi(
         }
         is SyncUiState.Failed -> {
             Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
+            if (syncUiState.throwable is UnknownHostException) {
+                showToast(context, stringResource(R.string.not_connected_to_the_internet))
+                return
+            }
             var supportMessage: String? = null
             val dialogDataType: HomeScreenFailedResponseDialog = when (syncUiState.throwable) {
                 SignInThrowable.BadPassword -> FAILED_WRONG_PASSWORD
