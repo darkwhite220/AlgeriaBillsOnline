@@ -53,7 +53,7 @@ fun SettingsDialogRow(
                 text = stringResource(selected)
             )
         }
-        IconButton(onClick = { }) {
+        IconButton(onClick = onClick) {
             Icon(
                 painter = painterResource(endIcon),
                 contentDescription = null,
