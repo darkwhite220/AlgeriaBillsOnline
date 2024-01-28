@@ -1,9 +1,21 @@
 package earth.core.designsystem.icon
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Settings
 import earth.core.designsystem.R
 
 object AppIcons {
     val AppIcon = R.drawable.designa
+    
+    val HomeUnselected = Icons.Outlined.Home
+    val HomeSelected = Icons.Filled.Home
+    val EstimateUnselected = R.drawable.estimate
+    val EstimateSelected = R.drawable.estimate_selected
+    val SettingsUnselected = Icons.Outlined.Settings
+    val SettingsSelected = Icons.Filled.Settings
     
     val BillReference = R.drawable.bill_reference
     val BrokenImage = R.drawable.broken_image

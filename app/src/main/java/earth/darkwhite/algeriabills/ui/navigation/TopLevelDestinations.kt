@@ -1,40 +1,36 @@
 package earth.darkwhite.algeriabills.ui.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Settings
+import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.vector.ImageVector
-
-//enum class TopLevelDestination {
-//  HOME,
-//  ESTIMATE,
-//  SETTINGS,
-//}
+import earth.core.designsystem.icon.AppIcons
 
 enum class TopLevelDestination(
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-//  val titleTextId: Int,
-    val iconTextId: String,
+    val selectedIcon: IconRepresentation,
+    val unselectedIcon: IconRepresentation,
+    val titleTextId: Int,
+//    val iconTextId: String,
 ) {
     HOME(
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
-//    titleTextId = forYouR.string.for_you,
-        iconTextId = "Home",
+        selectedIcon = IconRepresentation.Vector(AppIcons.HomeSelected),
+        unselectedIcon = IconRepresentation.Vector(AppIcons.HomeUnselected),
+        titleTextId = earth.feature.home.R.string.home,
+//        iconTextId = "Home",
     ),
     ESTIMATE(
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
-//    titleTextId = bookmarksR.string.saved,
-        iconTextId = "Estimate",
+        selectedIcon = IconRepresentation.Drawable(AppIcons.EstimateSelected),
+        unselectedIcon = IconRepresentation.Drawable(AppIcons.EstimateUnselected),
+        titleTextId = earth.feature.estimate.R.string.estimate,
+//        iconTextId = "Estimate",
     ),
     SETTINGS(
-        selectedIcon = Icons.Filled.Settings,
-        unselectedIcon = Icons.Outlined.Settings,
-//    titleTextId = interestsR.string.interests,
-        iconTextId = "Settings",
+        selectedIcon = IconRepresentation.Vector(AppIcons.SettingsSelected),
+        unselectedIcon = IconRepresentation.Vector(AppIcons.SettingsUnselected),
+        titleTextId = earth.feature.settings.R.string.settings,
+//        iconTextId = "Settings",
     ),
+}
+
+sealed class IconRepresentation {
+    data class Vector(val imageVector: ImageVector) : IconRepresentation()
+    data class Drawable(@DrawableRes val drawableId: Int) : IconRepresentation()
 }

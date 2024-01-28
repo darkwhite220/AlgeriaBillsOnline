@@ -20,7 +20,7 @@
     <string name="fr_lang" translatable="false">Francais</string>
     <string name="ar_lang" translatable="false">العربية</string>
     <string name="app_notifications">Notifications</string>
-    <string name="permission_denied">Permission Denied</string>
+    <string name="permission_denied_title">Permission Denied</string>
     <string name="enable_notification_from_settings">Notification permission denied, You need to enable notifications from device settings to receive notifications.</string>
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>

@@ -7,7 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -17,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,6 +24,7 @@ import earth.core.data.util.NetworkMonitorRepository
 import earth.core.designsystem.components.smallDp
 import earth.darkwhite.algeriabills.R
 import earth.darkwhite.algeriabills.ui.navigation.AlgeriaBillsNavHost
+import earth.darkwhite.algeriabills.ui.navigation.IconRepresentation
 
 @Composable
 fun AlgeriaBillsApp(
@@ -59,17 +60,27 @@ fun AlgeriaBillsApp(
                 NavigationBar {
                     appState.topLevelDestination.forEach { item ->
                         val isSelected = appState.currentTopLevelDestination == item
+                        val targetIcon = if (isSelected) item.selectedIcon else item.unselectedIcon
                         NavigationBarItem(
                             selected = isSelected,
                             onClick = { appState.navigate(item) },
                             icon = {
-                                Icon(
-                                    imageVector =
-                                    if (isSelected) item.selectedIcon else item.unselectedIcon,
-                                    contentDescription = null
-                                )
+                                when (targetIcon) {
+                                    is IconRepresentation.Vector -> {
+                                        Icon(
+                                            imageVector = targetIcon.imageVector,
+                                            contentDescription = null
+                                        )
+                                    }
+                                    is IconRepresentation.Drawable -> {
+                                        Icon(
+                                            painter = painterResource(targetIcon.drawableId),
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
                             },
-                            label = { Text(text = item.iconTextId) },
+                            label = { Text(text = stringResource(item.titleTextId)) },
                         )
                     }
                 }
