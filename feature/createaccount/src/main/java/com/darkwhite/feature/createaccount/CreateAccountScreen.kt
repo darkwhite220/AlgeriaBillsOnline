@@ -3,11 +3,13 @@ package com.darkwhite.feature.createaccount
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,11 +31,10 @@ import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
-import earth.core.designsystem.utils.Util
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyHeightSpacer
-import earth.core.designsystem.components.TextFieldDescription
 import earth.core.designsystem.components.TextTitleLarge
+import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.dialog.ResponseDialog
 import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED
 import earth.core.designsystem.components.dialog.SignUpResponseDialogDataType.FAILED_EXISTING_USERNAME
@@ -49,6 +50,7 @@ import earth.core.designsystem.components.textfield.MyTextField
 import earth.core.designsystem.components.textfield.TextFieldEvent
 import earth.core.designsystem.components.textfield.createAccountTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
+import earth.core.designsystem.utils.Util
 import earth.core.throwablemodel.SignupThrowable
 import earth.feature.createaccount.R
 import java.net.UnknownHostException
@@ -163,7 +165,11 @@ private fun CreateAccountScreen(
                     },
                 )
                 
-                TextFieldDescription(description = item.value.description)
+                TextWithEmphasise(
+                    textId = item.value.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.fillMaxWidth()
+                )
                 
                 MyHeightSpacer(mediumDp)
             }

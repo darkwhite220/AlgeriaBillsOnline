@@ -56,10 +56,9 @@ fun CaptchaUi(
                     ImageCaptcha(modifier = modifier, bitmap = captchaUiState.captchaBitmap)
                 }
                 is CaptchaUiState.Failed -> {
+                    Log.e("ImageCaptcha", "CaptchaUi: FAILED, ${captchaUiState.exception}")
                     noInternetConnection(LocalContext.current)
                     ImageCaptcha(modifier = modifier, bitmap = null)
-                    // TODO show broken image + reload icon if captcha fails
-                    Log.e("ImageCaptcha", "CaptchaUi: FAILED, ${captchaUiState.exception}")
                 }
             }
         }

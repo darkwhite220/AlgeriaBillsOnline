@@ -50,8 +50,6 @@ class CreateAccountViewModel @Inject constructor(
     private val setLastFetchTimeUseCase: SetLastFetchTimeUseCase,
 ) : ViewModel() {
     
-    // TODO Captcha error implement
-    
     private val isOnline = MutableStateFlow(false)
     
     private val _formUiState = MutableStateFlow(FormUiState())

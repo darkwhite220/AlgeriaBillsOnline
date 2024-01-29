@@ -69,32 +69,19 @@ fun TextWithEmphasise(
     val textValue = when {
         textId != null -> stringResource(textId)
         text != null -> text
-        else -> ""
+        else -> null
     }
-    CompositionLocalProvider(
-        LocalContentColor provides LocalContentColor.current.copy(alpha = alpha)
-    ) {
-        Text(
-            text = textValue,
-            style = style,
-            modifier = modifier,
-            textAlign = textAlign,
-            maxLines = maxLines,
-            overflow = overflow,
-        )
-    }
-}
-
-@Composable
-fun TextFieldDescription(description: Int? = null) {
-    description?.let {
+    textValue?.let {
         CompositionLocalProvider(
-            LocalContentColor provides LocalContentColor.current.copy(alpha = mediumDimAlpha)
+            LocalContentColor provides LocalContentColor.current.copy(alpha = alpha)
         ) {
             Text(
-                text = stringResource(it),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth()
+                text = textValue,
+                style = style,
+                modifier = modifier,
+                textAlign = textAlign,
+                maxLines = maxLines,
+                overflow = overflow,
             )
         }
     }

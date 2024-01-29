@@ -17,8 +17,6 @@ android {
 dependencies {
   implementation(project(":core:model"))
   
-  implementation(libs.bundles.retrofit)
-  implementation(libs.okHttp.logging)
   implementation(libs.hilt.android)
   kapt(libs.hilt.compiler)
   

@@ -66,8 +66,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     
-    implementation(libs.accompanist.systemuicontroller)
-    
     implementation(libs.androidx.core.splashscreen)
     
     implementation(platform(libs.androidx.compose.bom))
@@ -84,6 +82,4 @@ dependencies {
     implementation(libs.work.manager)
     implementation(libs.hilt.worker)
     
-    implementation(libs.junit)
-    implementation(libs.androidx.test.ext.junit)
 }

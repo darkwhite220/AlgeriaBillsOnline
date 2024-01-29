@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-// TODO Persist estimateScreen data
+
 @HiltViewModel
 class EstimateViewModel @Inject constructor(
     private val estimateRepository: EstimateRepository

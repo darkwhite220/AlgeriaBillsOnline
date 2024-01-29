@@ -6,6 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import earth.feature.home.HomeRoute
 
+const val homeRouteStartingDestination = "home_route_starting_destination"
 const val homeRoute = "home_route"
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {

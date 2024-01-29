@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,13 +26,12 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import earth.core.data.NetworkMonitorRepository
+import earth.core.designsystem.theme.AlgeriaBillsTheme
 import earth.core.designsystem.utils.Constants.ARABIC_LANGUAGE_TAG
 import earth.core.designsystem.utils.Constants.ENGLISH_LANGUAGE_TAG
 import earth.core.designsystem.utils.Constants.FRENCH_LANGUAGE_TAG
-import earth.core.designsystem.theme.AlgeriaBillsTheme
 import earth.core.preferencesmodel.DarkThemeConfig
 import earth.core.preferencesmodel.LanguageConfig
 import earth.core.preferencesmodel.ThemeBrand
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         
         initSyncDataWorker()
-
+        
         enableEdgeToEdge()
         
         var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
@@ -71,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         
-        
         splashScreen.setKeepOnScreenCondition {
             when (uiState) {
                 MainActivityUiState.Loading -> true
@@ -80,15 +77,8 @@ class MainActivity : AppCompatActivity() {
         }
         
         setContent {
-            val systemUiController = rememberSystemUiController()
             val darkTheme = shouldUseDarkTheme(uiState)
             AppLocales(uiState)
-            
-            // Update the dark content of the system bars to match the theme
-            DisposableEffect(systemUiController, darkTheme) {
-                systemUiController.systemBarsDarkContentEnabled = !darkTheme
-                onDispose {}
-            }
             
             AlgeriaBillsTheme(
                 darkTheme = darkTheme,

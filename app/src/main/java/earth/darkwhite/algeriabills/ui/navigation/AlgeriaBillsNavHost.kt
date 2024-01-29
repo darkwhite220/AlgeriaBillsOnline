@@ -13,6 +13,7 @@ import earth.darkwhite.algeriabills.ui.AppState
 import earth.darkwhite.feature.estimate.navigation.estimateScreen
 import earth.darkwhite.feature.signin.navigation.signInScreen
 import earth.feature.home.navigation.homeRoute
+import earth.feature.home.navigation.homeRouteStartingDestination
 import earth.feature.home.navigation.homeScreen
 import earth.feature.settings.navigation.settingsScreen
 
@@ -26,7 +27,7 @@ fun AlgeriaBillsNavHost(
 ) {
     NavHostWithFadeThough(
         navController = appState.navController,
-        startDestination = homeRoute,
+        startDestination = homeRouteStartingDestination,
         modifier = modifier
             .padding(paddingValues)
             .consumeWindowInsets(paddingValues)
@@ -44,7 +45,7 @@ fun AlgeriaBillsNavHost(
 }
 
 private fun NavGraphBuilder.homeNestedGraph(appState: AppState) {
-    navigation(startDestination = homeRoute, route = homeRoute) {
+    navigation(startDestination = homeRoute, route = homeRouteStartingDestination) {
         homeScreen(
             onCreateAccountClick = {
                 appState.navigateToCreateAccount()

@@ -13,7 +13,9 @@ android {
 
 dependencies {
   implementation(project(":core:model"))
+  
   implementation(libs.androidx.datastore.preferences)
+  
   implementation(libs.hilt.android)
   kapt(libs.hilt.compiler)
 }
