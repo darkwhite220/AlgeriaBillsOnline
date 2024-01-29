@@ -1,0 +1,5 @@
+<resources>
+    <string name="sign_in">Se connecter</string>
+    <string name="sign_in_desc">Remarque : vous pouvez utiliser les mêmes identifiants que sur le site Web si vous y avez déjà un compte !</string>
+    <string name="sign_in_failed_error">Échec de la connexion</string>
+</resources>

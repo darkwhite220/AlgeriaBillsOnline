@@ -2,5 +2,5 @@
 <resources>
     <string name="sign_in">Sign In</string>
     <string name="sign_in_desc">Note: You can use the same credentials as in the website if you already have a account there!</string>
-    <string name="sign_in_failed_error">New SignIn Failed Error</string>
+    <string name="sign_in_failed_error">Sign In Failed</string>
 </resources>

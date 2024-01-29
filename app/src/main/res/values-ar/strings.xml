@@ -1,0 +1,8 @@
+<resources>
+    <string name="not_connected">⚠️ لا يوجد اتصال</string>
+
+    <string name="sync_new_bills">مزامنة الفواتير الجديدة</string>
+    <string name="sync_bills">مزامنة الفواتير</string>
+    <string name="sync_successful_new_bill_found">تمت المزامنة بنجاح، تم العثور على فاتورة جديدة!</string>
+    <string name="sync_failed_contact_support">فشلت المزامنة، يرجى الاتصال بالدعم إذا استمرت المشكلة.</string>
+</resources>

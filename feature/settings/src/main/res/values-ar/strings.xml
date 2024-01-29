@@ -1,0 +1,23 @@
+<resources>
+    <string name="settings">إعدادات</string>
+    <string name="app_version">1.0.0</string>
+    <string name="app">برنامج</string>
+    <string name="settings_about">عن التطبيق</string>
+    <string name="settings_loading">تحميل…</string>
+    <string name="contact_support">اتصل بنا</string>
+    <string name="rate_us">قيم التطبيق</string>
+    <string name="share_app">مشاركة التطبيق</string>
+    <string name="theme">السمة</string>
+    <string name="theme_default">الإفتراضي</string>
+    <string name="theme_android">أندرويد</string>
+    <string name="dark_theme_pref">المظهر</string>
+    <string name="dark_mode_config_system_default">إستخدام إعدادات الجهاز</string>
+    <string name="dark_mode_config_light">الوضع الساطع</string>
+    <string name="dark_mode_config_dark">الوضع المظلم</string>
+    <string name="app_language">لغة</string>
+    <string name="app_notifications">إشعارات</string>
+    <string name="permission_denied_title">تم رفض الإذن</string>
+    <string name="enable_notification_from_settings">تم رفض إذن الإشعارات، تحتاج إلى تمكين الإشعارات من إعدادات الجهاز لتلقي الإشعارات.</string>
+    <string name="confirm">ثبت</string>
+    <string name="dismiss">رفض</string>
+</resources>

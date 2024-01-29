@@ -1,0 +1,25 @@
+<resources>
+    <string name="home">الرئيسية</string>
+    <string name="track_more_bills">تتبع المزيد من الفواتير!</string>
+    <string name="need_to_track_bills_for_a_new_place">هل تحتاج إلى تتبع الفواتير لمكان جديد؟</string>
+    <string name="create_an_account_to_track_the_bills">إنشاء حساب لتتبع الفواتير</string>
+    <string name="create_account">إنشاء حساب</string>
+    <string name="have_an_account">هل لديك حساب؟</string>
+    <string name="sign_in_to_continue">تسجيل الدخول للمتابعة</string>
+    <string name="sign_in">تسجيل الدخول</string>
+
+    <string name="new_bill_found">تم العثور على فاتورة جديدة!</string>
+    <string name="no_new_bill_found">لم يتم العثور على فاتورة جديدة</string>
+    <string name="sync_data_error">خطأ في مزامنة البيانات</string>
+
+    <string name="bill_details">تفاصيل الفاتورة</string>
+    <string name="consumption_level">مستوى الاستهلاك</string>
+    <string name="bill_n">رقم الفاتورة: %1$s</string>
+    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
+    <string name="trimester">الفصل الدراسي</string>
+    <string name="price_da">%1$s دج</string>
+    <string name="download_as_pdf">تحميل بصيغة PDF</string>
+    <string name="file_saved_download">الملف المحفوظ: تنزيل/%1$s</string>
+    <string name="permission_denied">تم رفض الإذن، لا يمكن تنزيل الملف.</string>
+    <string name="close">غلق</string>
+</resources>

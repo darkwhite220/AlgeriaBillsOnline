@@ -18,7 +18,6 @@ hilt-worker = "1.1.0"
 # @keep
 lottie = "6.1.0"
 hilt = "2.48"
-okHttp = "4.11.0"
 jsoup= "1.14.3"
 itextg= "5.5.10"
 # @keep

@@ -1,0 +1,37 @@
+<resources>
+    <string name="estimate">Estimation</string>
+    <string name="electricity_consumption">Consommation d\'électricité</string>
+    <string name="gas_pcs">Gaz PCS</string>
+    <string name="gas_pcs_hint">Gaz PCS 8,80</string>
+    <string name="gaz_consumption">Consommation de gaz</string>
+
+    <!--MenageType-->
+    <string name="household_city">Ménage (en ville)</string>
+    <string name="household_out_city">Ménage (à l\'extérieur de la ville)</string>
+    <string name="none_household_city">Magasin/usine (en ville)</string>
+    <string name="none_household_out_city">Magasin/Usine (à l’extérieur de la ville)</string>
+    <!--StateSupport-->
+    <string name="state_support_none">Pas de soutien de l\'État : 0%</string>
+    <string name="state_support_high_plateau">Soutien de l\'État : 10%</string>
+    <string name="state_support_sought_none_agriculture">Soutien de l\'État : 25%</string>
+    <string name="state_support_sought_agriculture">Soutien de l\'État : 65%</string>
+    <!--ElectricityPMD-->
+    <string name="electricity_dpm_4">Électricité PMD : 4</string>
+    <string name="electricity_dpm_6">Électricité PMD : 6</string>
+    <string name="electricity_dpm_12">Électricité PMD : 12</string>
+    <string name="electricity_dpm_20">Électricité PMD : 20</string>
+    <string name="electricity_dpm_40">Électricité PMD : 40</string>
+    <string name="electricity_dpm_60">Électricité PMD : 60</string>
+    <string name="electricity_dpm_80">Électricité PMD : 80</string>
+    <!--Dialog Details-->
+    <string name="estimate_details">Détails de l\'estimation</string>
+    <string name="elect_pmd_image">Électricité PMD</string>
+    <string name="gas_pcs_image">Gas PCS</string>
+    <string name="select_menage_details">"\n                    1) Sélectionnez le type de ménage:\n                        - Ménage en ville\n                        - Ménage hors ville (Pas de chef-lieu de daïra)\n                        - Non-Ménage en ville (Magasin/Usine)\n                        - Non-Ménage hors ville (Pas de chef-lieu de daïra)\n"</string>
+    <string name="select_state_support_details">"\n                    2) Soutien de l\'État à la consommation d'électricité :\n                        - 65% pour les retraités de Sonelgaz et les provinces du sud\n                        - 25% pour les provinces du sud à des fins non agricoles\n                        - 10% pour Djelfa, El Bayadh et Naama\n                        - 0% pour les reste\n"</string>
+    <string name="select_elect_pmd_details">3) Électricité PMD : à partir de vos factures précédentes</string>
+    <string name="select_gas_pcs_details">4) PCS Gaz : à partir de vos factures précédentes</string>
+    <string name="select_consumption_details">5 et 6) Consommation d\'électricité et de gaz que vous souhaitez estimer</string>
+    <string name="select_details_note">Remarque: L\'estimation est précise à +/-0,01DA sans le soutien de l\'État.</string>
+
+</resources>

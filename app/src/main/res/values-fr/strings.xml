@@ -1,0 +1,8 @@
+<resources>
+    <string name="not_connected">⚠️ Pas de connection</string>
+
+    <string name="sync_new_bills">Synchronisez les nouvelles factures</string>
+    <string name="sync_bills">Synchroniser les factures</string>
+    <string name="sync_successful_new_bill_found">Synchronisation réussie, nouvelle facture trouvée!</string>
+    <string name="sync_failed_contact_support">La synchronisation a échoué. Veuillez contacter l\'assistance si le problème persiste.</string>
+</resources>

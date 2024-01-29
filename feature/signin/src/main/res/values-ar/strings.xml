@@ -1,0 +1,5 @@
+<resources>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="sign_in_desc">ملاحظة: يمكنك استخدام نفس بيانات الاعتماد الموجودة في الموقع إذا كان لديك حساب هناك !</string>
+    <string name="sign_in_failed_error">فشل تسجيل الدخول</string>
+</resources>

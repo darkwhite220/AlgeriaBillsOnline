@@ -1,0 +1,25 @@
+<resources>
+    <string name="home">Accueil</string>
+    <string name="track_more_bills">Suivez plus de factures!</string>
+    <string name="need_to_track_bills_for_a_new_place">Besoin de suivre les factures d\'un nouveau logement?</string>
+    <string name="create_an_account_to_track_the_bills">Créez un compte pour suivre les factures</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="have_an_account">Vous avez un compte?</string>
+    <string name="sign_in_to_continue">Connectez-vous pour continuer</string>
+    <string name="sign_in">Se connecter</string>
+
+    <string name="new_bill_found">Nouvelle facture trouvée !</string>
+    <string name="no_new_bill_found">Aucune nouvelle facture trouvée</string>
+    <string name="sync_data_error">Erreur de synchronisation des données</string>
+
+    <string name="bill_details">Détails de la facture</string>
+    <string name="consumption_level">Niveau de consommation</string>
+    <string name="bill_n">Facture N° : %1$s</string>
+    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
+    <string name="trimester">Trimestre</string>
+    <string name="price_da">%1$s DA</string>
+    <string name="download_as_pdf">Télécharger en PDF</string>
+    <string name="file_saved_download">Fichier enregistré: Téléchargement/%1$s</string>
+    <string name="permission_denied">Autorisation refusée, impossible de télécharger le fichier.</string>
+    <string name="close">Fermer</string>
+</resources>

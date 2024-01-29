@@ -1,0 +1,37 @@
+<resources>
+    <string name="estimate">تقدير</string>
+    <string name="electricity_consumption">استهلاك الكهرباء</string>
+    <string name="gas_pcs">معامل الغاز</string>
+    <string name="gas_pcs_hint">معامل الغاز 8.80</string>
+    <string name="gaz_consumption">استهلاك الغاز</string>
+
+    <!--MenageType-->
+    <string name="household_city">منزل (في المدينة)</string>
+    <string name="household_out_city">منزل (خارج المدينة)</string>
+    <string name="none_household_city">متجر/مصنع (داخل المدينة)</string>
+    <string name="none_household_out_city">متجر/مصنع (خارج المدينة)</string>
+    <!--StateSupport-->
+    <string name="state_support_none">لا دعم من الدولة: 0%</string>
+    <string name="state_support_high_plateau">دعم الدولة: 10%</string>
+    <string name="state_support_sought_none_agriculture">دعم الدولة: 25%</string>
+    <string name="state_support_sought_agriculture">دعم الدولة: 65%</string>
+    <!--ElectricityDPM-->
+    <string name="electricity_dpm_4">إستطاعة الكهرباء: 4</string>
+    <string name="electricity_dpm_6">إستطاعة الكهرباء: 6</string>
+    <string name="electricity_dpm_12">إستطاعة الكهرباء: 12</string>
+    <string name="electricity_dpm_20">إستطاعة الكهرباء: 20</string>
+    <string name="electricity_dpm_40">إستطاعة الكهرباء: 40</string>
+    <string name="electricity_dpm_60">إستطاعة الكهرباء: 60</string>
+    <string name="electricity_dpm_80">إستطاعة الكهرباء: 80</string>
+    <!--Dialog Details-->
+    <string name="estimate_details">تفاصيل التقدير</string>
+    <string name="elect_pmd_image">إستطاعة الكهرباء</string>
+    <string name="gas_pcs_image">معامل الغاز</string>
+    <string name="select_menage_details">"\n                    1) حدد نوع المكان:\n                        - منزل في المدينة\n                        - منزل خارج المدينة (بدون مقر الدائرة)\n                        - غيز منزل في المدينة (متجر/مصنع)\n                        - غيز منزل (متجر/مصنع) خارج المدينة (بدون مقر الدائرة)\n"</string>
+    <string name="select_state_support_details">"\n                    2) دعم الدولة لاستهلاك الكهرباء:\n                        - 65% لمتقاعدي سونلغاز وولايات الجنوب\n                        - 25% ولايات الجنوب لأغراض غير زراعية\n                        - 10% الجلفة والبيض والنعامة \n                        - 0% بالنسبة للبقية \n\"</string>
+    <string name="select_elect_pmd_details">3) إستطاعة الكهرباء: من فواتيرك السابقة</string>
+    <string name="select_gas_pcs_details">4) معامل الغاز: من فواتيرك السابقة</string>
+    <string name="select_consumption_details">5 و 6) استهلاك الكهرباء والغاز الذي تريد تقديره</string>
+    <string name="select_details_note">ملحوظة: التقدير دقيق +/- 0.01 DA بدون دعم الدولة.</string>
+
+</resources>

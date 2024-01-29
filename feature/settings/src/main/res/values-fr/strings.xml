@@ -1,0 +1,23 @@
+<resources>
+    <string name="settings">Paramètres</string>
+    <string name="app_version">1.0.0</string>
+    <string name="app">Application</string>
+    <string name="settings_about">À propos</string>
+    <string name="settings_loading">Chargement…</string>
+    <string name="contact_support">Contactez-nous</string>
+    <string name="rate_us">Évaluer l\'application</string>
+    <string name="share_app">Partagez l\'application</string>
+    <string name="theme">Thème</string>
+    <string name="theme_default">Défaut</string>
+    <string name="theme_android">Android</string>
+    <string name="dark_theme_pref">Apparence</string>
+    <string name="dark_mode_config_system_default">Thème de l\'appareil</string>
+    <string name="dark_mode_config_light">Thème claire</string>
+    <string name="dark_mode_config_dark">Thème sombre</string>
+    <string name="app_language">Langue</string>
+    <string name="app_notifications">Notifications</string>
+    <string name="permission_denied_title">Permission refusée</string>
+    <string name="enable_notification_from_settings">Permission de notification refusée. Vous devez activer les notifications à partir des paramètres de l\'appareil pour recevoir des notifications.</string>
+    <string name="confirm">Confirmer</string>
+    <string name="dismiss">Rejeter</string>
+</resources>
