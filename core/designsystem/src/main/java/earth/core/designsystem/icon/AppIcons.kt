@@ -8,7 +8,8 @@ import androidx.compose.material.icons.outlined.Settings
 import earth.core.designsystem.R
 
 object AppIcons {
-    val AppIcon = R.drawable.designa
+    val AppIcon = R.drawable.logo_splash
+    val NotificationIcon = R.drawable.ic_notification
     
     val HomeUnselected = Icons.Outlined.Home
     val HomeSelected = Icons.Filled.Home

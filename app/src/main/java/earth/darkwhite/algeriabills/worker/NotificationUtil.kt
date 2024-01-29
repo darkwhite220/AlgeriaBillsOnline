@@ -76,7 +76,7 @@ class NotificationUtil(
             PendingIntent.getActivity(context, REQUEST_CODE, intent, PendingIntent.FLAG_IMMUTABLE)
         
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
-            .setSmallIcon(AppIcons.AppIcon)
+            .setSmallIcon(AppIcons.NotificationIcon)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(body))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
