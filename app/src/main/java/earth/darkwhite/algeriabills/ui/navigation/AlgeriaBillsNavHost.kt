@@ -34,7 +34,6 @@ fun AlgeriaBillsNavHost(
         homeNestedGraph(appState)
         
         estimateScreen(
-            onSettingsClick = { appState.navigate(TopLevelDestination.SETTINGS) },
             onBackClick = { appState.popBackStack() },
         )
         

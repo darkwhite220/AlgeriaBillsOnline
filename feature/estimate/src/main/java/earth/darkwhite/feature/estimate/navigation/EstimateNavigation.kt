@@ -13,12 +13,10 @@ fun NavController.navigateToEstimate(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.estimateScreen(
-    onSettingsClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     composable(route = estimateRoute) {
         EstimateRoute(
-            onSettingsClick = onSettingsClick,
             onBackClick = onBackClick,
         )
     }

@@ -46,7 +46,6 @@ import earth.feature.estimate.R
 
 @Composable
 internal fun EstimateRoute(
-    onSettingsClick: () -> Unit,
     onBackClick: () -> Unit,
     viewModel: EstimateViewModel = hiltViewModel()
 ) {
@@ -58,7 +57,6 @@ internal fun EstimateRoute(
         uiState = uiState,
         billEstimate = billEstimate,
         onEstimateEvent = viewModel::onEvent,
-        onSettingsClick = onSettingsClick,
         onBackClick = onBackClick,
         onShowDetailDialogClick = { showDetailDialog = true },
     )
@@ -75,7 +73,6 @@ private fun EstimateScreen(
     uiState: EstimateUiState = EstimateUiState(),
     billEstimate: Bill = Bill(),
     onEstimateEvent: (EstimateEvent) -> Unit = {},
-    onSettingsClick: () -> Unit = {},
     onBackClick: () -> Unit = {},
     onShowDetailDialogClick: () -> Unit = {},
 ) {
