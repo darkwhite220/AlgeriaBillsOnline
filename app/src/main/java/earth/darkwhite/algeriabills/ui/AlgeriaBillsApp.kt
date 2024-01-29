@@ -1,10 +1,13 @@
 package earth.darkwhite.algeriabills.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -52,40 +55,41 @@ fun AlgeriaBillsApp(
     
     Scaffold(
         bottomBar = {
-//            Column {
-//                if (isOffline) {
-//                    NoConnectionUi()
-//                }
-            if (currentDestination != null) {
-                NavigationBar {
-                    appState.topLevelDestination.forEach { item ->
-                        val isSelected = appState.currentTopLevelDestination == item
-                        val targetIcon = if (isSelected) item.selectedIcon else item.unselectedIcon
-                        NavigationBarItem(
-                            selected = isSelected,
-                            onClick = { appState.navigate(item) },
-                            icon = {
-                                when (targetIcon) {
-                                    is IconRepresentation.Vector -> {
-                                        Icon(
-                                            imageVector = targetIcon.imageVector,
-                                            contentDescription = null
-                                        )
+            Column {
+                if (isOffline) {
+                    NoConnectionUi(navigationBarPaddingEnabled = { currentDestination == null })
+                }
+                if (currentDestination != null) {
+                    NavigationBar {
+                        appState.topLevelDestination.forEach { item ->
+                            val isSelected = appState.currentTopLevelDestination == item
+                            val targetIcon =
+                                if (isSelected) item.selectedIcon else item.unselectedIcon
+                            NavigationBarItem(
+                                selected = isSelected,
+                                onClick = { appState.navigate(item) },
+                                icon = {
+                                    when (targetIcon) {
+                                        is IconRepresentation.Vector -> {
+                                            Icon(
+                                                imageVector = targetIcon.imageVector,
+                                                contentDescription = null
+                                            )
+                                        }
+                                        is IconRepresentation.Drawable -> {
+                                            Icon(
+                                                painter = painterResource(targetIcon.drawableId),
+                                                contentDescription = null
+                                            )
+                                        }
                                     }
-                                    is IconRepresentation.Drawable -> {
-                                        Icon(
-                                            painter = painterResource(targetIcon.drawableId),
-                                            contentDescription = null
-                                        )
-                                    }
-                                }
-                            },
-                            label = { Text(text = stringResource(item.titleTextId)) },
-                        )
+                                },
+                                label = { Text(text = stringResource(item.titleTextId)) },
+                            )
+                        }
                     }
                 }
             }
-//            }
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { paddingValues ->
@@ -107,7 +111,12 @@ fun AlgeriaBillsApp(
 }
 
 @Composable
-private fun NoConnectionUi() {
+private fun NoConnectionUi(
+    navigationBarPaddingEnabled: () -> Boolean
+) {
+    val modifier = if (navigationBarPaddingEnabled())
+        Modifier.padding(NavigationBarDefaults.windowInsets.asPaddingValues())
+    else Modifier
     Surface(
         color = MaterialTheme.colorScheme.errorContainer
     ) {
@@ -117,6 +126,7 @@ private fun NoConnectionUi() {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
+                .then(modifier)
                 .padding(smallDp)
         )
     }
