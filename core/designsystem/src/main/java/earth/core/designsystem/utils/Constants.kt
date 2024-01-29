@@ -1,4 +1,4 @@
-package earth.core.designsystem
+package earth.core.designsystem.utils
 
 object Constants {
     

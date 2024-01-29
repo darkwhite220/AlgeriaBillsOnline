@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import earth.core.database.BillPreview
-import earth.core.designsystem.Util.getNumberSuffix
-import earth.core.designsystem.Util.printDate
-import earth.core.designsystem.Util.toPrice
+import earth.core.designsystem.utils.Util.getNumberSuffix
+import earth.core.designsystem.utils.Util.printDate
+import earth.core.designsystem.utils.Util.toPrice
 import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp

@@ -12,10 +12,14 @@ class UserImplementation @Inject constructor(
     private val userDao: UserDao
 ) : UserRepository {
     
-    override fun getUsers(): Flow<List<User>> =
+    override fun getUsersFlow(): Flow<List<User>> =
         userDao.getUsersFlow().map {
             it.map { userEntity -> userEntity.asExternalModel() }
         }
+    
+    override fun getUsers(): List<User> =
+        userDao.getUsers().map { userEntity -> userEntity.asExternalModel() }
+    
     
     override fun getUser(reference: String): User? =
         userDao.getUser(reference)?.asExternalModel()

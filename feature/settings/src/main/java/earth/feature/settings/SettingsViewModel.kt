@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.data.UserDataRepository
-import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
+import earth.core.designsystem.utils.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.core.preferencesmodel.UserData
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted

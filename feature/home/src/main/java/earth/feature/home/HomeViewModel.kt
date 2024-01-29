@@ -12,11 +12,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.common.Result
 import earth.core.common.asResult
 import earth.core.data.UserDataRepository
-import earth.core.data.util.NetworkMonitorRepository
+import earth.core.data.NetworkMonitorRepository
 import earth.core.database.Bill
 import earth.core.database.BillDownload
 import earth.core.database.asBillDownload
-import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
+import earth.core.designsystem.utils.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.core.domain.SetLastFetchTimeUseCase
 import earth.core.domain.home.DownloadBillUseCase
 import earth.core.domain.home.GetBillUseCase

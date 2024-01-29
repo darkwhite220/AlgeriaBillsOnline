@@ -1,4 +1,4 @@
-package earth.core.designsystem
+package earth.core.designsystem.utils
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -8,10 +8,11 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.text.isDigitsOnly
-import earth.core.designsystem.Constants.CAPTCHA_LENGTH
-import earth.core.designsystem.Constants.MAX_REFERENCE_LENGTH
-import earth.core.designsystem.Constants.MIN_PASSWORD_LENGTH
-import earth.core.designsystem.Constants.MIN_USERNAME_LENGTH
+import earth.core.designsystem.R
+import earth.core.designsystem.utils.Constants.CAPTCHA_LENGTH
+import earth.core.designsystem.utils.Constants.MAX_REFERENCE_LENGTH
+import earth.core.designsystem.utils.Constants.MIN_PASSWORD_LENGTH
+import earth.core.designsystem.utils.Constants.MIN_USERNAME_LENGTH
 import java.math.BigDecimal
 import java.text.DecimalFormat
 

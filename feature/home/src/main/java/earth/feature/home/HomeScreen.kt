@@ -32,9 +32,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.Bill
 import earth.core.database.BillPreview
 import earth.core.database.User
-import earth.core.designsystem.Util
-import earth.core.designsystem.Util.noInternetConnection
-import earth.core.designsystem.Util.showToast
+import earth.core.designsystem.utils.Util
+import earth.core.designsystem.utils.Util.noInternetConnection
+import earth.core.designsystem.utils.Util.showToast
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.MyLinearProgressBar

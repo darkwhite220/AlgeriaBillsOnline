@@ -27,8 +27,6 @@ interface BillDao {
         """
     )
     fun getBillsPreview(): Flow<List<BillPreviewEntity>>
-//    WHERE reference MATCH :reference
-//    fun getBillsPreview(reference: String): Flow<List<BillPreviewEntity>>
     
     @Query("SELECT * FROM bill_table WHERE bill_number LIKE :billNumber")
     fun getBill(billNumber: String): Flow<BillEntity>

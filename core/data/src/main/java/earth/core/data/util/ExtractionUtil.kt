@@ -49,7 +49,7 @@ import earth.core.data.util.Constants.SECOND_TAV
 import earth.core.database.Bill
 import earth.core.database.ElectricityPMD
 import earth.core.database.MenageType
-import earth.core.network.Constants
+import earth.core.network.utils.Constants
 import java.math.BigDecimal
 
 

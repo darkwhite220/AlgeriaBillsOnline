@@ -29,10 +29,10 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import earth.core.data.util.NetworkMonitorRepository
-import earth.core.designsystem.Constants.ARABIC_LANGUAGE_TAG
-import earth.core.designsystem.Constants.ENGLISH_LANGUAGE_TAG
-import earth.core.designsystem.Constants.FRENCH_LANGUAGE_TAG
+import earth.core.data.NetworkMonitorRepository
+import earth.core.designsystem.utils.Constants.ARABIC_LANGUAGE_TAG
+import earth.core.designsystem.utils.Constants.ENGLISH_LANGUAGE_TAG
+import earth.core.designsystem.utils.Constants.FRENCH_LANGUAGE_TAG
 import earth.core.designsystem.theme.AlgeriaBillsTheme
 import earth.core.preferencesmodel.DarkThemeConfig
 import earth.core.preferencesmodel.LanguageConfig
@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         
         initSyncDataWorker()
 
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
         
         var uiState: MainActivityUiState by mutableStateOf(MainActivityUiState.Loading)
@@ -95,7 +94,6 @@ class MainActivity : AppCompatActivity() {
                 darkTheme = darkTheme,
                 dynamicColor = shouldUseAndroidTheme(uiState)
             ) {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -112,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        // TODO implement fetch time logic
+        
         val work = PeriodicWorkRequestBuilder<SyncDataWorker>(15, TimeUnit.MINUTES)
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
             .setInitialDelay(1, TimeUnit.DAYS)

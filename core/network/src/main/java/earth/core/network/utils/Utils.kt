@@ -1,4 +1,4 @@
-package earth.core.network
+package earth.core.network.utils
 
 import kotlin.random.Random
 

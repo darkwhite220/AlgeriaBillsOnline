@@ -9,9 +9,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.common.Result
 import earth.core.common.asResult
-import earth.core.data.util.NetworkMonitorRepository
-import earth.core.designsystem.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
-import earth.core.designsystem.Util.isValidSignInPassword
+import earth.core.data.NetworkMonitorRepository
+import earth.core.designsystem.utils.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
+import earth.core.designsystem.utils.Util.isValidSignInPassword
 import earth.core.domain.SetLastFetchTimeUseCase
 import earth.core.domain.signin.SignInUseCase
 import earth.darkwhite.feature.signin.uistate.SignInFormState

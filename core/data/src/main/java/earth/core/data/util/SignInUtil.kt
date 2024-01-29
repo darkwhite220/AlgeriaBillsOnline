@@ -9,7 +9,6 @@ import org.jsoup.nodes.Document
 
 object SignInUtil {
     
-    // TODO ADD TESTS
     fun extractSignInPageData(response: SignInResponse): SignInData {
         val result: SignInData
         

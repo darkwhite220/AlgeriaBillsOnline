@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import earth.core.data.util.NetworkMonitorRepository
+import earth.core.data.NetworkMonitorRepository
 import earth.core.designsystem.components.smallDp
 import earth.darkwhite.algeriabills.ui.navigation.AlgeriaBillsNavHost
 import earth.darkwhite.algeriabills.ui.navigation.IconRepresentation

@@ -13,11 +13,6 @@ class BillImplementation @Inject constructor(
     private val billDao: BillDao
 ) : BillRepository {
     
-//    override fun getBillsPreview(reference: String): Flow<List<BillPreview>> =
-//        billDao.getBillsPreview(reference).map {
-//            it.map { billPreviewEntity -> billPreviewEntity.asExternalModel() }
-//        }
-    
     override fun getBillsPreview(): Flow<List<BillPreview>> =
         billDao.getBillsPreview().map {
             it.map { billPreviewEntity -> billPreviewEntity.asExternalModel() }
@@ -25,6 +20,9 @@ class BillImplementation @Inject constructor(
     
     override fun getBill(billNumber: String): Flow<Bill> =
         billDao.getBill(billNumber).map { it.asExternalModel() }
+    
+    override fun getLastBill(reference: String): Bill? =
+        billDao.getLastBill(reference)?.asExternalModel()
     
     override suspend fun insertBills(bills: List<Bill>) =
         billDao.insertBills(bills.map { it.asEntity() })

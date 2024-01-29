@@ -1,7 +1,7 @@
 package earth.core.designsystem.components.dialog
 
-import earth.core.designsystem.Constants.FAILED_LOTTIE_FILE
-import earth.core.designsystem.Constants.SUCCESSFUL_LOTTIE_FILE
+import earth.core.designsystem.utils.Constants.FAILED_LOTTIE_FILE
+import earth.core.designsystem.utils.Constants.SUCCESSFUL_LOTTIE_FILE
 import earth.core.designsystem.R
 
 enum class SignUpResponseDialogDataType(

@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
-import earth.core.designsystem.Util.noInternetConnection
+import earth.core.designsystem.utils.Util.noInternetConnection
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.largeCorner

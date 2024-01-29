@@ -12,7 +12,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.darkwhite.feature.createaccount.navigation.navigateToCreateAccount
-import earth.core.data.util.NetworkMonitorRepository
+import earth.core.data.NetworkMonitorRepository
+import earth.core.designsystem.utils.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.darkwhite.algeriabills.ui.navigation.TopLevelDestination
 import earth.darkwhite.feature.estimate.navigation.estimateRoute
 import earth.darkwhite.feature.estimate.navigation.navigateToEstimate
@@ -55,7 +56,7 @@ class AppState(
         .map(Boolean::not)
         .stateIn(
             scope = coroutineScope,
-            started = SharingStarted.WhileSubscribed(5_000),
+            started = SharingStarted.WhileSubscribed(VIEW_MODEL_SUBSCRIPTION_TIME),
             initialValue = false,
         )
     

@@ -10,22 +10,18 @@ import earth.core.database.Bill
 import earth.core.database.ElectricityPMD
 import earth.core.database.MenageType
 import earth.core.database.User
-import earth.core.database.dao.BillDao
-import earth.core.database.dao.UserDao
-import earth.core.database.model.asEntity
-import earth.core.database.model.asExternalModel
 import earth.core.network.AppNetworkDataSource
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 
 class SyncDataImplementation @Inject constructor(
     private val appNetwork: AppNetworkDataSource,
-    private val userDao: UserDao,
-    private val billDao: BillDao,
+    private val userRepository: UserRepository,
+    private val billRepository: BillRepository,
 ) : SyncDataRepository {
     
     override suspend fun syncData(): Boolean? {
-        val userList: List<User> = userDao.getUsers().map { it.asExternalModel() }
+        val userList: List<User> = userRepository.getUsers()
         var result: Boolean? = null
         
         userList.forEach { user ->
@@ -47,10 +43,10 @@ class SyncDataImplementation @Inject constructor(
                     lastBillNumber = signInResponse.billNumber,
                 )
                 
-                userDao.insertUser(newUserCopy.asEntity())
+                userRepository.insertUser(user = newUserCopy)
             }
             
-            val lastBill = billDao.getLastBill(user.reference)?.asExternalModel()
+            val lastBill = billRepository.getLastBill(user.reference)
             Log.d(TAG, "syncData: lastBill $lastBill")
             
             if (user.lastBillNumber != signInResponse.billNumber ||
@@ -122,12 +118,12 @@ class SyncDataImplementation @Inject constructor(
                             gasPCS = gazPCS,
                         )
                         
-                        userDao.insertUser(newUserCopy.asEntity())
+                        userRepository.insertUser(user = newUserCopy)
                     }
                     
                     // Extract & Insert bills
-                    billDao.insertBills(
-                        billsList.map { it.asEntity() }
+                    billRepository.insertBills(
+                        bills = billsList
                     )
                 }
                 result = true

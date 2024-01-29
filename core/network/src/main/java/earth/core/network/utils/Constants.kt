@@ -1,4 +1,4 @@
-package earth.core.network
+package earth.core.network.utils
 
 object Constants {
     const val BASE_URL = "https://consulter-factures.elit.dz"

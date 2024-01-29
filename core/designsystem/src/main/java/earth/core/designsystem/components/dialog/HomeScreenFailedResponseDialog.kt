@@ -1,6 +1,6 @@
 package earth.core.designsystem.components.dialog
 
-import earth.core.designsystem.Constants
+import earth.core.designsystem.utils.Constants
 import earth.core.designsystem.R
 
 enum class HomeScreenFailedResponseDialog(

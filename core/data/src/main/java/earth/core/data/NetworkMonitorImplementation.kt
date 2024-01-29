@@ -1,4 +1,4 @@
-package earth.core.data.util
+package earth.core.data
 
 import android.content.Context
 import android.net.ConnectivityManager

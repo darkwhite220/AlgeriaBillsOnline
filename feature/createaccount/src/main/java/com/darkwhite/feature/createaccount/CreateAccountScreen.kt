@@ -29,7 +29,7 @@ import com.darkwhite.feature.createaccount.dialog.ReferenceDetailDialog
 import com.darkwhite.feature.createaccount.uistate.CaptchaUiState
 import com.darkwhite.feature.createaccount.uistate.FormUiState
 import com.darkwhite.feature.createaccount.uistate.SignupUiState
-import earth.core.designsystem.Util
+import earth.core.designsystem.utils.Util
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.TextFieldDescription

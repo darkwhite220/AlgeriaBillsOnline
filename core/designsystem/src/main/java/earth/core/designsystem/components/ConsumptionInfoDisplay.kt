@@ -15,9 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import earth.core.database.Bill
 import earth.core.designsystem.R
-import earth.core.designsystem.Util.getNumberSuffix
-import earth.core.designsystem.Util.printDate
-import earth.core.designsystem.Util.toPrice
+import earth.core.designsystem.utils.Util.getNumberSuffix
+import earth.core.designsystem.utils.Util.printDate
+import earth.core.designsystem.utils.Util.toPrice
 
 
 @Composable

@@ -1,11 +1,11 @@
-package earth.core.network.di
+package earth.core.network.utils
 
-import earth.core.network.Constants.ACCEPT_ALL
-import earth.core.network.Constants.ACCEPT_IMAGE
-import earth.core.network.Constants.BASE_URL
-import earth.core.network.Constants.HEADER_CONSULT_URL
-import earth.core.network.Constants.LOGIN_CONSULT_URL
-import earth.core.network.Constants.SIGNUP_FORM_URL
+import earth.core.network.utils.Constants.ACCEPT_ALL
+import earth.core.network.utils.Constants.ACCEPT_IMAGE
+import earth.core.network.utils.Constants.BASE_URL
+import earth.core.network.utils.Constants.HEADER_CONSULT_URL
+import earth.core.network.utils.Constants.LOGIN_CONSULT_URL
+import earth.core.network.utils.Constants.SIGNUP_FORM_URL
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.headers

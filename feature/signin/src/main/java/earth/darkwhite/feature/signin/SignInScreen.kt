@@ -18,8 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import earth.core.designsystem.Util
-import earth.core.designsystem.Util.sendEmail
+import earth.core.designsystem.utils.Util
+import earth.core.designsystem.utils.Util.sendEmail
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.TextDisplaySmall
 import earth.core.designsystem.components.TextWithEmphasise

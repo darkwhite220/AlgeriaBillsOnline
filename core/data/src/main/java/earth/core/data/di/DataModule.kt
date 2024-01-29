@@ -18,8 +18,8 @@ import earth.core.data.UserDataImplementation
 import earth.core.data.UserDataRepository
 import earth.core.data.UserImplementation
 import earth.core.data.UserRepository
-import earth.core.data.util.NetworkMonitorImplementation
-import earth.core.data.util.NetworkMonitorRepository
+import earth.core.data.NetworkMonitorImplementation
+import earth.core.data.NetworkMonitorRepository
 
 @Module
 @InstallIn(SingletonComponent::class)

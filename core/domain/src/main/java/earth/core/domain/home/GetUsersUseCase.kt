@@ -14,7 +14,7 @@ class GetUsersUseCase @Inject constructor(
 ) {
     
     operator fun invoke(): Flow<List<User>> =
-        userRepository.getUsers().addBillsPreview(billRepository.getBillsPreview())
+        userRepository.getUsersFlow().addBillsPreview(billRepository.getBillsPreview())
     
 }
 

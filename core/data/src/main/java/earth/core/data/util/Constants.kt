@@ -11,9 +11,6 @@ object Constants {
     const val RIGHTS_THIRD_TRANCHE = 390
     const val RIGHTS_THIRD_TRANCHE_PRICE = 100
     
-    val SOUTH_DISCOUNT_PERCENT = "0.65".toBigDecimal()
-    
-    val TIMBRE_PERCENT_FROM_TOTAL = "0.01".toBigDecimal()
     val MIN_TIMBRE_VALUE = "5.00".toBigDecimal()
     
     val PMD_MARGIN = "0.1".toBigDecimal()

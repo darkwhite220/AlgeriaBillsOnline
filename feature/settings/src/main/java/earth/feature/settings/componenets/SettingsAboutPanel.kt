@@ -6,9 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import earth.core.designsystem.Util
+import earth.core.designsystem.utils.Util
 import earth.core.designsystem.components.MyDivider
-import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.customContentSizeAnimation
 import earth.core.designsystem.icon.AppIcons
 import earth.feature.settings.R
