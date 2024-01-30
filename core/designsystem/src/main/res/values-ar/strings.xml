@@ -68,7 +68,7 @@
     <string name="price_da">%1$s دج</string>
     <string name="vat">ضريبة القيمة المضافة:</string>
     <string name="total">المجموع</string>
-    <string name="close">يغلق</string>
+    <string name="close">غلق</string>
     <string name="total_amount_ht">المبلغ الإجمالي HT:</string>
     <string name="total_vat">إجمالي ضريبة القيمة المضافة:</string>
     <string name="rights_and_taxes">الحقوق والضرائب:</string>

@@ -28,7 +28,7 @@
     <string name="elect_pmd_image">إستطاعة الكهرباء</string>
     <string name="gas_pcs_image">معامل الغاز</string>
     <string name="select_menage_details">"\n                    1) حدد نوع المكان:\n                        - منزل في المدينة\n                        - منزل خارج المدينة (بدون مقر الدائرة)\n                        - غيز منزل في المدينة (متجر/مصنع)\n                        - غيز منزل (متجر/مصنع) خارج المدينة (بدون مقر الدائرة)\n"</string>
-    <string name="select_state_support_details">"\n                    2) دعم الدولة لاستهلاك الكهرباء:\n                        - 65% لمتقاعدي سونلغاز وولايات الجنوب\n                        - 25% ولايات الجنوب لأغراض غير زراعية\n                        - 10% الجلفة والبيض والنعامة \n                        - 0% بالنسبة للبقية \n\"</string>
+    <string name="select_state_support_details">"\n                    2) دعم الدولة لاستهلاك الكهرباء:\n                        - 65% لمتقاعدي سونلغاز وولايات الجنوب\n                        - 25% ولايات الجنوب لأغراض غير زراعية\n                        - 10% الجلفة والبيض والنعامة\n                        - 0% بالنسبة للبقية \n"</string>
     <string name="select_elect_pmd_details">3) إستطاعة الكهرباء: من فواتيرك السابقة</string>
     <string name="select_gas_pcs_details">4) معامل الغاز: من فواتيرك السابقة</string>
     <string name="select_consumption_details">5 و 6) استهلاك الكهرباء والغاز الذي تريد تقديره</string>
