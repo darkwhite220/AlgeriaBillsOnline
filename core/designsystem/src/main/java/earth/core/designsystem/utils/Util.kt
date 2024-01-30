@@ -15,6 +15,8 @@ import earth.core.designsystem.utils.Constants.MIN_PASSWORD_LENGTH
 import earth.core.designsystem.utils.Constants.MIN_USERNAME_LENGTH
 import java.math.BigDecimal
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 object Util {
     
@@ -38,7 +40,7 @@ object Util {
         ).show()
     }
     
-    private val decimalFormat = DecimalFormat("0.00")
+    private val decimalFormat = DecimalFormat("0.00", DecimalFormatSymbols(Locale.ENGLISH))
     
     fun Float.toPrice(): String = decimalFormat.format(this)
     
