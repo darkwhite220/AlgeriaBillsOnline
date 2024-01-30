@@ -36,7 +36,7 @@
     <string name="reference_length">يجب أن يكون 15 رقما</string>
     <string name="password">كلمة المرور</string>
     <string name="password_wrong_format">صيغة خاطئة</string>
-    <string name="password_desc">"يجب أن تحتوي كلمة المرور على:\n- 8 أحرف على الأقل\n        - حرف كبير واحد على الأقل\n        - حرف صغير واحد على الأقل\n        - حرف خاص واحد على الأقل (_-*/,\\$!?.\")"</string>
+    <string name="password_desc">"   يجب أن تحتوي كلمة المرور على:\n        - 8 أحرف على الأقل\n        - حرف كبير واحد على الأقل\n        - حرف صغير واحد على الأقل\n        - حرف خاص واحد على الأقل (_-*/,\\$!?.\")"</string>
     <string name="repeat_password">اعد كلمة السر</string>
     <string name="repeat_password_desc">يجب أن تكون نفس كلمة المرور</string>
     <string name="image_code">رمز الصورة</string>
