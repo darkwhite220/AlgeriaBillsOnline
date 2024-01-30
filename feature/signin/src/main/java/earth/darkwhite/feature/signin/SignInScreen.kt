@@ -1,8 +1,10 @@
 package earth.darkwhite.feature.signin
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -18,8 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import earth.core.designsystem.utils.Util
-import earth.core.designsystem.utils.Util.sendEmail
 import earth.core.designsystem.components.ButtonWithLoading
 import earth.core.designsystem.components.TextDisplaySmall
 import earth.core.designsystem.components.TextWithEmphasise
@@ -32,6 +32,8 @@ import earth.core.designsystem.components.textfield.TextFieldEvent
 import earth.core.designsystem.components.textfield.signInTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
 import earth.core.designsystem.components.verticalSpacedBy
+import earth.core.designsystem.utils.Util
+import earth.core.designsystem.utils.Util.sendEmail
 import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.SignInThrowable
 import earth.darkwhite.feature.signin.SignInEvent.OnSignInClick
@@ -64,6 +66,7 @@ fun SignInRoute(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SignInScreen(
     signInFormState: SignInFormState = SignInFormState(),
@@ -72,19 +75,17 @@ fun SignInScreen(
     onSignInEvent: (SignInEvent) -> Unit,
     onBackClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-    ) {
+    Column {
         CenteredTopAppBar(
             titleId = null,
             onBackClick = onBackClick,
         )
         Column(
             modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding()
                 .verticalScroll(rememberScrollState())
-//                .imePadding() // TODO CHECK IME PADDING
-                .padding(horizontal = largeDp)
-                .fillMaxSize(),
+                .padding(horizontal = largeDp),
             verticalArrangement = verticalSpacedBy(largeDp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

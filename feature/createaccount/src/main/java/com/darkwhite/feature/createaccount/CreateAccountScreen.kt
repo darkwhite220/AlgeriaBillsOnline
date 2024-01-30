@@ -1,11 +1,9 @@
 package com.darkwhite.feature.createaccount
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imeNestedScroll
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -88,7 +86,6 @@ internal fun CreateAccountRoute(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun CreateAccountScreen(
@@ -99,21 +96,18 @@ private fun CreateAccountScreen(
     onBackClick: () -> Unit = {},
     onShowReferenceDetailClick: () -> Unit = {},
 ) {
-    Column(
-        modifier = Modifier
-    ) {
+    Column {
         CenteredTopAppBar(
             titleId = R.string.create_account,
             onBackClick = onBackClick,
         )
         
         Column(
-            modifier = Modifier // TODO CHECK IME PADDING
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = largeDp)
+            modifier = Modifier
                 .fillMaxSize()
-                .imePadding()
-                .imeNestedScroll(),
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = largeDp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val focusManager = LocalFocusManager.current
