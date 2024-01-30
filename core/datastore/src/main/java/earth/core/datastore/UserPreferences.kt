@@ -118,7 +118,7 @@ class PreferencesDataStore @Inject constructor(
         const val LAST_FETCH_TIME_DEFAULT = 0L
         const val NOTIFICATION_DEFAULT = false
         const val FIRST_LAUNCH_DEFAULT = true
-        val APP_LANGUAGE_DEFAULT = LanguageConfig.ENGLISH.name
+        val APP_LANGUAGE_DEFAULT = LanguageConfig.FRENCH.name
     }
     
     companion object {
