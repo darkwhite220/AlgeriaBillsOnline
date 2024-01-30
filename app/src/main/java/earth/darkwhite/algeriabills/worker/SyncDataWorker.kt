@@ -50,8 +50,10 @@ class SyncDataWorker @AssistedInject constructor(
             } catch (e: Throwable) {
                 
                 println("Throwable: $e")
-                if (e is UnknownHostException) {
+                if (e is UnknownHostException && attempts == MAX_RETRY_ATTEMPTS) {
                     return Result.Failure()
+                } else if (e is UnknownHostException) {
+                    return Result.Retry()
                 }
                 if (e is SignInThrowable || e is ConvertingPdfThrowable || attempts == MAX_RETRY_ATTEMPTS) {
                     notificationUtil.showNotification(isSuccessful = false)
