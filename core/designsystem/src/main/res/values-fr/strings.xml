@@ -1,0 +1,82 @@
+<resources>
+    <string name="password_visibility_icon">Icône de visibilité</string>
+    <string name="reference_detail_image">Détail de référence</string>
+    <string name="not_connected_to_the_internet">Pas connecté à l\'Internet</string>
+
+    <!-- SignUp Response Dialog-->
+    <string name="account_creation_successful">Création de compte réussie</string>
+    <string name="continue_button">Continuer</string>
+    <string name="account_creation_failed">Échec de la création du compte</string>
+    <string name="account_creation_failed_desc">Veuillez vérifier les valeurs et réessayer. Si le problème persiste, contactez l\'assistance.</string>
+    <string name="account_creation_failed_wrong_captcha">Mauvais code captcha, veuillez insérer le code correct et réessayer.</string>
+    <string name="account_creation_failed_wrong_reference">Mauvais numéro de référence, veuillez insérer le numéro correct et réessayer.</string>
+    <string name="account_creation_failed_wrong_email">Mauvais format d\'e-mail, veuillez insérer le bon e-mail et réessayer. Si le problème persiste, contactez l\'assistance.</string>
+    <string name="account_creation_failed_existing_username">Nom d\'utilisateur déjà utilisé, veuillez le modifier et réessayer.</string>
+    <string name="account_creation_failed_try_again_later">Erreur de serveur, veuillez réessayer plus tard.</string>
+    <string name="dismiss">Rejeter</string>
+    <string name="contact_support">Contactez le supportt</string>
+
+    <!-- SignIn Response Dialog-->
+    <string name="sign_in_successful">Connexion réussie</string>
+    <string name="sign_in_successful_updated_credentials">Informations d\'identification mises à jour avec succès</string>
+    <string name="sign_in_successful_updated_credentials_desc">Compte détenant le même « numéro de référence » déjà enregistré dans l\'application, ses informations d\'identification ont été mises à jour avec succès.</string>
+    <string name="sign_in_failed">Échec de la connexion</string>
+    <string name="sign_in_failed_desc">Veuillez vérifier les valeurs et réessayer. Si le problème persiste, contactez l\'assistance.</string>
+    <string name="sign_in_failed_wrong_username_desc">Nom d\'utilisateur incorrect, veuillez vérifier les valeurs et réessayer.</string>
+    <string name="sign_in_failed_wrong_password_desc">Mot de passe erroné, veuillez vérifier les valeurs et réessayer.</string>
+    <string name="sign_in_failed_temporary_lock_desc">Mot de passe erroné saisi plusieurs fois, Compte temporairement verrouillé (5 minutes), Veuillez réessayer plus tard.</string>
+
+    <!-- Create Account & SignIn screens-->
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="min_username_length">Minimum 8 caractères alphanumériques</string>
+    <string name="email">E-mail</string>
+    <string name="example_gmail">Example@gmail.com</string>
+    <string name="reference">Réference</string>
+    <string name="example_reference">012345678901234</string>
+    <string name="reference_length">Doit contenir 15 chiffres</string>
+    <string name="password">Mot de passe</string>
+    <string name="password_wrong_format">Mauvais format</string>
+    <string name="password_desc">"   Le mot de passe doit contenir:\n        - au moins 8 caractères\n        - au moins une majuscule\n        - au moins une minuscule\n        - au moins un caractère spécial (_-*/,\\$!?.\")"</string>
+    <string name="repeat_password">Répéter le mot de passe</string>
+    <string name="repeat_password_desc">Doit être identique au mot de passe</string>
+    <string name="image_code">Code d\'image</string>
+    <string name="image_code_desc">5 caractères alphanumériques</string>
+
+    <!-- Home screen-->
+    <string name="sync_failed">Échec de la synchronisation des données</string>
+    <string name="sync_failed_sync_wrong_password_desc">Échec de la récupération des nouvelles factures\nRaison: mot de passe incorrect, connectez-vous avec les nouvelles informations d\'identification à corriger.</string>
+    <string name="sync_failed_sync_wrong_username_desc">Échec de la récupération des nouvelles factures\nRaison: nom d\'utilisateur incorrect, connectez-vous avec les nouvelles informations d\'identification à corriger.</string>
+    <string name="sync_failed_sync_temporary_lock_desc">Échec de la récupération de nouvelles factures\nRaison: trop de tentatives erronées, veuillez réessayer plus tard.</string>
+    <string name="sync_failed_sync_pdf_extractor_desc">Échec de la récupération des nouvelles factures\nRaison: échec de l\'extraction des données. Si le problème persiste, contactez l\'assistance.</string>
+    <string name="sync_failed_desc">Échec de la récupération de nouvelles factures. Si le problème persiste, contactez l\'assistance.</string>
+    <string name="trimester_suffix_one">er</string>
+    <string name="trimester_suffix_two">ème</string>
+    <string name="trimester_suffix_three">ème</string>
+    <string name="trimester_suffix_four">ème</string>
+    <!-- Home screen bottomSheet-->
+    <string name="electricity">Électricité</string>
+    <string name="gaz">Gaz</string>
+    <string name="consumption_level">Niveau de consommation</string>
+    <string name="bill_n">Facture N°: %1$s</string>
+    <string name="Period">Période:</string>
+    <string name="bill_trimester_date">%1$s %2$s %3$s</string>
+    <string name="trimester">%1$s%2$s Trimestre</string>
+    <string name="consumption">Consommation:</string>
+    <string name="electricity_consumption_value">%1$s kWh</string>
+    <string name="gaz_consumption_value">%1$s m3</string>
+    <string name="amount_ht">Montant HT:</string>
+    <string name="price_da">%1$s DA</string>
+    <string name="vat">TVA:</string>
+    <string name="total">Total</string>
+    <string name="close">Fermer</string>
+    <string name="total_amount_ht">Montant Total HT:</string>
+    <string name="total_vat">TVA totale:</string>
+    <string name="rights_and_taxes">Droits et taxes:</string>
+    <string name="state_support">Soutien de l\'État:</string>
+    <string name="net_payable_ttc">Net à payer TTC:</string>
+    <string name="timbre">Timbre:</string>
+    <string name="total_to_pay">Total à payer:</string>
+    <string name="share_app">Partagez l\'application</string>
+
+
+</resources>

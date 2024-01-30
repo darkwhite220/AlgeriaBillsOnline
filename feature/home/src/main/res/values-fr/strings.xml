@@ -15,8 +15,8 @@
     <string name="bill_details">Détails de la facture</string>
     <string name="consumption_level">Niveau de consommation</string>
     <string name="bill_n">Facture N° : %1$s</string>
-    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
-    <string name="trimester">Trimestre</string>
+    <string name="bill_trimester_date">%1$s %2$s %3$s</string>
+    <string name="trimester">%1$s%2$s Trimestre</string>
     <string name="price_da">%1$s DA</string>
     <string name="download_as_pdf">Télécharger en PDF</string>
     <string name="file_saved_download">Fichier enregistré: Téléchargement/%1$s</string>

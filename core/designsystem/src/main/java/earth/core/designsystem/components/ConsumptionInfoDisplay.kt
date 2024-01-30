@@ -114,13 +114,17 @@ class BillBottomSheetUtil(context: Context, bill: Bill) {
     
     data class BillStringLine(@StringRes val valueName: Int, val value: String)
     
+    private val trimester = context.getString(
+        R.string.trimester,
+        bill.trimester,
+        context.getString(bill.trimester.toInt().getNumberSuffix())
+    )
+    
     val billHeader = listOf(
         context.getString(R.string.bill_n, bill.billNumber),
         context.getString(R.string.Period) + " " + context.getString(
             R.string.bill_trimester_date,
-            bill.trimester,
-            context.getString(bill.trimester.toInt().getNumberSuffix()),
-            context.getString(R.string.trimester),
+            trimester,
             bill.year,
             bill.date.printDate()
         )

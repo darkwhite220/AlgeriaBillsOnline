@@ -19,15 +19,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import earth.core.database.BillPreview
-import earth.core.designsystem.utils.Util.getNumberSuffix
-import earth.core.designsystem.utils.Util.printDate
-import earth.core.designsystem.utils.Util.toPrice
 import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.smallDp
 import earth.core.designsystem.components.verticalSpacedBy
 import earth.core.designsystem.icon.AppIcons
+import earth.core.designsystem.utils.Util.getNumberSuffix
+import earth.core.designsystem.utils.Util.printDate
+import earth.core.designsystem.utils.Util.toPrice
 import earth.feature.home.HomeEvent
 import earth.feature.home.R
 
@@ -64,11 +64,14 @@ fun BillPreviewItem(
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                 )
+                val trimester = stringResource(
+                    R.string.trimester,
+                    item.trimester,
+                    stringResource(item.trimester.toInt().getNumberSuffix())
+                )
                 val date = stringResource(
                     R.string.bill_trimester_date,
-                    item.trimester,
-                    stringResource(item.trimester.toInt().getNumberSuffix()),
-                    stringResource(R.string.trimester),
+                    trimester,
                     item.year,
                     item.date.printDate()
                 )

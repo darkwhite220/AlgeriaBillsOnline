@@ -16,8 +16,8 @@
     <string name="bill_details">Bill Details</string>
     <string name="consumption_level">Consumption level</string>
     <string name="bill_n">Bill N°: %1$s</string>
-    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
-    <string name="trimester">Trimester</string>
+    <string name="bill_trimester_date">%1$s %2$s %3$s</string>
+    <string name="trimester">%1$s%2$s Trimester</string>
     <string name="price_da">%1$s DA</string>
     <string name="download_as_pdf">Download as Pdf</string>
     <string name="file_saved_download">File saved: Download/%1$s</string>

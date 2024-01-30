@@ -1,0 +1,82 @@
+<resources>
+    <string name="password_visibility_icon">أيقونة الرؤية</string>
+    <string name="reference_detail_image">تفاصيل المرجعية</string>
+    <string name="not_connected_to_the_internet">غير متصل بالإنترنت</string>
+
+    <!-- SignUp Response Dialog-->
+    <string name="account_creation_successful">تم إنشاء الحساب بنجاح</string>
+    <string name="continue_button">تابع</string>
+    <string name="account_creation_failed">فشل إنشاء الحساب</string>
+    <string name="account_creation_failed_desc">يرجى التحقق من القيم والمحاولة مرة أخرى، إذا استمرت المشكلة فاتصل بالدعم.</string>
+    <string name="account_creation_failed_wrong_captcha">رمز التحقق خاطئ، يرجى إدخال الرمز الصحيح والمحاولة مرة أخرى.</string>
+    <string name="account_creation_failed_wrong_reference">الرقم المرجعي خاطئ، يرجى إدخال الرقم الصحيح والمحاولة مرة أخرى.</string>
+    <string name="account_creation_failed_wrong_email">البريد الإلكتروني غير صحيح، يرجى إدخال البريد الإلكتروني الصحيح والمحاولة مرة أخرى، إذا استمرت المشكلة فاتصل بالدعم.</string>
+    <string name="account_creation_failed_existing_username">اسم المستخدم مستعمل من قبل، يرجى تغييره والمحاولة مرة أخرى.</string>
+    <string name="account_creation_failed_try_again_later">حدث خطأ في قاعدة البيانات، يرجى المحاولة مرة أخرى لاحقًا.</string>
+    <string name="dismiss">رفض</string>
+    <string name="contact_support">اتصل بالدعم</string>
+
+    <!-- SignIn Response Dialog-->
+    <string name="sign_in_successful">تم تسجيل الدخول بنجاح</string>
+    <string name="sign_in_successful_updated_credentials">تم تحديث بيانات الاعتماد بنجاح</string>
+    <string name="sign_in_successful_updated_credentials_desc">الحساب الذي يحمل نفس \"الرقم المرجعي\" محفوظ  من قبل في التطبيق، تم تحديث بيانات الاعتماد بنجاح.</string>
+    <string name="sign_in_failed">فشل تسجيل الدخول</string>
+    <string name="sign_in_failed_desc">يرجى التحقق من القيم والمحاولة مرة أخرى، إذا استمرت المشكلة فاتصل بالدعم.</string>
+    <string name="sign_in_failed_wrong_username_desc">اسم المستخدم خاطئ، يرجى التحقق من القيم والمحاولة مرة أخرى.</string>
+    <string name="sign_in_failed_wrong_password_desc">كلمة المرور خاطئة، يرجى التحقق من القيم والمحاولة مرة أخرى.</string>
+    <string name="sign_in_failed_temporary_lock_desc">تم إدخال كلمة مرور خاطئة عدة مرات، تم قفل الحساب مؤقتًا (5 دقائق)، يرجى المحاولة مرة أخرى لاحقًا.</string>
+
+    <!-- Create Account & SignIn screens-->
+    <string name="username">اسم المستخدم</string>
+    <string name="min_username_length">الحد الأدنى 8 أحرف أبجدية رقمية</string>
+    <string name="email">بريد إلكتروني</string>
+    <string name="example_gmail">Example@gmail.com</string>
+    <string name="reference">رقم المرجع</string>
+    <string name="example_reference">012345678901234</string>
+    <string name="reference_length">يجب أن يكون 15 رقما</string>
+    <string name="password">كلمة المرور</string>
+    <string name="password_wrong_format">صيغة خاطئة</string>
+    <string name="password_desc">"يجب أن تحتوي كلمة المرور على:\n- 8 أحرف على الأقل\n        - حرف كبير واحد على الأقل\n        - حرف صغير واحد على الأقل\n        - حرف خاص واحد على الأقل (_-*/,\\$!?.\")"</string>
+    <string name="repeat_password">اعد كلمة السر</string>
+    <string name="repeat_password_desc">يجب أن تكون نفس كلمة المرور</string>
+    <string name="image_code">رمز الصورة</string>
+    <string name="image_code_desc">5 أحرف أبجدية رقمية</string>
+
+    <!-- Home screen-->
+    <string name="sync_failed">فشلت مزامنة البيانات</string>
+    <string name="sync_failed_sync_wrong_password_desc">فشل جلب فواتير جديدة\nالسبب: كلمة مرور خاطئة، قم بتسجيل الدخول باستخدام بيانات الاعتماد الجديدة لإصلاحها.</string>
+    <string name="sync_failed_sync_wrong_username_desc">فشل جلب فواتير جديدة\nالسبب: اسم مستخدم خاطئ، قم بتسجيل الدخول باستخدام بيانات الاعتماد الجديدة لإصلاح ذلك.</string>
+    <string name="sync_failed_sync_temporary_lock_desc">فشل جلب فواتير جديدة\nالسبب: العديد من المحاولات الخاطئة، يرجى المحاولة مرة أخرى لاحقًا.</string>
+    <string name="sync_failed_sync_pdf_extractor_desc">فشل جلب فواتير جديدة\nالسبب: فشل في استخراج البيانات، إذا استمرت المشكلة فاتصل بالدعم.</string>
+    <string name="sync_failed_desc">فشل جلب فواتير جديدة، إذا استمرت المشكلة اتصل بالدعم.</string>
+    <string name="trimester_suffix_one" />
+    <string name="trimester_suffix_two" />
+    <string name="trimester_suffix_three" />
+    <string name="trimester_suffix_four" />
+    <!-- Home screen bottomSheet-->
+    <string name="electricity">كهرباء</string>
+    <string name="gaz">غاز</string>
+    <string name="consumption_level">مستوى الاستهلاك</string>
+    <string name="bill_n">رقم الفاتورة: %1$s</string>
+    <string name="Period">فترة:</string>
+    <string name="bill_trimester_date">%1$s %2$s %3$s</string>
+    <string name="trimester">الثلاث %1$s%2$s</string>
+    <string name="consumption">استهلاك:</string>
+    <string name="electricity_consumption_value">%1$s kWh</string>
+    <string name="gaz_consumption_value">%1$s م3</string>
+    <string name="amount_ht">المبلغ HT:</string>
+    <string name="price_da">%1$s دج</string>
+    <string name="vat">ضريبة القيمة المضافة:</string>
+    <string name="total">المجموع</string>
+    <string name="close">يغلق</string>
+    <string name="total_amount_ht">المبلغ الإجمالي HT:</string>
+    <string name="total_vat">إجمالي ضريبة القيمة المضافة:</string>
+    <string name="rights_and_taxes">الحقوق والضرائب:</string>
+    <string name="state_support">دعم الدولة:</string>
+    <string name="net_payable_ttc">صافي للدفع TTC:</string>
+    <string name="timbre">طابع:</string>
+    <string name="total_to_pay">إجمالي للدفع:</string>
+    <string name="share_app">مشاركة التطبيق</string>
+
+
+</resources>

@@ -30,7 +30,7 @@
     <!-- Create Account & SignIn screens-->
     <string name="username">Username</string>
     <string name="min_username_length">Min 8 alphanumeric characters</string>
-    <string name="email">Email</string>
+    <string name="email">E-mail</string>
     <string name="example_gmail">Example@gmail.com</string>
     <string name="reference">Reference</string>
     <string name="example_reference">012345678901234</string>
@@ -56,12 +56,12 @@
     <string name="trimester_suffix_four">th</string>
     <!-- Home screen bottomSheet-->
     <string name="electricity">Electricity</string>
-    <string name="gaz">Gaz</string>
+    <string name="gaz">Gas</string>
     <string name="consumption_level">Consumption level</string>
     <string name="bill_n">Bill N°: %1$s</string>
     <string name="Period">Period:</string>
-    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
-    <string name="trimester">Trimester</string>
+    <string name="bill_trimester_date">%1$s %2$s %3$s</string>
+    <string name="trimester">%1$s%2$s Trimester</string>
     <string name="consumption">Consumption:</string>
     <string name="electricity_consumption_value">%1$s kWh</string>
     <string name="gaz_consumption_value">%1$s m3</string>
@@ -78,7 +78,7 @@
     <string name="timbre">Timbre:</string>
     <string name="total_to_pay">Total To Pay:</string>
     <string name="share_app">Share the App</string>
-    <string name="app_name">Algeria Bills Online</string>
+    <string name="app_name" translatable="false">Algeria Bills Online</string>
 
 
 </resources>

@@ -5,7 +5,7 @@
     <string name="create_an_account_to_track_the_bills">إنشاء حساب لتتبع الفواتير</string>
     <string name="create_account">إنشاء حساب</string>
     <string name="have_an_account">هل لديك حساب؟</string>
-    <string name="sign_in_to_continue">تسجيل الدخول للمتابعة</string>
+    <string name="sign_in_to_continue">سجل الدخول للمتابعة</string>
     <string name="sign_in">تسجيل الدخول</string>
 
     <string name="new_bill_found">تم العثور على فاتورة جديدة!</string>
@@ -15,8 +15,8 @@
     <string name="bill_details">تفاصيل الفاتورة</string>
     <string name="consumption_level">مستوى الاستهلاك</string>
     <string name="bill_n">رقم الفاتورة: %1$s</string>
-    <string name="bill_trimester_date">%1$s%2$s %3$s %4$s %5$s</string>
-    <string name="trimester">الفصل الدراسي</string>
+    <string name="bill_trimester_date">%1$s %2$s %3$s</string>
+    <string name="trimester">الثلث %1$s %2$s</string>
     <string name="price_da">%1$s دج</string>
     <string name="download_as_pdf">تحميل بصيغة PDF</string>
     <string name="file_saved_download">الملف المحفوظ: تنزيل/%1$s</string>
