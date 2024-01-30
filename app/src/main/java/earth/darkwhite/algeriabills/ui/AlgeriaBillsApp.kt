@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.data.NetworkMonitorRepository
 import earth.core.designsystem.components.smallDp
+import earth.darkwhite.algeriabills.R
 import earth.darkwhite.algeriabills.ui.navigation.AlgeriaBillsNavHost
 import earth.darkwhite.algeriabills.ui.navigation.IconRepresentation
 
@@ -103,7 +104,7 @@ private fun NoConnectionUi(
         color = MaterialTheme.colorScheme.errorContainer
     ) {
         Text(
-            text = "No connection",
+            text = stringResource(id = R.string.not_connected),
             color = MaterialTheme.colorScheme.onErrorContainer,
             textAlign = TextAlign.Center,
             modifier = Modifier
