@@ -17,6 +17,7 @@ import earth.core.designsystem.utils.Constants.VIEW_MODEL_SUBSCRIPTION_TIME
 import earth.darkwhite.algeriabills.ui.navigation.TopLevelDestination
 import earth.darkwhite.feature.estimate.navigation.estimateRoute
 import earth.darkwhite.feature.estimate.navigation.navigateToEstimate
+import earth.darkwhite.feature.onboarding.navigation.navigateToOnBoarding
 import earth.darkwhite.feature.signin.navigation.navigateToSignIn
 import earth.feature.home.navigation.homeRoute
 import earth.feature.home.navigation.navigateToHome

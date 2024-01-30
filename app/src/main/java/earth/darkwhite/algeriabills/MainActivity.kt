@@ -89,7 +89,8 @@ class MainActivity : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     AlgeriaBillsApp(
-                        networkMonitor = networkMonitor
+                        networkMonitor = networkMonitor,
+                        shouldShowOnBoarding = shouldShowOnBoarding(uiState)
                     )
                 }
             }
@@ -117,7 +118,15 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun shouldUseAndroidTheme(
+private fun shouldShowOnBoarding(
+    uiState: MainActivityUiState,
+): Boolean = when (uiState) {
+    MainActivityUiState.Loading -> true
+    is MainActivityUiState.Success -> uiState.userData.onBoarding
+}
+
+@Composable
+private fun shouldUseAndroidTheme(
     uiState: MainActivityUiState,
 ): Boolean = when (uiState) {
     MainActivityUiState.Loading -> false
@@ -128,7 +137,7 @@ fun shouldUseAndroidTheme(
 }
 
 @Composable
-fun shouldUseDarkTheme(
+private fun shouldUseDarkTheme(
     uiState: MainActivityUiState
 ): Boolean = when (uiState) {
     MainActivityUiState.Loading -> isSystemInDarkTheme()
@@ -140,7 +149,7 @@ fun shouldUseDarkTheme(
 }
 
 @Composable
-fun AppLocales(uiState: MainActivityUiState) {
+private fun AppLocales(uiState: MainActivityUiState) {
     val language = when (uiState) {
         MainActivityUiState.Loading -> AppCompatDelegate.getApplicationLocales().toLanguageTags()
         is MainActivityUiState.Success -> when (uiState.userData.language) {

@@ -19,4 +19,5 @@ interface UserDataRepository {
     suspend fun setNotificationStatus(newValue: Boolean)
     suspend fun setFirstLaunch(newValue: Boolean)
     suspend fun setLanguage(newValue: LanguageConfig)
+    suspend fun setOnBoarding(newValue: Boolean)
 }

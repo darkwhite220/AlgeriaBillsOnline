@@ -6,15 +6,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 internal fun OnBoardingRoute(
-    onCreateAccountClick: () -> Unit,
-    onSignInClick: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
-    
+    viewModel.onStartClick()
     OnBoardingScreen(
     
     )
-    
 }
 
 @Composable

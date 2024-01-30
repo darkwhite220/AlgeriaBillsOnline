@@ -28,6 +28,7 @@ import earth.darkwhite.algeriabills.ui.navigation.IconRepresentation
 @Composable
 fun AlgeriaBillsApp(
     networkMonitor: NetworkMonitorRepository,
+    shouldShowOnBoarding: Boolean,
     appState: AppState = rememberAppState(
         networkMonitor = networkMonitor
     ),
@@ -44,6 +45,7 @@ fun AlgeriaBillsApp(
     ) { paddingValues ->
         AlgeriaBillsNavHost(
             appState = appState,
+            shouldShowOnBoarding= shouldShowOnBoarding,
             modifier = Modifier,
             paddingValues = paddingValues,
         )

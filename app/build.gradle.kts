@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature:createaccount"))
     implementation(project(":feature:estimate"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:onboarding"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:signin"))
     

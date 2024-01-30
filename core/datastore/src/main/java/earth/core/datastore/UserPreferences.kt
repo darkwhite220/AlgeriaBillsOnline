@@ -12,6 +12,7 @@ import earth.core.datastore.PreferencesDataStore.DefaultValues.DARK_THEME_CONFIG
 import earth.core.datastore.PreferencesDataStore.DefaultValues.FIRST_LAUNCH_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.LAST_FETCH_TIME_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.NOTIFICATION_DEFAULT
+import earth.core.datastore.PreferencesDataStore.DefaultValues.ON_BOARDING_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.SHOULD_HIDE_ONBOARDING_DEFAULT
 import earth.core.datastore.PreferencesDataStore.DefaultValues.THEME_BRAND_DEFAULT
 import earth.core.preferencesmodel.DarkThemeConfig
@@ -56,6 +57,7 @@ class PreferencesDataStore @Inject constructor(
                 ),
                 notification = it[PreferencesKeys.NOTIFICATION] ?: NOTIFICATION_DEFAULT,
                 firstLaunch = it[PreferencesKeys.FIRST_LAUNCH] ?: FIRST_LAUNCH_DEFAULT,
+                onBoarding = it[PreferencesKeys.ON_BOARDING] ?: ON_BOARDING_DEFAULT,
             )
         }
     
@@ -101,6 +103,12 @@ class PreferencesDataStore @Inject constructor(
         }
     }
     
+    suspend fun setOnBoarding(newValue: Boolean) {
+        userPreferences.edit {
+            it[PreferencesKeys.ON_BOARDING] = newValue
+        }
+    }
+    
     private object PreferencesKeys {
         val SHOULD_HIDE_ONBOARDING = booleanPreferencesKey("should_hide_onboarding")
         val DARK_THEME_CONFIG = stringPreferencesKey("dark_theme_config")
@@ -109,6 +117,7 @@ class PreferencesDataStore @Inject constructor(
         val NOTIFICATION = booleanPreferencesKey("notification")
         val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
         val APP_LANGUAGE = stringPreferencesKey("app_language")
+        val ON_BOARDING = booleanPreferencesKey("on_boarding")
     }
     
     private object DefaultValues {
@@ -119,6 +128,7 @@ class PreferencesDataStore @Inject constructor(
         const val NOTIFICATION_DEFAULT = false
         const val FIRST_LAUNCH_DEFAULT = true
         val APP_LANGUAGE_DEFAULT = LanguageConfig.FRENCH.name
+        const val ON_BOARDING_DEFAULT = true
     }
     
     companion object {

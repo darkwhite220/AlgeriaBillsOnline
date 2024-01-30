@@ -44,4 +44,8 @@ class UserDataImplementation @Inject constructor(
         preferencesDataStore.setLanguage(newValue)
     }
     
+    override suspend fun setOnBoarding(newValue: Boolean) {
+        preferencesDataStore.setOnBoarding(newValue)
+    }
+    
 }

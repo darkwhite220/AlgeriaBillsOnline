@@ -7,4 +7,5 @@ data class UserData(
     val language: LanguageConfig,
     val notification: Boolean,
     val firstLaunch: Boolean,
+    val onBoarding: Boolean,
 )
