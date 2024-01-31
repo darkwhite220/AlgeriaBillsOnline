@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="choose_language1" translatable="false">"Choose Language إختر اللغة Selectionner La Langue "</string>
+    <string name="choose_language2" translatable="false">"إختر اللغة Selectionner La Langue Choose Language "</string>
+    <string name="choose_language3" translatable="false">"Selectionner La Langue Choose Language إختر اللغة "</string>
+
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="francais" translatable="false">Français</string>
+    <string name="english" translatable="false">English</string>
+
+    <string name="page_one_title">No More Unreceived Bills ⚡</string>
+    <string name="page_one_title_desc">No more Sonalgaz surprises! See bills in your phone, ditch the paper chase, and stay ahead of deadlines. Power up your peace of mind!</string>
+    <string name="page_two_title">Your Bills, Unplugged</string>
+    <string name="page_two_title_desc">No more mysterious costs. Enter the amount of electricity and gas used to estimate costs.</string>
+    <string name="page_three_title">Power Up with Notifications</string>
+    <string name="page_three_title_desc">Stay in the light! Get notifications for new bills. No more missed bills and scrambling in the dark.</string>
+</resources>

@@ -11,6 +11,14 @@ object AppIcons {
     val AppIcon = R.drawable.logo_splash
     val NotificationIcon = R.drawable.ic_notification
     
+    val DzFlag = R.drawable.dz_flag
+    val FrFlag = R.drawable.fr_flag
+    val EnFlag = R.drawable.en_flag
+    
+    val OnBoardingPage1 = R.drawable.stress
+    val OnBoardingPage2 = R.drawable.reading_list
+    val OnBoardingPage3 = R.drawable.mail
+    
     val HomeUnselected = Icons.Outlined.Home
     val HomeSelected = Icons.Filled.Home
     val EstimateUnselected = R.drawable.estimate

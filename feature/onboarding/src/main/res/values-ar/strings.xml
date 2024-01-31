@@ -1,0 +1,16 @@
+<resources>
+    <string name="choose_language1" translatable="false">"Choose Language إختر اللغة Selectionner La Langue "</string>
+    <string name="choose_language2" translatable="false">"إختر اللغة Selectionner La Langue Choose Language "</string>
+    <string name="choose_language3" translatable="false">"Selectionner La Langue Choose Language إختر اللغة "</string>
+
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="francais" translatable="false">Français</string>
+    <string name="english" translatable="false">English</string>
+
+    <string name="page_one_title">لا مزيد من الفواتير غير المستلمة ⚡</string>
+    <string name="page_one_title_desc">لا مزيد من مفاجآت سونالغاز! اطلع على الفواتير من هاتفك، وتخلص من البحث عن الأوراق، وكن متقدمًا على المواعيد النهائية. عزز راحة البال الخاصة بك!</string>
+    <string name="page_two_title">تعرف على التكلفة</string>
+    <string name="page_two_title_desc">لا مزيد من التكاليف الغامضة. أدخل كمية الكهرباء و الغاز المستعمل لتقدير التكاليف.</string>
+    <string name="page_three_title">إشعارات سهلة</string>
+    <string name="page_three_title_desc">ابق في النور! احصل على إشعارات للفواتير الجديدة. لا مزيد من الفواتير المفقودة.</string>
+</resources>

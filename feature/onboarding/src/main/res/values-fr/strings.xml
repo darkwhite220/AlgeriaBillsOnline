@@ -1,0 +1,16 @@
+<resources>
+    <string name="choose_language1" translatable="false">"Choose Language إختر اللغة Selectionner La Langue "</string>
+    <string name="choose_language2" translatable="false">"إختر اللغة Selectionner La Langue Choose Language "</string>
+    <string name="choose_language3" translatable="false">"Selectionner La Langue Choose Language إختر اللغة "</string>
+
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="francais" translatable="false">Français</string>
+    <string name="english" translatable="false">English</string>
+
+    <string name="page_one_title">Fini les factures non reçues ⚡</string>
+    <string name="page_one_title_desc">Fini les surprises Sonalgaz ! Consultez vos factures sur votre téléphone, abandonnez la course au papier et restez en avance sur les délais. Renforcez votre tranquillité d\'esprit!</string>
+    <string name="page_two_title">Vos factures, débranchées</string>
+    <string name="page_two_title_desc">Fini les coûts mystérieux. Entrez la quantité d’électricité et de gaz utilisée pour estimer les coûts.</string>
+    <string name="page_three_title">Notifications faciles</string>
+    <string name="page_three_title_desc">Restez dans la lumière ! Recevez des notifications pour les nouvelles factures. Fini les factures manquées.</string>
+</resources>

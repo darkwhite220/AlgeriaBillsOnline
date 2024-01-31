@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/feature/createaccount" />
             <option value="$PROJECT_DIR$/feature/estimate" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/onboarding" />
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/signin" />
           </set>

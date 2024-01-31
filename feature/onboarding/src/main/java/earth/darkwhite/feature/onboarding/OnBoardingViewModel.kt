@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import earth.core.data.UserDataRepository
+import earth.core.preferencesmodel.LanguageConfig
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,10 @@ class OnBoardingViewModel @Inject constructor(
     
     fun onStartClick() = viewModelScope.launch {
         userDataRepository.setOnBoarding(false)
+    }
+    
+    fun onLanguageChange(newValue: LanguageConfig) = viewModelScope.launch {
+        userDataRepository.setLanguage(newValue)
     }
     
     companion object {
