@@ -17,11 +17,16 @@ import androidx.compose.ui.text.style.TextOverflow
 
 
 @Composable
-fun TextDisplaySmall(@StringRes textId: Int, modifier: Modifier = Modifier) {
+fun TextDisplaySmall(
+    @StringRes textId: Int,
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start
+) {
     Text(
         text = stringResource(textId),
         style = MaterialTheme.typography.displaySmall,
-        modifier = modifier
+        textAlign = textAlign,
+        modifier = modifier,
     )
 }
 

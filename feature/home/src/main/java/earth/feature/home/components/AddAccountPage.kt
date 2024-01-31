@@ -10,12 +10,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import earth.core.designsystem.components.MyButton
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.TextDisplaySmall
-import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.TextTitleLarge
+import earth.core.designsystem.components.TextWithEmphasise
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.feature.home.HomeEvent
@@ -32,7 +33,7 @@ fun AddAccountPage(onHomeEvent: (HomeEvent) -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TextDisplaySmall(textId = R.string.track_more_bills)
+        TextDisplaySmall(textId = R.string.track_more_bills, textAlign = TextAlign.Center)
         MyHeightSpacer(height = 40.dp)
         
         TextTitleLarge(
