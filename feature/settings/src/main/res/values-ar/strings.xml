@@ -1,6 +1,5 @@
 <resources>
     <string name="settings">إعدادات</string>
-    <string name="app_version">1.0.0</string>
     <string name="app">برنامج</string>
     <string name="settings_about">عن التطبيق</string>
     <string name="settings_loading">تحميل…</string>

@@ -1,6 +1,5 @@
 <resources>
     <string name="settings">Paramètres</string>
-    <string name="app_version">1.0.0</string>
     <string name="app">Application</string>
     <string name="settings_about">À propos</string>
     <string name="settings_loading">Chargement…</string>
