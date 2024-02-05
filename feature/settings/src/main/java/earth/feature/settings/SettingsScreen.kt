@@ -20,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.designsystem.components.MyDivider
 import earth.core.designsystem.components.SettingsDialogSectionTitle
+import earth.core.designsystem.components.cardShape
 import earth.core.designsystem.components.customContentSizeAnimation
 import earth.core.designsystem.components.extraLargeDp
 import earth.core.designsystem.components.horizontalSpacedBy
@@ -149,9 +151,10 @@ fun SettingsAppPanel(
             onSettingsEvent(SettingsEvent.OnNotificationChange(isGranted))
         }
     
-    Card(
+    Surface(
+        shape = cardShape,
+        tonalElevation = largeDp,
         modifier = Modifier.customContentSizeAnimation(),
-        shape = MaterialTheme.shapes.large
     ) {
         Column {
             // DarkTheme

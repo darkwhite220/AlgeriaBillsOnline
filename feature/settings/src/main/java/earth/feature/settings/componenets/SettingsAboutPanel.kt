@@ -3,12 +3,15 @@ package earth.feature.settings.componenets
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import earth.core.designsystem.utils.Util
 import earth.core.designsystem.components.MyDivider
+import earth.core.designsystem.components.cardShape
 import earth.core.designsystem.components.customContentSizeAnimation
+import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.icon.AppIcons
 import earth.feature.settings.R
 
@@ -16,9 +19,10 @@ import earth.feature.settings.R
 @Composable
 fun SettingsAboutPanel() {
     val context = LocalContext.current
-    Card(
+    Surface(
+        shape = cardShape,
+        tonalElevation = largeDp,
         modifier = Modifier.customContentSizeAnimation(),
-        shape = MaterialTheme.shapes.large
     ) {
         Column {
             // ShareApp
