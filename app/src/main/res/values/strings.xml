@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Algeria Bills Online</string>
+    <string name="app_name">Bill Tracking</string>
     <string name="not_connected">⚠️ No connection</string>
 
     <string name="sync_new_bills">Sync new bills</string>

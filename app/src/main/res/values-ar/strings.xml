@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">تتبع الفاتورة</string>
     <string name="not_connected">⚠️ لا يوجد اتصال</string>
 
     <string name="sync_new_bills">مزامنة الفواتير الجديدة</string>

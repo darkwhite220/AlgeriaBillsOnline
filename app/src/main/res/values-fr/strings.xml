@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Suivi Factures</string>
     <string name="not_connected">⚠️ Pas de connection</string>
 
     <string name="sync_new_bills">Synchronisez les nouvelles factures</string>
