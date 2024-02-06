@@ -33,24 +33,19 @@ class SyncDataWorker @AssistedInject constructor(
         try {
             
             val result = syncDataRepository.syncData()
-            return if (result == null) {
-                Result.Retry()
-            } else {
-                if (result) {
-                    notificationUtil.showNotification(isSuccessful = true)
-                }
-                Result.success()
+            if (result != null && result) {
+                notificationUtil.showNotification(isSuccessful = true)
             }
+            return Result.success()
             
         } catch (e: Throwable) {
             
             println("Throwable: $e")
-            return if (e is SignInThrowable || e is ConvertingPdfThrowable) {
+            if (e is SignInThrowable || e is ConvertingPdfThrowable) {
                 notificationUtil.showNotification(isSuccessful = false)
-                Result.Failure()
-            } else {
-                Result.Failure()
             }
+            return Result.Failure()
+            
             
         } catch (e: Exception) {
             
