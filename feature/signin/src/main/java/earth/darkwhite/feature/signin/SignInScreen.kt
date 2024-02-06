@@ -187,8 +187,9 @@ private fun ShowSignInDialog(
         is SignInUiState.Failed -> {
             println("ShowSignInDialog SignInUiState.Failed: ${signInUiState.throwable}")
             val context = LocalContext.current
-            if (signInUiState.throwable is UnknownHostException) {
-                Util.noInternetConnection(context)
+            if (signInUiState.throwable is UnknownHostException ||
+                signInUiState.throwable is SignInThrowable.ServerOffline
+            ) {
                 return
             }
             var supportMessage: String? = null
