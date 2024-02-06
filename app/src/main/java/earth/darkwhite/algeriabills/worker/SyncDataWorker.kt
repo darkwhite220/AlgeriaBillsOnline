@@ -30,13 +30,13 @@ class SyncDataWorker @AssistedInject constructor(
         )
         notificationUtil.createNotificationChannel()
         
-        try {
+        return try {
             
             val result = syncDataRepository.syncData()
             if (result != null && result) {
                 notificationUtil.showNotification(isSuccessful = true)
             }
-            return Result.success()
+            Result.success()
             
         } catch (e: Throwable) {
             
@@ -44,14 +44,13 @@ class SyncDataWorker @AssistedInject constructor(
             if (e is SignInThrowable || e is ConvertingPdfThrowable) {
                 notificationUtil.showNotification(isSuccessful = false)
             }
-            return Result.Failure()
-            
+            Result.Failure()
             
         } catch (e: Exception) {
             
             println("Exception: $e")
             notificationUtil.showNotification(isSuccessful = false)
-            return Result.Failure()
+            Result.Failure()
             
         }
     }
