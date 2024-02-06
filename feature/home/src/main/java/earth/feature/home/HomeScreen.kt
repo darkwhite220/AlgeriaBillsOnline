@@ -32,9 +32,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import earth.core.database.Bill
 import earth.core.database.BillPreview
 import earth.core.database.User
-import earth.core.designsystem.utils.Util
-import earth.core.designsystem.utils.Util.noInternetConnection
-import earth.core.designsystem.utils.Util.showToast
 import earth.core.designsystem.components.MyCircularProgressBar
 import earth.core.designsystem.components.MyHeightSpacer
 import earth.core.designsystem.components.MyLinearProgressBar
@@ -49,6 +46,8 @@ import earth.core.designsystem.components.indicatorWidthUnselected
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.verticalSpacedBy
+import earth.core.designsystem.utils.Util
+import earth.core.designsystem.utils.Util.showToast
 import earth.core.throwablemodel.ConvertingPdfThrowable
 import earth.core.throwablemodel.SignInThrowable
 import earth.feature.home.HomeScreenContentType.BOTTOM_INDICATORS_PADDING
@@ -273,8 +272,9 @@ private fun SyncUi(
         }
         is SyncUiState.Failed -> {
             Log.d(TAG, "HomeScreen: syncData Failed: ${syncUiState.throwable}")
-            if (syncUiState.throwable is UnknownHostException) {
-                noInternetConnection(context)
+            if (syncUiState.throwable is UnknownHostException ||
+                syncUiState.throwable is SignInThrowable.ServerOffline
+            ) {
                 return
             }
             var supportMessage: String? = null
