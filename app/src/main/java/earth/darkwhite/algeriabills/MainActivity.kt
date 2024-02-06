@@ -102,9 +102,8 @@ class MainActivity : AppCompatActivity() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         
-        val work = PeriodicWorkRequestBuilder<SyncDataWorker>(1, TimeUnit.DAYS)
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
-            .setInitialDelay(1, TimeUnit.DAYS)
+        val work = PeriodicWorkRequestBuilder<SyncDataWorker>(2, TimeUnit.DAYS)
+            .setInitialDelay(2, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
         
