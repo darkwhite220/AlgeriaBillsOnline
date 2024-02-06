@@ -39,7 +39,6 @@ fun BottomPagerIndicator(pagerState: PagerState) {
     ) {
         Indicators(
             size = pagerState.pageCount,
-            index = pagerState.currentPage,
             pagerState = pagerState,
         )
     }
@@ -53,7 +52,6 @@ fun BottomPagerIndicator(pagerState: PagerState) {
 @Composable
 private fun Indicators(
     size: Int = 2,
-    index: Int = 0,
     pagerState: PagerState = rememberPagerState { 2 },
 ) {
     Row(

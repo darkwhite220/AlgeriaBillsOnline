@@ -21,7 +21,7 @@ fun OnBoardingTopBar(
     onLanguageClick: () -> Unit = {}
 ) {
     Row {
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = modifier.weight(1f))
         IconButton(
             onClick = onLanguageClick,
             modifier = Modifier.padding(largeDp),
