@@ -41,6 +41,7 @@ import earth.core.throwablemodel.SignInThrowable
 import earth.core.throwablemodel.SignInThrowableConstants
 import earth.core.throwablemodel.SignInThrowableConstants.TEMPORARILY_LOCKED_ACCOUNT_KEY
 import earth.core.throwablemodel.SignInThrowableConstants.TEMPORARILY_LOCKED_ACCOUNT_VALUE
+import earth.core.throwablemodel.SignupThrowable
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.ConnectTimeoutException
@@ -82,33 +83,37 @@ class AppNetwork @Inject constructor(
     }
     
     override suspend fun requestSignup(signupRequestBody: SignupRequestBody): SignupResponse {
-        val response = client.post(SIGNUP_URL) {
-            signupHeaders()
-            
-            expectSuccess = false
-            
-            setBody(
-                FormDataContent(
-                    Parameters.build {
-                        append(NAME, NO_VALUE)
-                        append(EMAIL, signupRequestBody.email)
-                        append(PHONE_NUMBER, NO_VALUE)
-                        append(USERNAME, signupRequestBody.username)
-                        append(REFERENCE_NUMBER, signupRequestBody.reference)
-                        append(PASSWORD, signupRequestBody.newpass)
-                        append(DUPLICATE_PASSWORD, signupRequestBody.cfnewpass)
-                        append(CAPTCHA, signupRequestBody.captcha)
-                        append(ACTION_BUTTON, ACTION_BUTTON_VALUE)
-                    })
+        try {
+            val response = client.post(SIGNUP_URL) {
+                signupHeaders()
+                
+                expectSuccess = false
+                
+                setBody(
+                    FormDataContent(
+                        Parameters.build {
+                            append(NAME, NO_VALUE)
+                            append(EMAIL, signupRequestBody.email)
+                            append(PHONE_NUMBER, NO_VALUE)
+                            append(USERNAME, signupRequestBody.username)
+                            append(REFERENCE_NUMBER, signupRequestBody.reference)
+                            append(PASSWORD, signupRequestBody.newpass)
+                            append(DUPLICATE_PASSWORD, signupRequestBody.cfnewpass)
+                            append(CAPTCHA, signupRequestBody.captcha)
+                            append(ACTION_BUTTON, ACTION_BUTTON_VALUE)
+                        })
+                )
+            }
+            println("SignupResponse ${response.status.value} ${response.status}")
+            return SignupResponse(
+                responseCode = response.status.value,
+                headers = response.headers.entries(),
+                body = response.bodyAsText()
             )
+            
+        } catch (e: Exception) {
+            throw SignupThrowable.ServerOffline
         }
-        
-        println("SignupResponse ${response.status.value} ${response.status}")
-        return SignupResponse(
-            responseCode = response.status.value,
-            headers = response.headers.entries(),
-            body = response.bodyAsText()
-        )
     }
     
     override suspend fun signIn(username: String, password: String): SignInResponse {

@@ -50,6 +50,7 @@ import earth.core.designsystem.components.textfield.TextFieldEvent
 import earth.core.designsystem.components.textfield.createAccountTextFieldMap
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
 import earth.core.designsystem.utils.Util
+import earth.core.throwablemodel.SignInThrowable
 import earth.core.throwablemodel.SignupThrowable
 import earth.feature.createaccount.R
 import java.net.UnknownHostException
@@ -232,7 +233,8 @@ private fun ShowSignupDialog(
                 return
             }
             val signUpResponseDialogDataType = when (signupUiState.throwable) {
-                SignupThrowable.FailedTryLaterException -> FAILED_SERVER_ERROR_TRY_LATER
+                SignupThrowable.FailedTryLaterException, SignupThrowable.ServerOffline ->
+                    FAILED_SERVER_ERROR_TRY_LATER
                 SignupThrowable.WrongCaptchaException -> FAILED_WRONG_CAPTCHA
                 SignupThrowable.WrongReferenceException -> FAILED_WRONG_REFERENCE
                 SignupThrowable.WrongEmailException -> FAILED_WRONG_EMAIL

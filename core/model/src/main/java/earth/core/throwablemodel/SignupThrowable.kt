@@ -7,6 +7,7 @@ sealed class SignupThrowable : Throwable() {
     data object WrongEmailException : Throwable()
     data object ExistingUsernameException : Throwable()
     data object BadServerResponseException : Throwable()
+    data object ServerOffline : Throwable()
 }
 
 object SignupThrowableConstants {
