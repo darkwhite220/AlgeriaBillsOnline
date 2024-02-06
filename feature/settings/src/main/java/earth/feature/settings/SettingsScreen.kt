@@ -10,19 +10,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,9 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,8 +34,6 @@ import earth.core.designsystem.components.MyDivider
 import earth.core.designsystem.components.SettingsDialogSectionTitle
 import earth.core.designsystem.components.cardShape
 import earth.core.designsystem.components.customContentSizeAnimation
-import earth.core.designsystem.components.extraLargeDp
-import earth.core.designsystem.components.horizontalSpacedBy
 import earth.core.designsystem.components.largeDp
 import earth.core.designsystem.components.mediumDp
 import earth.core.designsystem.components.topappbar.CenteredTopAppBar
@@ -57,6 +49,7 @@ import earth.core.preferencesmodel.ThemeBrand.DEFAULT
 import earth.core.preferencesmodel.UserData
 import earth.feature.settings.componenets.PermissionRequestRationalDialog
 import earth.feature.settings.componenets.SettingsAboutPanel
+import earth.feature.settings.componenets.SettingsDialogNotificationRow
 import earth.feature.settings.componenets.SettingsDialogOptionChooserRow
 import earth.feature.settings.componenets.SettingsDialogRow
 import earth.feature.settings.componenets.SettingsHeader
@@ -121,7 +114,11 @@ fun SettingsAppPanel(
     userData: UserData,
     onSettingsEvent: (SettingsEvent) -> Unit,
 ) {
-    val context = LocalContext.current
+    OnFirstLaunch(
+        settings = userData,
+        onFirstLaunch = { onSettingsEvent(SettingsEvent.OnFirstLaunch) }
+    )
+    
     var expandDarkTheme by remember { mutableStateOf(false) }
     var expandThemeBrand by remember { mutableStateOf(false) }
     var expandLanguage by remember { mutableStateOf(false) }
@@ -134,11 +131,6 @@ fun SettingsAppPanel(
     )
     val angleLanguage: Float by animateFloatAsState(
         targetValue = if (expandLanguage) -180F else 0f, label = "angleLanguage"
-    )
-    
-    OnFirstLaunch(
-        settings = userData,
-        onFirstLaunch = { onSettingsEvent(SettingsEvent.OnFirstLaunch) }
     )
     
     val notificationPermission =
@@ -161,7 +153,7 @@ fun SettingsAppPanel(
             SettingsDialogRow(
                 startingIcon = AppIcons.DarkTheme,
                 title = R.string.dark_theme_pref,
-                angle = angleTheme,
+                angle = { angleTheme },
                 selected = when (userData.darkThemeConfig) {
                     FOLLOW_SYSTEM -> R.string.dark_mode_config_system_default
                     LIGHT -> R.string.dark_mode_config_light
@@ -199,7 +191,7 @@ fun SettingsAppPanel(
                 SettingsDialogRow(
                     startingIcon = AppIcons.ThemeBrand,
                     title = R.string.theme,
-                    angle = angleBrand,
+                    angle = { angleBrand },
                     selected = when (userData.themeBrand) {
                         DEFAULT -> R.string.theme_default
                         ANDROID -> R.string.theme_android
@@ -231,7 +223,7 @@ fun SettingsAppPanel(
             SettingsDialogRow(
                 startingIcon = AppIcons.Language,
                 title = R.string.app_language,
-                angle = angleLanguage,
+                angle = { angleLanguage },
                 selected = when (userData.language) {
                     ENGLISH -> R.string.en_lang
                     FRENCH -> R.string.fr_lang
@@ -265,29 +257,19 @@ fun SettingsAppPanel(
             MyDivider()
             
             // Notification
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = horizontalSpacedBy(10.dp),
-                modifier = Modifier.padding(start = 10.dp, top = 2.dp, end = 0.dp, bottom = 2.dp)
-            ) {
-                Icon(
-                    modifier = Modifier.size(extraLargeDp),
-                    painter = painterResource(AppIcons.Notification),
-                    contentDescription = null
-                )
-                Text(
-                    text = stringResource(R.string.app_notifications),
-                    modifier = Modifier.weight(1f)
-                )
-                androidx.compose.material.Switch(
-                    checked = userData.notification,
-                    onCheckedChange = { newValue ->
-                        if (askNotificationPermission(context, notificationPermission)) {
-                            onSettingsEvent(SettingsEvent.OnNotificationChange(newValue))
-                        }
-                    },
-                    modifier = Modifier.padding(end = mediumDp)
-                )
+            var checkNotification by remember(userData) { mutableStateOf(userData.notification) }
+            SettingsDialogNotificationRow(
+                checkStatus = { checkNotification },
+                onCheckedChange = { newValue ->
+                    checkNotification = newValue
+                }
+            )
+            val context = LocalContext.current
+            LaunchedEffect(checkNotification) {
+                println("checkNotification $checkNotification")
+                if (askNotificationPermission(context, notificationPermission)) {
+                    onSettingsEvent(SettingsEvent.OnNotificationChange(checkNotification))
+                }
             }
         }
     }
@@ -298,7 +280,7 @@ fun SettingsAppPanel(
 }
 
 @Composable
-fun OnFirstLaunch(settings: UserData, onFirstLaunch: () -> Unit) {
+private fun OnFirstLaunch(settings: UserData, onFirstLaunch: () -> Unit) {
     if (settings.firstLaunch && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
         onFirstLaunch()
     }
@@ -308,7 +290,7 @@ fun OnFirstLaunch(settings: UserData, onFirstLaunch: () -> Unit) {
  * Ask notification permission if needed and update preferences in "rememberLauncherForActivityResult" result,
  * else update on switch onCheckChange
  */
-fun askNotificationPermission(
+private fun askNotificationPermission(
     context: Context,
     request: ManagedActivityResultLauncher<String, Boolean>
 ): Boolean {

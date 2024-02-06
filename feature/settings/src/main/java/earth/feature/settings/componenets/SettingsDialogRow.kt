@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import earth.core.designsystem.components.horizontalSpacedBy
-import earth.core.designsystem.components.iconSize
 import earth.core.designsystem.icon.AppIcons
 
 
@@ -28,7 +26,7 @@ fun SettingsDialogRow(
     @DrawableRes endIcon: Int = AppIcons.ArrowDown,
     @StringRes title: Int,
     @StringRes selected: Int = 0,
-    angle: Float = 0f,
+    angle: () -> Float = { 0f },
     onClick: () -> Unit
 ) {
     Row(
@@ -39,7 +37,6 @@ fun SettingsDialogRow(
             .padding(start = 10.dp, top = 2.dp, end = 0.dp, bottom = 2.dp)
     ) {
         Icon(
-            modifier = Modifier.size(iconSize),
             painter = painterResource(startingIcon),
             contentDescription = null
         )
@@ -57,7 +54,7 @@ fun SettingsDialogRow(
             Icon(
                 painter = painterResource(endIcon),
                 contentDescription = null,
-                modifier = Modifier.graphicsLayer { rotationZ = angle }
+                modifier = Modifier.graphicsLayer { rotationZ = angle() }
             )
         }
     }
