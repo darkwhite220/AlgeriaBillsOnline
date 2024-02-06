@@ -23,7 +23,6 @@ import earth.core.network.utils.Constants.SIGN_IN_BUTTON_Y
 import earth.core.network.utils.Constants.SIGN_IN_PASSWORD
 import earth.core.network.utils.Constants.SIGN_IN_USERNAME
 import earth.core.network.utils.Constants.USERNAME
-import earth.core.network.utils.Utils.randomInt
 import earth.core.network.utils.KtorHeaders.fetchBillHeaders
 import earth.core.network.utils.KtorHeaders.initialHeaders
 import earth.core.network.utils.KtorHeaders.logOutHeaders
@@ -32,6 +31,7 @@ import earth.core.network.utils.KtorHeaders.signInPostHeaders
 import earth.core.network.utils.KtorHeaders.signupCaptchaHeaders
 import earth.core.network.utils.KtorHeaders.signupFormHeaders
 import earth.core.network.utils.KtorHeaders.signupHeaders
+import earth.core.network.utils.Utils.randomInt
 import earth.core.networkmodel.BillResponse
 import earth.core.networkmodel.SignInResponse
 import earth.core.networkmodel.SignupCaptcha
@@ -43,6 +43,7 @@ import earth.core.throwablemodel.SignInThrowableConstants.TEMPORARILY_LOCKED_ACC
 import earth.core.throwablemodel.SignInThrowableConstants.TEMPORARILY_LOCKED_ACCOUNT_VALUE
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.plugins.cookies.cookies
 import io.ktor.client.plugins.expectSuccess
 import io.ktor.client.plugins.onDownload
@@ -59,8 +60,10 @@ class AppNetwork @Inject constructor(
 ) : AppNetworkDataSource {
     
     override suspend fun fetchSignupCaptcha(): SignupCaptcha {
-        client.get(SIGNUP_FORM_URL) {
-            signupFormHeaders()
+        connectTimeoutExceptionWrapper {
+            client.get(SIGNUP_FORM_URL) {
+                signupFormHeaders()
+            }
         }
         
         var totalLength = 0
@@ -109,8 +112,10 @@ class AppNetwork @Inject constructor(
     }
     
     override suspend fun signIn(username: String, password: String): SignInResponse {
-        client.get(BASE_URL) {
-            initialHeaders()
+        connectTimeoutExceptionWrapper {
+            client.get(BASE_URL) {
+                initialHeaders()
+            }
         }
         
         val logIn = client.post(LOGIN_AUTH_URL) {
@@ -181,6 +186,20 @@ class AppNetwork @Inject constructor(
     private suspend fun HttpClient.printCookies() {
         this.cookies(BASE_URL).forEach {
             println("Cookie: $it.")
+        }
+    }
+    
+    private suspend fun connectTimeoutExceptionWrapper(request: suspend () -> Unit) {
+        try {
+            request()
+        } catch (e: Exception) {
+            handleConnectTimeoutException(e)
+        }
+    }
+    
+    private fun handleConnectTimeoutException(e: Throwable) {
+        if (e is ConnectTimeoutException) {
+            throw SignInThrowable.ServerOffline
         }
     }
     

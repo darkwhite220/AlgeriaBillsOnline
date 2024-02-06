@@ -4,6 +4,7 @@ sealed class SignInThrowable : Throwable() {
     data object BadUsername : Throwable()
     data object BadPassword : Throwable()
     data object TemporarilyLockedAccount : Throwable()
+    data object ServerOffline : Throwable()
 }
 
 object SignInThrowableConstants {
