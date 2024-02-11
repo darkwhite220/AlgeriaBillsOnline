@@ -37,6 +37,12 @@ Algeria - Invoice Tracking is an app that attempts to use the latest libraries a
  * Uses [Ktor](https://ktor.io/docs/getting-started-ktor-client.html) for network.
  * Uses modularization.
 
+## Modularization
+
+<p align="center">
+    <img src="art/modularization.png" width=80% height=80%>
+</p>
+
 ## License
 
 ```
