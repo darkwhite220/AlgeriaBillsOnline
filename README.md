@@ -13,6 +13,10 @@ Algeria - Invoice Tracking is a companion app to:
 
 > Website format/Data Source: [[consulter-factures.elit.dz](https://consulter-factures.elit.dz/)]
 
+## Download
+
+[Play store](https://play.google.com/store/apps/details?id=earth.darkwhite.algeriabills)
+
 ## Screenshots
 
 <p align="center">
