@@ -29,30 +29,22 @@ class SyncDataImplementation @Inject constructor(
             // login
             val signInResponse = extractSignInPageData(
                 appNetwork.signIn(
-                    username = user.username,
-                    password = user.password
+                    username = newUserCopy.username,
+                    password = newUserCopy.password
                 )
             )
             Log.d(TAG, "syncData: $signInResponse")
             
-            // Save user data from logged in page
-            if (user.fullName.isEmpty()) {
+            // Save user data from first time logging in
+            if (newUserCopy.fullName.isEmpty()) {
                 newUserCopy = newUserCopy.copy(
                     fullName = signInResponse.fullName,
                     address = signInResponse.address,
-                    lastBillNumber = signInResponse.billNumber,
                 )
-                
                 userRepository.insertUser(user = newUserCopy)
             }
             
-            val lastBill = billRepository.getLastBill(user.reference)
-            Log.d(TAG, "syncData: lastBill $lastBill")
-            
-            if (user.lastBillNumber != signInResponse.billNumber ||
-                lastBill == null ||
-                lastBill.billNumber != signInResponse.billNumber
-            ) {
+            if (newUserCopy.lastBillNumber != signInResponse.billNumber) {
                 // fetch bill
                 signInResponse.billUrl?.let { urlEndpoint ->
                     val billResponse = appNetwork.fetchBill(urlEndpoint)
@@ -66,20 +58,20 @@ class SyncDataImplementation @Inject constructor(
                     var agency = ""
                     var menageType = MenageType.M
                     var electricityPMD = ElectricityPMD.MEDIUM_MONO_PHASE
-                    var gazPCS = "0".toBigDecimal()
+                    var gasPCS = "0".toBigDecimal()
                     
                     // Extract Main Bill
                     billsList.add(
                         extractMainBillData(
                             dataSource = dataAsListOfString,
                             pdfByteArray = billResponse.pdfByteArray,
-                            isPaid = lastBill == null,
+                            isPaid = false,
                             onDone = { directionDistribution, agence, menage, pmd, pcs ->
                                 direction = directionDistribution
                                 agency = agence
                                 menageType = menage
                                 electricityPMD = pmd
-                                gazPCS = pcs
+                                gasPCS = pcs
                                 dataAsListOfString = dataAsListOfString.subList(
                                     dataAsListOfString.size - 19,
                                     dataAsListOfString.size
@@ -96,37 +88,33 @@ class SyncDataImplementation @Inject constructor(
                             mainBill = billsList[0],
                             menageType = menageType,
                             electricityPMD = electricityPMD,
-                            gazPCS = gazPCS,
+                            gazPCS = gasPCS,
                             isPaid = true,
                             onDone = { pcs ->
-                                if (gazPCS == "0".toBigDecimal()) {
-                                    gazPCS = pcs
+                                if (gasPCS == "0".toBigDecimal()) {
+                                    gasPCS = pcs
                                 }
                             }
                         )
                     )
                     
-                    // Save new user data
-                    // gasPCS can be 0 when no consumption registered
-                    if (user.gasPCS != gazPCS) {
-                        newUserCopy = newUserCopy.copy(
-                            directionDistribution = direction,
-                            businessAgency = agency,
-                            isHouse = menageType in listOf(MenageType.M, MenageType.M_OUT_CITY),
-                            isInState = menageType in listOf(MenageType.M, MenageType.NM),
-                            electPMD = electricityPMD.value,
-                            gasPCS = gazPCS,
-                        )
-                        
-                        userRepository.insertUser(user = newUserCopy)
-                    }
-                    
-                    // Extract & Insert bills
-                    billRepository.insertBills(
-                        bills = billsList
+                    // Update user data
+                    // gasPCS can be 0 when no consumption registered (we keep the highest value)
+                    newUserCopy = newUserCopy.copy(
+                        lastBillNumber = signInResponse.billNumber,
+                        directionDistribution = direction,
+                        businessAgency = agency,
+                        isHouse = menageType in listOf(MenageType.M, MenageType.M_OUT_CITY),
+                        isInState = menageType in listOf(MenageType.M, MenageType.NM),
+                        electPMD = electricityPMD.value,
+                        gasPCS = if (gasPCS > "0".toBigDecimal()) gasPCS else newUserCopy.gasPCS,
                     )
+                    userRepository.insertUser(user = newUserCopy)
+                    
+                    // Insert new bills
+                    billRepository.insertBills(bills = billsList)
+                    result = true
                 }
-                result = true
             } else {
                 result = false
             }
